@@ -1,0 +1,103 @@
+import { prisma } from "@/src/lib/prisma";
+import { auth } from "@/src/lib/auth";
+import { notFound } from "next/navigation";
+import { generateDownloadUrl } from "@/src/lib/r2";
+import { CourseDetail } from "@/src/components/courses/CourseDetail";
+import type { Metadata } from "next";
+
+interface CoursePageProps {
+  params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: CoursePageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const course = await prisma.course.findUnique({
+    where: { id: resolvedParams.id },
+    select: { courseCode: true, courseTitle: true },
+  });
+
+  if (!course) return { title: "Course Not Found" };
+
+  return {
+    title: `${course.courseCode} — MSSN UI Library`,
+  };
+}
+
+async function getCourse(id: string, userId: string) {
+  const [course, isBookmarked] = await Promise.all([
+    prisma.course.findUnique({
+      where: { id, status: "approved" },
+      include: {
+        department: {
+          include: {
+            academicUnit: {
+              include: {
+                parent: { select: { name: true } },
+              },
+            },
+          },
+        },
+        uploadedBy: {
+          select: { name: true, avatar: true },
+        },
+        _count: {
+          select: {
+            downloads: true,
+            bookmarks: true,
+            views: true,
+          },
+        },
+      },
+    }),
+    prisma.bookmark.findFirst({
+      where: { userId, courseId: id },
+    }),
+  ]);
+
+  if (!course) return null;
+
+  // Log view
+  await prisma.resourceView
+    .create({
+      data: {
+        userId,
+        resourceType: "course",
+        courseId: id,
+      },
+    })
+    .catch(() => {});
+
+  // Generate signed URL
+  const fileKey = course.fileUrl.replace(
+    `${process.env.R2_PUBLIC_URL}/`,
+    ""
+  );
+  const signedUrl = await generateDownloadUrl(fileKey, 7200);
+
+  return {
+    course,
+    signedUrl,
+    isBookmarked: !!isBookmarked,
+  };
+}
+
+export default async function CoursePage({
+  params,
+}: CoursePageProps) {
+  const session = await auth();
+  if (!session) return null;
+
+  const resolvedParams = await params;
+  const data = await getCourse(resolvedParams.id, session.user.id);
+  if (!data) notFound();
+
+  return (
+    <CourseDetail
+      course={data.course}
+      signedUrl={data.signedUrl}
+      isBookmarked={data.isBookmarked}
+    />
+  );
+}

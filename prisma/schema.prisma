@@ -1,0 +1,359 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==============================
+// ENUMS
+// ==============================
+
+enum Role {
+  member
+  contributor
+  admin
+  super_admin
+}
+
+enum Status {
+  pending
+  approved
+  rejected
+}
+
+enum CourseType {
+  note
+  past_question
+  handout
+  assignment
+}
+
+enum Semester {
+  first
+  second
+}
+
+enum NotificationType {
+  approval
+  rejection
+  new_upload
+}
+
+enum ResourceType {
+  book
+  course
+  project
+}
+
+enum UnitType {
+  college
+  faculty
+  institute
+  centre
+  school
+}
+
+// ==============================
+// UNIVERSITY STRUCTURE
+// ==============================
+
+model AcademicUnit {
+  id          String         @id @default(cuid())
+  name        String
+  type        UnitType
+  description String?        @db.Text
+  parentId    String?
+  parent      AcademicUnit?  @relation("UnitHierarchy", fields: [parentId], references: [id])
+  children    AcademicUnit[] @relation("UnitHierarchy")
+  departments Department[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@unique([name, parentId])
+  @@map("academic_units")
+}
+
+model Department {
+  id             String       @id @default(cuid())
+  name           String
+  academicUnitId String
+  academicUnit   AcademicUnit @relation(fields: [academicUnitId], references: [id], onDelete: Cascade)
+  isDLC          Boolean      @default(false)
+  isPostgraduate Boolean      @default(false)
+  users          User[]
+  courses        Course[]
+  projects       Project[]
+  books          Book[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([name, academicUnitId])
+  @@map("departments")
+}
+
+// ==============================
+// USERS & AUTH
+// ==============================
+
+model User {
+  id           String      @id @default(cuid())
+  name         String
+  email        String      @unique
+  password     String?
+  googleId     String?     @unique
+  role         Role        @default(member)
+  matricNumber String?     @unique
+  avatar       String?
+  isActive     Boolean     @default(true)
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+
+  accounts         Account[]
+  sessions         Session[]
+  uploadedBooks    Book[]          @relation("BookUploader")
+  approvedBooks    Book[]          @relation("BookApprover")
+  uploadedCourses  Course[]        @relation("CourseUploader")
+  approvedCourses  Course[]        @relation("CourseApprover")
+  uploadedProjects Project[]       @relation("ProjectUploader")
+  approvedProjects Project[]       @relation("ProjectApprover")
+  bookmarks        Bookmark[]
+  downloads        Download[]
+  views            ResourceView[]
+  notifications    Notification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ==============================
+// CATEGORIES
+// ==============================
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  books     Book[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
+}
+
+// ==============================
+// CONTENT TABLES
+// ==============================
+
+model Book {
+  id              String      @id @default(cuid())
+  title           String
+  author          String
+  description     String?     @db.Text
+  coverImageUrl   String?
+  fileUrl         String
+  fileSize        Int
+  pages           Int?
+  publishedYear   Int?
+  language        String      @default("English")
+  status          Status      @default(pending)
+  rejectionReason String?     @db.Text
+  categoryId      String?
+  category        Category?   @relation(fields: [categoryId], references: [id])
+  departmentId    String?
+  department      Department? @relation(fields: [departmentId], references: [id])
+  uploadedById    String
+  uploadedBy      User        @relation("BookUploader", fields: [uploadedById], references: [id])
+  approvedById    String?
+  approvedBy      User?       @relation("BookApprover", fields: [approvedById], references: [id])
+  approvedAt      DateTime?
+  bookmarks       Bookmark[]
+  downloads       Download[]
+  views           ResourceView[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@map("books")
+}
+
+model Course {
+  id              String     @id @default(cuid())
+  courseCode      String
+  courseTitle     String
+  level           Int
+  semester        Semester
+  type            CourseType
+  fileUrl         String
+  fileSize        Int
+  coverImageUrl   String?
+  status          Status     @default(pending)
+  rejectionReason String?    @db.Text
+  departmentId    String
+  department      Department @relation(fields: [departmentId], references: [id])
+  uploadedById    String
+  uploadedBy      User       @relation("CourseUploader", fields: [uploadedById], references: [id])
+  approvedById    String?
+  approvedBy      User?      @relation("CourseApprover", fields: [approvedById], references: [id])
+  approvedAt      DateTime?
+  bookmarks       Bookmark[]
+  downloads       Download[]
+  views           ResourceView[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@unique([courseCode, departmentId, semester, type])
+  @@map("courses")
+}
+
+model Project {
+  id              String     @id @default(cuid())
+  title           String
+  authorName      String
+  abstract        String?    @db.Text
+  fileUrl         String
+  fileSize        Int
+  coverImageUrl   String?
+  year            Int
+  supervisor      String?
+  status          Status     @default(pending)
+  rejectionReason String?    @db.Text
+  departmentId    String
+  department      Department @relation(fields: [departmentId], references: [id])
+  uploadedById    String
+  uploadedBy      User       @relation("ProjectUploader", fields: [uploadedById], references: [id])
+  approvedById    String?
+  approvedBy      User?      @relation("ProjectApprover", fields: [approvedById], references: [id])
+  approvedAt      DateTime?
+  bookmarks       Bookmark[]
+  downloads       Download[]
+  views           ResourceView[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@map("projects")
+}
+
+// ==============================
+// BOOKMARKS
+// ==============================
+
+model Bookmark {
+  id           String       @id @default(cuid())
+  userId       String
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resourceType ResourceType
+  bookId       String?
+  book         Book?        @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  courseId     String?
+  course       Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  projectId    String?
+  project      Project?     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt    DateTime     @default(now())
+
+  @@unique([userId, bookId])
+  @@unique([userId, courseId])
+  @@unique([userId, projectId])
+  @@map("bookmarks")
+}
+
+// ==============================
+// DOWNLOADS
+// ==============================
+
+model Download {
+  id           String       @id @default(cuid())
+  userId       String
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resourceType ResourceType
+  bookId       String?
+  book         Book?        @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  courseId     String?
+  course       Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  projectId    String?
+  project      Project?     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  downloadedAt DateTime     @default(now())
+
+  @@map("downloads")
+}
+
+// ==============================
+// RESOURCE VIEWS
+// ==============================
+
+model ResourceView {
+  id           String       @id @default(cuid())
+  userId       String
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resourceType ResourceType
+  bookId       String?
+  book         Book?        @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  courseId     String?
+  course       Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  projectId    String?
+  project      Project?     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  viewedAt     DateTime     @default(now())
+
+  @@map("resource_views")
+}
+
+// ==============================
+// NOTIFICATIONS
+// ==============================
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message   String           @db.Text
+  type      NotificationType
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  @@map("notifications")
+}
