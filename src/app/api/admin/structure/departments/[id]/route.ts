@@ -3,6 +3,10 @@ import { auth } from "@/src/lib/auth";
 import { prisma } from "@/src/lib/prisma";
 import { z } from "zod";
 
+interface RouteContext {
+  params: Promise<{ id: string }>;
+}
+
 const schema = z.object({
   name: z.string().min(2).optional(),
   isDLC: z.boolean().optional(),
@@ -11,9 +15,9 @@ const schema = z.object({
 
 export async function PATCH(
   req: NextRequest,
-  context: any
+  context: RouteContext
 ) {
-  const params = await Promise.resolve(context.params);
+  const params = await context.params;
   try {
     const session = await auth();
     if (!session || session.user.role !== "super_admin") {
@@ -50,9 +54,9 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  context: any
+  context: RouteContext
 ) {
-  const params = await Promise.resolve(context.params);
+  const params = await context.params;
   try {
     const session = await auth();
     if (!session || session.user.role !== "super_admin") {

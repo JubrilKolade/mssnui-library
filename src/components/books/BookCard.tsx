@@ -11,9 +11,16 @@ import {
 import { Badge } from "@/src/components/ui/badge";
 import { formatFileSize } from "@/src/lib/utils";
 import { cn } from "@/src/lib/utils";
+import type { Book } from "@/types";
+
+type BookCardBook = Pick<Book, "id" | "title" | "author" | "coverImageUrl" | "fileSize" | "pages"> & {
+  category?: { name: string } | null;
+  department?: { name: string } | null;
+  _count: { downloads: number; bookmarks: number };
+};
 
 interface BookCardProps {
-  book: any;
+  book: BookCardBook;
 }
 
 export function BookCard({ book }: BookCardProps) {

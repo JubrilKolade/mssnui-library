@@ -8,9 +8,15 @@ import {
 import { Badge } from "@/src/components/ui/badge";
 import { formatFileSize } from "@/src/lib/utils";
 import { cn } from "@/src/lib/utils";
+import type { Course } from "@/types";
+
+type CourseCardCourse = Pick<Course, "id" | "courseCode" | "courseTitle" | "level" | "semester" | "type" | "fileSize"> & {
+  department: { name: string };
+  _count: { downloads: number; bookmarks: number };
+};
 
 interface CourseCardProps {
-  course: any;
+  course: CourseCardCourse;
 }
 
 const typeColors: Record<string, string> = {

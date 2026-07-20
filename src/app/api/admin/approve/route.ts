@@ -7,7 +7,6 @@ const schema = z.object({
   id: z.string(),
   type: z.enum(["book", "course", "project"]),
   action: z.enum(["approve", "reject"]),
-  adminId: z.string(),
   reason: z.string().optional(),
 });
 
@@ -36,7 +35,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { id, type, action, adminId, reason } = validated.data;
+    const { id, type, action, reason } = validated.data;
 
     const status = action === "approve" ? "approved" : "rejected";
     const now = new Date();
@@ -50,7 +49,7 @@ export async function POST(req: NextRequest) {
         where: { id },
         data: {
           status,
-          approvedById: adminId,
+          approvedById: session.user.id,
           approvedAt: now,
           rejectionReason: reason || null,
         },
@@ -63,7 +62,7 @@ export async function POST(req: NextRequest) {
         where: { id },
         data: {
           status,
-          approvedById: adminId,
+          approvedById: session.user.id,
           approvedAt: now,
           rejectionReason: reason || null,
         },
@@ -80,7 +79,7 @@ export async function POST(req: NextRequest) {
         where: { id },
         data: {
           status,
-          approvedById: adminId,
+          approvedById: session.user.id,
           approvedAt: now,
           rejectionReason: reason || null,
         },

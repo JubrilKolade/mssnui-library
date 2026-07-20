@@ -2,9 +2,15 @@ import Link from "next/link";
 import { ScrollText, Download, Bookmark, User } from "lucide-react";
 import { Badge } from "@/src/components/ui/badge";
 import { formatFileSize, truncateText } from "@/src/lib/utils";
+import type { Project } from "@/types";
+
+type ProjectCardProject = Pick<Project, "id" | "title" | "authorName" | "abstract" | "year" | "fileSize"> & {
+  department: { name: string };
+  _count: { downloads: number; bookmarks: number };
+};
 
 interface ProjectCardProps {
-  project: any;
+  project: ProjectCardProject;
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {

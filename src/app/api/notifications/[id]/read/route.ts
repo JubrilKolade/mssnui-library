@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/src/lib/auth";
 import { prisma } from "@/src/lib/prisma";
 
+interface RouteContext {
+  params: Promise<{ id: string }>;
+}
+
 export async function PATCH(
   req: NextRequest,
-  context: any
+  context: RouteContext
 ) {
-  const params = await Promise.resolve(context.params);
+  const params = await context.params;
   try {
     const session = await auth();
     if (!session) {

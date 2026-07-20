@@ -3,15 +3,19 @@ import { auth } from "@/src/lib/auth";
 import { prisma } from "@/src/lib/prisma";
 import { z } from "zod";
 
+interface RouteContext {
+  params: Promise<{ id: string }>;
+}
+
 const schema = z.object({
   role: z.enum(["member", "contributor", "admin", "super_admin"]),
 });
 
 export async function PATCH(
   req: NextRequest,
-  context: any
+  context: RouteContext
 ) {
-  const params = await Promise.resolve(context.params);
+  const params = await context.params;
   try {
     const session = await auth();
 

@@ -4,6 +4,10 @@ import { prisma } from "@/src/lib/prisma";
 import { r2Client } from "@/src/lib/r2";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 
+interface RouteContext {
+  params: Promise<{ type: string; id: string }>;
+}
+
 async function deleteFromR2(url: string) {
   try {
     const key = url.replace(
@@ -23,9 +27,9 @@ async function deleteFromR2(url: string) {
 
 export async function DELETE(
   req: NextRequest,
-  context: any
+  context: RouteContext
 ) {
-  const params = await Promise.resolve(context.params);
+  const params = await context.params;
   try {
     const session = await auth();
 
@@ -129,9 +133,9 @@ export async function DELETE(
 // GET single item (for admin content table)
 export async function GET(
   req: NextRequest,
-  context: any
+  context: RouteContext
 ) {
-  const params = await Promise.resolve(context.params);
+  const params = await context.params;
   try {
     const session = await auth();
 
