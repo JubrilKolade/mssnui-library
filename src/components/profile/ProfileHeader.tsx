@@ -19,9 +19,9 @@ const roleLabels: Record<Role, string> = {
 
 const roleBadgeColors: Record<Role, string> = {
   member: "bg-slate-100 text-slate-700",
-  contributor: "bg-blue-100 text-blue-700",
-  admin: "bg-purple-100 text-purple-700",
-  super_admin: "bg-green-100 text-green-700",
+  contributor: "bg-amber-100 text-amber-800",
+  admin: "bg-emerald-100 text-emerald-800",
+  super_admin: "bg-emerald-700 text-amber-50",
 };
 
 interface ProfileHeaderProps {
@@ -98,13 +98,13 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6">
+    <div className="bg-white rounded-2xl border border-amber-100 p-6">
       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
         {/* Avatar */}
         <div className="relative flex-shrink-0">
           <Avatar className="w-24 h-24">
             <AvatarImage src={avatar} alt={user.name} />
-            <AvatarFallback className="text-2xl font-bold bg-green-100 text-green-700">
+            <AvatarFallback className="text-2xl font-bold bg-emerald-100 text-emerald-800">
               {getInitials(user.name)}
             </AvatarFallback>
           </Avatar>
@@ -113,7 +113,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
-            className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center hover:bg-green-700 transition-colors shadow-md"
+            className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-emerald-700 text-amber-50 flex items-center justify-center hover:bg-emerald-800 transition-colors shadow-md"
           >
             {isUploading ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -133,7 +133,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
 
         {/* Info */}
         <div className="flex-1 text-center sm:text-left">
-          <h1 className="text-2xl font-bold text-slate-900">
+          <h1 className="font-serif text-2xl font-bold text-emerald-950">
             {user.name}
           </h1>
           <p className="text-slate-500 text-sm mt-0.5">{user.email}</p>

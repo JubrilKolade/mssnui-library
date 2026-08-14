@@ -94,12 +94,12 @@ export function ChangePasswordForm({
 
   if (!hasPassword) {
     return (
-      <div className="bg-white rounded-xl border border-slate-200 p-6">
-        <h3 className="font-semibold text-slate-900 mb-4">
+      <div className="bg-white rounded-2xl border border-amber-100 p-6">
+        <h3 className="font-serif font-bold text-emerald-950 mb-4">
           Change Password
         </h3>
-        <Alert className="border-blue-200 bg-blue-50">
-          <AlertDescription className="text-blue-700 text-sm">
+        <Alert className="border-amber-200 bg-amber-50">
+          <AlertDescription className="text-amber-800 text-sm">
             Your account uses Google Sign-In. Password management is
             handled through your Google account.
           </AlertDescription>
@@ -109,8 +109,8 @@ export function ChangePasswordForm({
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6">
-      <h3 className="font-semibold text-slate-900 mb-4">
+    <div className="bg-white rounded-2xl border border-amber-100 p-6">
+      <h3 className="font-serif font-bold text-emerald-950 mb-4">
         Change Password
       </h3>
 
@@ -217,7 +217,7 @@ export function ChangePasswordForm({
 
           <Button
             type="submit"
-            className="bg-green-600 hover:bg-green-700"
+            className="bg-emerald-700 hover:bg-emerald-800"
             disabled={isLoading}
           >
             {isLoading ? (
