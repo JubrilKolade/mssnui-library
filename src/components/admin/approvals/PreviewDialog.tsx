@@ -92,7 +92,7 @@ export function PreviewDialog({
 
                 {/* Open PDF Button */}
                 <Button
-                  className="w-full bg-green-600 hover:bg-green-700"
+                  className="w-full bg-emerald-700 hover:bg-emerald-800"
                   onClick={() => {
                     onOpenChange(false);
                     setShowPDF(true);

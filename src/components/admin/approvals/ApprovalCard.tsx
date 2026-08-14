@@ -38,20 +38,20 @@ interface ApprovalCardProps {
 const typeConfig = {
   book: {
     icon: BookOpen,
-    color: "text-blue-600",
-    bg: "bg-blue-50",
+    color: "text-emerald-700",
+    bg: "bg-emerald-50",
     label: "Book",
   },
   course: {
     icon: GraduationCap,
-    color: "text-purple-600",
-    bg: "bg-purple-50",
+    color: "text-teal-700",
+    bg: "bg-teal-50",
     label: "Course",
   },
   project: {
     icon: ScrollText,
-    color: "text-orange-600",
-    bg: "bg-orange-50",
+    color: "text-amber-700",
+    bg: "bg-amber-50",
     label: "Project",
   },
 };
@@ -131,10 +131,10 @@ export function ApprovalCard({
   return (
     <div
       className={cn(
-        "bg-white rounded-xl border transition-all",
+        "bg-white rounded-2xl border transition-all",
         isSelected
-          ? "border-green-300 shadow-sm shadow-green-100"
-          : "border-slate-200"
+          ? "border-emerald-300 shadow-sm shadow-emerald-100"
+          : "border-amber-100"
       )}
     >
       {/* Card Header */}
@@ -144,13 +144,13 @@ export function ApprovalCard({
           type="checkbox"
           checked={isSelected}
           onChange={onSelect}
-          className="w-4 h-4 rounded accent-green-600 mt-1 flex-shrink-0"
+          className="w-4 h-4 rounded accent-emerald-600 mt-1 shrink-0"
         />
 
         {/* Cover / Icon */}
         <div
           className={cn(
-            "w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0",
+            "w-12 h-12 rounded-lg flex items-center justify-center shrink-0",
             config.bg
           )}
         >
@@ -235,7 +235,7 @@ export function ApprovalCard({
         {/* Expand Toggle */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="text-slate-400 hover:text-slate-600 flex-shrink-0 p-1"
+          className="text-slate-400 hover:text-slate-600 shrink-0 p-1"
         >
           {isExpanded ? (
             <ChevronUp className="w-4 h-4" />
@@ -363,7 +363,7 @@ export function ApprovalCard({
         {/* Approve */}
         <Button
           size="sm"
-          className="gap-1.5 bg-green-600 hover:bg-green-700"
+          className="gap-1.5 bg-emerald-700 hover:bg-emerald-800"
           onClick={handleApprove}
           disabled={isApproving}
         >

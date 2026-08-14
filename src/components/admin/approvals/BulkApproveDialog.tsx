@@ -38,7 +38,7 @@ export function BulkApproveDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-green-600">
+          <DialogTitle className="flex items-center gap-2 text-emerald-700">
             <CheckCircle className="w-5 h-5" />
             Bulk Approve
           </DialogTitle>
@@ -63,7 +63,7 @@ export function BulkApproveDialog({
             Cancel
           </Button>
           <Button
-            className="flex-1 bg-green-600 hover:bg-green-700"
+            className="flex-1 bg-emerald-700 hover:bg-emerald-800"
             onClick={handleConfirm}
             disabled={isLoading}
           >

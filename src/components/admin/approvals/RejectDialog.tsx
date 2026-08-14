@@ -146,7 +146,7 @@ export function RejectDialog({
                     key={reason}
                     type="button"
                     onClick={() => applyQuickReason(reason)}
-                    className="text-xs px-2.5 py-1 rounded-full border border-slate-200 text-slate-600 hover:border-red-300 hover:text-red-600 hover:bg-red-50 transition-colors text-left"
+                    className="text-xs px-2.5 py-1 rounded-full border border-amber-100 text-slate-600 hover:border-red-300 hover:text-red-600 hover:bg-red-50 transition-colors text-left"
                   >
                     {reason}
                   </button>

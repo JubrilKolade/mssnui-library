@@ -92,13 +92,13 @@ export function ApprovalList({
     <div className="space-y-4">
       {/* Bulk Actions Bar */}
       {items.length > 0 && (
-        <div className="flex items-center justify-between bg-white border border-slate-200 rounded-xl px-4 py-3">
+        <div className="flex items-center justify-between bg-white border border-amber-100 rounded-2xl px-4 py-3">
           <div className="flex items-center gap-3">
             <input
               type="checkbox"
               checked={selectedIds.length === items.length}
               onChange={toggleSelectAll}
-              className="w-4 h-4 rounded accent-green-600"
+              className="w-4 h-4 rounded accent-emerald-600"
             />
             <span className="text-sm text-slate-600">
               {selectedIds.length > 0
@@ -110,7 +110,7 @@ export function ApprovalList({
           {selectedIds.length > 0 && (
             <Button
               size="sm"
-              className="bg-green-600 hover:bg-green-700"
+              className="bg-emerald-700 hover:bg-emerald-800"
               onClick={() => setIsBulkOpen(true)}
             >
               Approve Selected ({selectedIds.length})
