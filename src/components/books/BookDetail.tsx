@@ -113,7 +113,7 @@ export function BookDetail({
       {/* Back */}
       <Link
         href="/books"
-        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-emerald-700"
       >
         <ChevronLeft className="w-4 h-4" />
         Back to Books
@@ -123,8 +123,8 @@ export function BookDetail({
         {/* Left — Book Info */}
         <div className="lg:col-span-1 space-y-4">
           {/* Cover */}
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-            <div className="relative h-64 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
+          <div className="bg-white rounded-2xl border border-amber-100 overflow-hidden">
+            <div className="relative h-64 bg-linear-to-br from-emerald-50 to-amber-50 flex items-center justify-center">
               {book.coverImageUrl ? (
                 <Image
                   src={book.coverImageUrl}
@@ -133,14 +133,14 @@ export function BookDetail({
                   className="object-cover"
                 />
               ) : (
-                <BookOpen className="w-16 h-16 text-blue-300" />
+                <BookOpen className="w-16 h-16 text-emerald-300" />
               )}
             </div>
 
             <div className="p-4 space-y-3">
               {/* Actions */}
               <Button
-                className="w-full bg-green-600 hover:bg-green-700"
+                className="w-full bg-emerald-700 hover:bg-emerald-800"
                 onClick={() => setShowPDF(true)}
               >
                 <Eye className="w-4 h-4 mr-2" />
@@ -161,7 +161,7 @@ export function BookDetail({
                   onClick={handleBookmark}
                   disabled={isBookmarking}
                   className={
-                    isBookmarked ? "text-yellow-600 border-yellow-300" : ""
+                    isBookmarked ? "text-amber-600 border-amber-300" : ""
                   }
                 >
                   {isBookmarked ? (
@@ -176,8 +176,8 @@ export function BookDetail({
           </div>
 
           {/* Stats */}
-          <div className="bg-white rounded-xl border border-slate-200 p-4">
-            <h3 className="text-sm font-semibold text-slate-700 mb-3">
+          <div className="bg-white rounded-2xl border border-amber-100 p-4">
+            <h3 className="font-serif font-bold text-emerald-950 text-sm mb-3">
               Statistics
             </h3>
             <div className="space-y-2">
@@ -215,16 +215,16 @@ export function BookDetail({
         {/* Right — Details */}
         <div className="lg:col-span-2 space-y-4">
           {/* Title & Author */}
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <div className="bg-white rounded-2xl border border-amber-100 p-6">
             <div className="flex items-start gap-3 mb-4">
               {book.category && (
-                <Badge className="bg-blue-50 text-blue-700 hover:bg-blue-50">
+                <Badge className="bg-emerald-50 text-emerald-700 hover:bg-emerald-50">
                   {book.category.name}
                 </Badge>
               )}
             </div>
 
-            <h1 className="text-2xl font-bold text-slate-900">
+            <h1 className="font-serif text-2xl font-bold text-emerald-950">
               {book.title}
             </h1>
             <p className="text-slate-600 mt-1">by {book.author}</p>
@@ -240,8 +240,8 @@ export function BookDetail({
           </div>
 
           {/* Details */}
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
-            <h3 className="font-semibold text-slate-900 mb-4">
+          <div className="bg-white rounded-2xl border border-amber-100 p-6">
+            <h3 className="font-serif font-bold text-emerald-950 mb-4">
               Book Details
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

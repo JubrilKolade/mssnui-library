@@ -94,8 +94,8 @@ export default async function BooksPage({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <BookOpen className="w-6 h-6 text-blue-600" />
+          <h1 className="font-serif text-2xl font-bold text-emerald-950 flex items-center gap-2">
+            <BookOpen className="w-6 h-6 text-emerald-700" />
             Books
           </h1>
           <p className="text-slate-500 text-sm mt-1">
@@ -136,7 +136,7 @@ function BooksGridSkeleton() {
       {Array.from({ length: 6 }).map((_, i) => (
         <div
           key={i}
-          className="bg-white rounded-xl border border-slate-200 p-4 animate-pulse"
+          className="bg-white rounded-2xl border border-amber-100 p-4 animate-pulse"
         >
           <div className="w-full h-40 bg-slate-100 rounded-lg mb-4" />
           <div className="h-4 bg-slate-100 rounded w-3/4 mb-2" />
