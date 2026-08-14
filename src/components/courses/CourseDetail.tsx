@@ -30,18 +30,18 @@ const typeLabels: Record<string, string> = {
 };
 
 const typeColors: Record<string, string> = {
-  note: "bg-blue-50 text-blue-700",
-  past_question: "bg-red-50 text-red-700",
-  handout: "bg-green-50 text-green-700",
-  assignment: "bg-orange-50 text-orange-700",
+  note: "bg-emerald-50 text-emerald-700",
+  past_question: "bg-amber-50 text-amber-700",
+  handout: "bg-teal-50 text-teal-700",
+  assignment: "bg-yellow-50 text-yellow-700",
 };
 
 const levelColors: Record<number, string> = {
   100: "bg-slate-100 text-slate-700",
-  200: "bg-blue-100 text-blue-700",
-  300: "bg-green-100 text-green-700",
-  400: "bg-yellow-100 text-yellow-700",
-  500: "bg-orange-100 text-orange-700",
+  200: "bg-teal-100 text-teal-700",
+  300: "bg-emerald-100 text-emerald-700",
+  400: "bg-amber-100 text-amber-700",
+  500: "bg-yellow-100 text-yellow-700",
   600: "bg-red-100 text-red-700",
 };
 
@@ -128,7 +128,7 @@ export function CourseDetail({
       {/* Back */}
       <Link
         href="/courses"
-        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-emerald-700"
       >
         <ChevronLeft className="w-4 h-4" />
         Back to Courses
@@ -138,10 +138,10 @@ export function CourseDetail({
         {/* Left */}
         <div className="lg:col-span-1 space-y-4">
           {/* Icon Card */}
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-            <div className="h-44 bg-gradient-to-br from-purple-50 to-purple-100 flex flex-col items-center justify-center gap-3">
+          <div className="bg-white rounded-2xl border border-amber-100 overflow-hidden">
+            <div className="h-44 bg-linear-to-br from-teal-50 to-emerald-50 flex flex-col items-center justify-center gap-3">
               <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center">
-                <GraduationCap className="w-8 h-8 text-purple-600" />
+                <GraduationCap className="w-8 h-8 text-teal-700" />
               </div>
               <div className="flex gap-2">
                 <Badge
@@ -166,7 +166,7 @@ export function CourseDetail({
 
             <div className="p-4 space-y-3">
               <Button
-                className="w-full bg-green-600 hover:bg-green-700"
+                className="w-full bg-emerald-700 hover:bg-emerald-800"
                 onClick={() => setShowPDF(true)}
               >
                 <Eye className="w-4 h-4 mr-2" />
@@ -188,7 +188,7 @@ export function CourseDetail({
                   disabled={isBookmarking}
                   className={
                     isBookmarked
-                      ? "text-yellow-600 border-yellow-300"
+                      ? "text-amber-600 border-amber-300"
                       : ""
                   }
                 >
@@ -204,8 +204,8 @@ export function CourseDetail({
           </div>
 
           {/* Stats */}
-          <div className="bg-white rounded-xl border border-slate-200 p-4">
-            <h3 className="text-sm font-semibold text-slate-700 mb-3">
+          <div className="bg-white rounded-2xl border border-amber-100 p-4">
+            <h3 className="font-serif font-bold text-emerald-950 text-sm mb-3">
               Statistics
             </h3>
             <div className="space-y-2">
@@ -242,8 +242,8 @@ export function CourseDetail({
 
         {/* Right */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
-            <h1 className="text-2xl font-bold text-slate-900">
+          <div className="bg-white rounded-2xl border border-amber-100 p-6">
+            <h1 className="font-serif text-2xl font-bold text-emerald-950">
               {course.courseCode}
             </h1>
             <p className="text-slate-600 mt-1 text-lg">

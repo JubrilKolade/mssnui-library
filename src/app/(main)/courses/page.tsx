@@ -26,25 +26,25 @@ const typeHeaders: Record<
   note: {
     title: "Lecture Notes",
     icon: FileText,
-    color: "text-blue-600",
+    color: "text-emerald-700",
     description: "Course lecture notes and slides",
   },
   past_question: {
     title: "Past Questions",
     icon: FileQuestion,
-    color: "text-red-600",
+    color: "text-amber-700",
     description: "Previous exam questions to help you prepare",
   },
   handout: {
     title: "Handouts",
     icon: GraduationCap,
-    color: "text-green-600",
+    color: "text-teal-700",
     description: "Course handouts and materials",
   },
   assignment: {
     title: "Assignments",
     icon: ClipboardList,
-    color: "text-orange-600",
+    color: "text-amber-700",
     description: "Course assignments and tasks",
   },
 };
@@ -122,10 +122,10 @@ export default async function CoursesPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <h1 className="font-serif text-2xl font-bold text-emerald-950 flex items-center gap-2">
             <HeaderIcon
               className={`w-6 h-6 ${
-                typeConfig?.color || "text-purple-600"
+                typeConfig?.color || "text-emerald-700"
               }`}
             />
             {typeConfig?.title || "Course Materials"}
@@ -201,8 +201,8 @@ function TypeChip({
       href={href}
       className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
         active
-          ? "bg-green-600 text-white"
-          : "bg-white border border-slate-200 text-slate-600 hover:border-green-300 hover:text-green-600"
+          ? "bg-emerald-700 text-amber-50"
+          : "bg-white border border-amber-100 text-slate-600 hover:border-emerald-300 hover:text-emerald-700"
       }`}
     >
       {label}
