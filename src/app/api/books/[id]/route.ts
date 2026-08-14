@@ -3,15 +3,11 @@ import { auth } from "@/src/lib/auth";
 import { prisma } from "@/src/lib/prisma";
 import { generateDownloadUrl } from "@/src/lib/r2";
 
-interface RouteContext {
-  params: Promise<{ id: string }>;
-}
-
 export async function GET(
   req: NextRequest,
-  context: RouteContext
+  context: any
 ) {
-  const params = await context.params;
+  const params = await Promise.resolve(context.params);
   try {
     const session = await auth();
     if (!session) {
@@ -90,9 +86,9 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  context: RouteContext
+  context: any
 ) {
-  const params = await context.params;
+  const params = await Promise.resolve(context.params);
   try {
     const session = await auth();
     if (
@@ -125,9 +121,9 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  context: RouteContext
+  context: any
 ) {
-  const params = await context.params;
+  const params = await Promise.resolve(context.params);
   try {
     const session = await auth();
     if (
