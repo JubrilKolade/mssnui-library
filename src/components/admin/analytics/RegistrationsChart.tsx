@@ -39,12 +39,12 @@ export function RegistrationsChart({ data }: RegistrationsChartProps) {
   const totalRegistrations = data.reduce((sum, d) => sum + d.total, 0);
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5">
+    <div className="bg-white rounded-2xl border border-amber-100 p-5">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="font-semibold text-slate-900 flex items-center gap-2">
-            <Users className="w-4 h-4 text-blue-600" />
+            <Users className="w-4 h-4 text-emerald-700" />
             User Registrations
           </h3>
           <p className="text-xs text-slate-400 mt-0.5">

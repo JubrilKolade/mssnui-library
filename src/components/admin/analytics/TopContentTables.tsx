@@ -26,7 +26,7 @@ interface TopContentTablesProps {
 
 export function TopContentTables({ data }: TopContentTablesProps) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5">
+    <div className="bg-white rounded-2xl border border-amber-100 p-5">
       <h3 className="font-semibold text-slate-900 flex items-center gap-2 mb-4">
         <Trophy className="w-4 h-4 text-yellow-500" />
         Top Performing Content
@@ -70,8 +70,8 @@ export function TopContentTables({ data }: TopContentTablesProps) {
                   downloads={book._count.downloads}
                   views={book._count.views}
                   bookmarks={book._count.bookmarks}
-                  color="text-blue-600"
-                  bg="bg-blue-50"
+                  color="text-emerald-700"
+                  bg="bg-emerald-50"
                   icon={BookOpen}
                 />
               ))
@@ -95,8 +95,8 @@ export function TopContentTables({ data }: TopContentTablesProps) {
                   subtitle={course.department?.name}
                   downloads={course._count.downloads}
                   views={course._count.views}
-                  color="text-purple-600"
-                  bg="bg-purple-50"
+                  color="text-teal-700"
+                  bg="bg-teal-50"
                   icon={GraduationCap}
                 />
               ))
@@ -120,8 +120,8 @@ export function TopContentTables({ data }: TopContentTablesProps) {
                   subtitle={project.department?.name}
                   downloads={project._count.downloads}
                   views={project._count.views}
-                  color="text-orange-600"
-                  bg="bg-orange-50"
+                  color="text-amber-700"
+                  bg="bg-amber-50"
                   icon={ScrollText}
                 />
               ))
@@ -156,7 +156,7 @@ export function TopContentTables({ data }: TopContentTablesProps) {
                     {/* Avatar */}
                     <Avatar className="w-8 h-8">
                       <AvatarImage src={user.avatar} />
-                      <AvatarFallback className="text-xs bg-green-100 text-green-700">
+                      <AvatarFallback className="text-xs bg-emerald-100 text-emerald-700">
                         {getInitials(user.name)}
                       </AvatarFallback>
                     </Avatar>
@@ -235,7 +235,7 @@ function TopContentRow({
 
       {/* Icon */}
       <div
-        className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${bg}`}
+        className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${bg}`}
       >
         <Icon className={`w-4 h-4 ${color}`} />
       </div>
@@ -251,7 +251,7 @@ function TopContentRow({
       </div>
 
       {/* Stats */}
-      <div className="flex items-center gap-3 flex-shrink-0">
+      <div className="flex items-center gap-3 shrink-0">
         <span className="flex items-center gap-1 text-xs text-slate-400">
           <Download className="w-3 h-3" />
           {downloads}

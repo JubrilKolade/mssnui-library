@@ -47,8 +47,8 @@ export function OverviewCards({ data }: OverviewCardsProps) {
       value: data.users.total.toLocaleString(),
       sub: `+${data.users.newThisMonth} this month`,
       icon: Users,
-      iconBg: "bg-blue-50",
-      iconColor: "text-blue-600",
+      iconBg: "bg-emerald-50",
+      iconColor: "text-emerald-700",
       trend: data.users.growth,
     },
     {
@@ -56,8 +56,8 @@ export function OverviewCards({ data }: OverviewCardsProps) {
       value: data.content.total.toLocaleString(),
       sub: `${data.content.pending} pending approval`,
       icon: BookOpen,
-      iconBg: "bg-purple-50",
-      iconColor: "text-purple-600",
+      iconBg: "bg-teal-50",
+      iconColor: "text-teal-700",
       trend: null,
     },
     {
@@ -65,8 +65,8 @@ export function OverviewCards({ data }: OverviewCardsProps) {
       value: data.downloads.total.toLocaleString(),
       sub: `${data.downloads.today} today · ${data.downloads.thisWeek} this week`,
       icon: Download,
-      iconBg: "bg-green-50",
-      iconColor: "text-green-600",
+      iconBg: "bg-emerald-50",
+      iconColor: "text-emerald-700",
       trend: null,
     },
     {
@@ -74,8 +74,8 @@ export function OverviewCards({ data }: OverviewCardsProps) {
       value: data.users.active.toLocaleString(),
       sub: "Last 30 days",
       icon: Activity,
-      iconBg: "bg-orange-50",
-      iconColor: "text-orange-600",
+      iconBg: "bg-amber-50",
+      iconColor: "text-amber-700",
       trend: null,
     },
     {
@@ -83,8 +83,8 @@ export function OverviewCards({ data }: OverviewCardsProps) {
       value: data.engagement.views.toLocaleString(),
       sub: "All time",
       icon: Eye,
-      iconBg: "bg-cyan-50",
-      iconColor: "text-cyan-600",
+      iconBg: "bg-teal-50",
+      iconColor: "text-teal-700",
       trend: null,
     },
     {
@@ -92,8 +92,8 @@ export function OverviewCards({ data }: OverviewCardsProps) {
       value: data.engagement.bookmarks.toLocaleString(),
       sub: "Saved by users",
       icon: Bookmark,
-      iconBg: "bg-yellow-50",
-      iconColor: "text-yellow-600",
+      iconBg: "bg-amber-50",
+      iconColor: "text-amber-700",
       trend: null,
     },
     {
@@ -101,8 +101,8 @@ export function OverviewCards({ data }: OverviewCardsProps) {
       value: data.downloads.today.toLocaleString(),
       sub: `${data.downloads.thisMonth} this month`,
       icon: Download,
-      iconBg: "bg-rose-50",
-      iconColor: "text-rose-600",
+      iconBg: "bg-emerald-50",
+      iconColor: "text-emerald-700",
       trend: null,
     },
     {
@@ -111,7 +111,7 @@ export function OverviewCards({ data }: OverviewCardsProps) {
       sub: "Awaiting review",
       icon: Clock,
       iconBg: "bg-amber-50",
-      iconColor: "text-amber-600",
+      iconColor: "text-amber-700",
       trend: null,
     },
   ];
@@ -121,14 +121,14 @@ export function OverviewCards({ data }: OverviewCardsProps) {
       {cards.map((card) => (
         <div
           key={card.label}
-          className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-sm transition-shadow"
+          className="bg-white rounded-2xl border border-amber-100 p-4 hover:shadow-sm transition-shadow"
         >
           <div className="flex items-start justify-between">
             <div className="flex-1 min-w-0">
               <p className="text-xs font-medium text-slate-500 truncate">
                 {card.label}
               </p>
-              <p className="text-2xl font-bold text-slate-900 mt-1">
+              <p className="font-serif text-2xl font-bold text-emerald-950 mt-1">
                 {card.value}
               </p>
               <p className="text-xs text-slate-400 mt-1 truncate">
@@ -136,7 +136,7 @@ export function OverviewCards({ data }: OverviewCardsProps) {
               </p>
             </div>
             <div
-              className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ml-2 ${card.iconBg}`}
+              className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ml-2 ${card.iconBg}`}
             >
               <card.icon className={`w-4 h-4 ${card.iconColor}`} />
             </div>
@@ -146,14 +146,14 @@ export function OverviewCards({ data }: OverviewCardsProps) {
           {card.trend !== null && (
             <div className="flex items-center gap-1 mt-2">
               {card.trend >= 0 ? (
-                <TrendingUp className="w-3.5 h-3.5 text-green-500" />
+                <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
               ) : (
                 <TrendingDown className="w-3.5 h-3.5 text-red-500" />
               )}
               <span
                 className={`text-xs font-medium ${
                   card.trend >= 0
-                    ? "text-green-600"
+                    ? "text-emerald-700"
                     : "text-red-600"
                 }`}
               >

@@ -25,10 +25,10 @@ interface DownloadsChartProps {
 }
 
 const COLORS = {
-  total: "#22c55e",
-  book: "#3b82f6",
-  course: "#a855f7",
-  project: "#f97316",
+  total: "#059669",
+  book: "#0d9488",
+  course: "#d97706",
+  project: "#b45309",
 };
 
 function formatDate(dateStr: string) {
@@ -52,12 +52,12 @@ export function DownloadsChart({ data }: DownloadsChartProps) {
   const totalDownloads = data.reduce((sum, d) => sum + d.total, 0);
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5">
+    <div className="bg-white rounded-2xl border border-amber-100 p-5">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="font-semibold text-slate-900 flex items-center gap-2">
-            <Download className="w-4 h-4 text-green-600" />
+          <h3 className="font-serif font-bold text-emerald-950 flex items-center gap-2">
+            <Download className="w-4 h-4 text-emerald-700" />
             Downloads Over Time
           </h3>
           <p className="text-xs text-slate-400 mt-0.5">
@@ -66,15 +66,15 @@ export function DownloadsChart({ data }: DownloadsChartProps) {
         </div>
         <div className="flex gap-2">
           {/* Days selector */}
-          <div className="flex rounded-lg border border-slate-200 overflow-hidden">
+          <div className="flex rounded-lg border border-amber-100 overflow-hidden">
             {[7, 14, 30].map((d) => (
               <button
                 key={d}
                 onClick={() => setDays(d)}
                 className={`px-2.5 py-1 text-xs font-medium transition-colors ${
                   days === d
-                    ? "bg-green-600 text-white"
-                    : "text-slate-500 hover:bg-slate-50"
+                    ? "bg-emerald-700 text-amber-50"
+                    : "text-slate-500 hover:bg-amber-50"
                 }`}
               >
                 {d}d
@@ -83,13 +83,13 @@ export function DownloadsChart({ data }: DownloadsChartProps) {
           </div>
 
           {/* View toggle */}
-          <div className="flex rounded-lg border border-slate-200 overflow-hidden">
+          <div className="flex rounded-lg border border-amber-100 overflow-hidden">
             <button
               onClick={() => setView("total")}
               className={`px-2.5 py-1 text-xs font-medium transition-colors ${
                 view === "total"
-                  ? "bg-green-600 text-white"
-                  : "text-slate-500 hover:bg-slate-50"
+                  ? "bg-emerald-700 text-amber-50"
+                  : "text-slate-500 hover:bg-amber-50"
               }`}
             >
               Total
@@ -98,8 +98,8 @@ export function DownloadsChart({ data }: DownloadsChartProps) {
               onClick={() => setView("breakdown")}
               className={`px-2.5 py-1 text-xs font-medium transition-colors ${
                 view === "breakdown"
-                  ? "bg-green-600 text-white"
-                  : "text-slate-500 hover:bg-slate-50"
+                  ? "bg-emerald-700 text-amber-50"
+                  : "text-slate-500 hover:bg-amber-50"
               }`}
             >
               Breakdown

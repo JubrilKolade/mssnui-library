@@ -63,7 +63,7 @@ export function DistributionCharts({ data }: DistributionChartsProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* Content by Type */}
-      <div className="bg-white rounded-xl border border-slate-200 p-4">
+      <div className="bg-white rounded-2xl border border-amber-100 p-4">
         <h3 className="text-sm font-semibold text-slate-900 mb-4">
           Content by Type
         </h3>
@@ -99,7 +99,7 @@ export function DistributionCharts({ data }: DistributionChartsProps) {
       </div>
 
       {/* Users by Role */}
-      <div className="bg-white rounded-xl border border-slate-200 p-4">
+      <div className="bg-white rounded-2xl border border-amber-100 p-4">
         <h3 className="text-sm font-semibold text-slate-900 mb-4">
           Users by Role
         </h3>
@@ -135,7 +135,7 @@ export function DistributionCharts({ data }: DistributionChartsProps) {
       </div>
 
       {/* Approval Status */}
-      <div className="bg-white rounded-xl border border-slate-200 p-4">
+      <div className="bg-white rounded-2xl border border-amber-100 p-4">
         <h3 className="text-sm font-semibold text-slate-900 mb-4">
           Approval Status
         </h3>
@@ -171,7 +171,7 @@ export function DistributionCharts({ data }: DistributionChartsProps) {
       </div>
 
       {/* Courses by Level */}
-      <div className="bg-white rounded-xl border border-slate-200 p-4">
+      <div className="bg-white rounded-2xl border border-amber-100 p-4">
         <h3 className="text-sm font-semibold text-slate-900 mb-4">
           Courses by Level
         </h3>

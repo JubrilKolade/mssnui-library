@@ -29,23 +29,23 @@ const typeIcons = {
 };
 
 const typeColors = {
-  book: "text-blue-600",
-  course: "text-purple-600",
-  project: "text-orange-600",
+  book: "text-emerald-700",
+  course: "text-teal-700",
+  project: "text-amber-700",
 };
 
 const roleBadgeColors: Record<string, string> = {
   member: "bg-slate-100 text-slate-700",
-  contributor: "bg-blue-100 text-blue-700",
-  admin: "bg-purple-100 text-purple-700",
-  super_admin: "bg-green-100 text-green-700",
+  contributor: "bg-amber-100 text-amber-800",
+  admin: "bg-emerald-100 text-emerald-800",
+  super_admin: "bg-emerald-700 text-amber-50",
 };
 
 export function ActivityFeed({ data }: ActivityFeedProps) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5 h-full">
-      <h3 className="font-semibold text-slate-900 flex items-center gap-2 mb-4">
-        <Activity className="w-4 h-4 text-green-600" />
+    <div className="bg-white rounded-2xl border border-amber-100 p-5 h-full">
+      <h3 className="font-serif font-bold text-emerald-950 flex items-center gap-2 mb-4">
+        <Activity className="w-4 h-4 text-emerald-700" />
         Recent Activity
       </h3>
 
@@ -85,7 +85,7 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
                     key={download.id}
                     className="flex items-start gap-2.5"
                   >
-                    <Avatar className="w-7 h-7 flex-shrink-0">
+                    <Avatar className="w-7 h-7 shrink-0">
                       <AvatarImage src={download.user?.avatar} />
                       <AvatarFallback className="text-xs bg-slate-100">
                         {getInitials(download.user?.name || "?")}
@@ -99,7 +99,7 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
                         downloaded
                       </p>
                       <p className="text-xs text-slate-500 truncate flex items-center gap-1">
-                        <Icon className={`w-3 h-3 ${color} flex-shrink-0`} />
+                        <Icon className={`w-3 h-3 ${color} shrink-0`} />
                         {download.resourceTitle}
                       </p>
                       <p className="text-xs text-slate-400 mt-0.5">
@@ -123,9 +123,9 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
             ) : (
               data.recentRegistrations.map((user) => (
                 <div key={user.id} className="flex items-center gap-2.5">
-                  <Avatar className="w-7 h-7 flex-shrink-0">
+                  <Avatar className="w-7 h-7 shrink-0">
                     <AvatarImage src={user.avatar} />
-                    <AvatarFallback className="text-xs bg-green-100 text-green-700">
+                    <AvatarFallback className="text-xs bg-emerald-100 text-emerald-700">
                       {getInitials(user.name)}
                     </AvatarFallback>
                   </Avatar>
@@ -141,7 +141,7 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
                     </p>
                   </div>
                   <Badge
-                    className={`text-xs flex-shrink-0 ${
+                    className={`text-xs shrink-0 ${
                       roleBadgeColors[user.role] ||
                       "bg-slate-100 text-slate-700"
                     }`}
@@ -176,7 +176,7 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
                     className="flex items-start gap-2.5"
                   >
                     <div
-                      className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-slate-100`}
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 bg-slate-100`}
                     >
                       <Icon className={`w-3.5 h-3.5 ${color}`} />
                     </div>
@@ -191,7 +191,7 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
                         {formatDate(upload.createdAt)}
                       </p>
                     </div>
-                    <Badge className="text-xs bg-yellow-100 text-yellow-700 flex-shrink-0">
+                    <Badge className="text-xs bg-yellow-100 text-yellow-700 shrink-0">
                       Pending
                     </Badge>
                   </div>

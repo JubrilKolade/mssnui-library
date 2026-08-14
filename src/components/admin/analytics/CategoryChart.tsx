@@ -31,9 +31,9 @@ export function CategoryChart({ data }: CategoryChartProps) {
   const chartData = data.slice(0, 8);
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5">
+    <div className="bg-white rounded-2xl border border-amber-100 p-5">
       <h3 className="font-semibold text-slate-900 flex items-center gap-2 mb-4">
-        <Tag className="w-4 h-4 text-green-600" />
+        <Tag className="w-4 h-4 text-emerald-700" />
         Books by Category
       </h3>
 
