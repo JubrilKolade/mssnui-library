@@ -4,7 +4,8 @@ import { Badge } from "@/src/components/ui/badge";
 import { formatFileSize, truncateText } from "@/src/lib/utils";
 import type { Project } from "@/types";
 
-type ProjectCardProject = Pick<Project, "id" | "title" | "authorName" | "abstract" | "year" | "fileSize"> & {
+type ProjectCardProject = Pick<Project, "id" | "title" | "authorName" | "year" | "fileSize"> & {
+  abstract?: string | null;
   department: { name: string };
   _count: { downloads: number; bookmarks: number };
 };
@@ -16,11 +17,11 @@ interface ProjectCardProps {
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Link href={`/projects/${project.id}`}>
-      <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-md hover:border-slate-300 transition-all group h-full flex flex-col">
+      <div className="bg-white rounded-2xl border border-amber-100 p-4 hover:shadow-md hover:border-amber-200 transition-all group h-full flex flex-col">
         {/* Icon & Year */}
         <div className="flex items-start justify-between mb-3">
-          <div className="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center">
-            <ScrollText className="w-5 h-5 text-orange-600" />
+          <div className="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center">
+            <ScrollText className="w-5 h-5 text-amber-700" />
           </div>
           <Badge className="bg-slate-100 text-slate-700 text-xs">
             {project.year}
@@ -28,7 +29,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
 
         {/* Title */}
-        <h3 className="font-semibold text-slate-900 text-sm line-clamp-2 group-hover:text-orange-600 transition-colors flex-1">
+        <h3 className="font-semibold text-slate-900 text-sm line-clamp-2 group-hover:text-amber-700 transition-colors flex-1">
           {project.title}
         </h3>
 
@@ -53,7 +54,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </p>
 
         {/* Stats */}
-        <div className="flex items-center gap-3 mt-3 pt-3 border-t border-slate-100">
+        <div className="flex items-center gap-3 mt-3 pt-3 border-t border-amber-50">
           <span className="flex items-center gap-1 text-xs text-slate-400">
             <Download className="w-3 h-3" />
             {project._count.downloads}

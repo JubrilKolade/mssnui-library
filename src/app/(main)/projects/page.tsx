@@ -88,8 +88,8 @@ export default async function ProjectsPage({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <ScrollText className="w-6 h-6 text-orange-600" />
+        <h1 className="font-serif text-2xl font-bold text-emerald-950 flex items-center gap-2">
+          <ScrollText className="w-6 h-6 text-amber-700" />
           Projects
         </h1>
         <p className="text-slate-500 text-sm mt-1">

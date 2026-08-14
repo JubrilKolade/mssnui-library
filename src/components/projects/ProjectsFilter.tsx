@@ -2,9 +2,16 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import { useCallback } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/src/components/ui/select";
 import { Button } from "@/src/components/ui/button";
 import { Label } from "@/src/components/ui/label";
-import { X, ChevronDown } from "lucide-react";
+import { X } from "lucide-react";
 
 interface ProjectsFilterProps {
   departments: {
@@ -29,7 +36,7 @@ export function ProjectsFilter({
   );
 
   const updateFilter = useCallback(
-    (key: string, value: string) => {
+    (key: string, value: string | null) => {
       const params = new URLSearchParams();
       Object.entries(searchParams).forEach(([k, v]) => {
         if (v && k !== "page") params.set(k, v);
@@ -45,14 +52,14 @@ export function ProjectsFilter({
   );
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4 space-y-5">
+    <div className="bg-white rounded-2xl border border-amber-100 p-4 space-y-5">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-slate-900 text-sm">Filters</h3>
+        <h3 className="font-serif font-bold text-emerald-950 text-sm">Filters</h3>
         {hasFilters && (
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 text-xs text-red-500"
+            className="h-7 text-xs text-amber-600 hover:text-amber-700"
             onClick={() => router.push(pathname)}
           >
             <X className="w-3 h-3 mr-1" />
@@ -63,42 +70,46 @@ export function ProjectsFilter({
 
       {/* Department */}
       <div className="space-y-2">
-        <Label className="text-xs font-medium text-slate-600">Department</Label>
-        <div className="relative">
-          <select
-            value={searchParams.department || "all"}
-            onChange={(e) => updateFilter("department", e.target.value)}
-            className="w-full h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring cursor-pointer"
-          >
-            <option value="all">All departments</option>
+        <Label className="text-xs font-medium text-slate-600">
+          Department
+        </Label>
+        <Select
+          value={searchParams.department || "all"}
+          onValueChange={(val) => updateFilter("department", val)}
+        >
+          <SelectTrigger className="h-9 text-sm">
+            <SelectValue placeholder="All departments" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All departments</SelectItem>
             {departments.map((dept) => (
-              <option key={dept.id} value={dept.id}>
+              <SelectItem key={dept.id} value={dept.id}>
                 {dept.name}
-              </option>
+              </SelectItem>
             ))}
-          </select>
-          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        </div>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Year */}
       <div className="space-y-2">
         <Label className="text-xs font-medium text-slate-600">Year</Label>
-        <div className="relative">
-          <select
-            value={searchParams.year || "all"}
-            onChange={(e) => updateFilter("year", e.target.value)}
-            className="w-full h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring cursor-pointer"
-          >
-            <option value="all">Any year</option>
+        <Select
+          value={searchParams.year || "all"}
+          onValueChange={(val) => updateFilter("year", val)}
+        >
+          <SelectTrigger className="h-9 text-sm">
+            <SelectValue placeholder="Any year" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Any year</SelectItem>
             {years.map((year) => (
-              <option key={year} value={String(year)}>
+              <SelectItem key={year} value={String(year)}>
                 {year}
-              </option>
+              </SelectItem>
             ))}
-          </select>
-          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        </div>
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );

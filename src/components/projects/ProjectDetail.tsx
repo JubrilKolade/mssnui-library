@@ -102,7 +102,7 @@ export function ProjectDetail({
       {/* Back */}
       <Link
         href="/projects"
-        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-emerald-700"
       >
         <ChevronLeft className="w-4 h-4" />
         Back to Projects
@@ -112,19 +112,19 @@ export function ProjectDetail({
         {/* Left */}
         <div className="lg:col-span-1 space-y-4">
           {/* Icon Card */}
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-            <div className="h-44 bg-gradient-to-br from-orange-50 to-orange-100 flex flex-col items-center justify-center gap-3">
+          <div className="bg-white rounded-2xl border border-amber-100 overflow-hidden">
+            <div className="h-44 bg-linear-to-br from-amber-50 to-amber-100 flex flex-col items-center justify-center gap-3">
               <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center">
-                <ScrollText className="w-8 h-8 text-orange-600" />
+                <ScrollText className="w-8 h-8 text-amber-700" />
               </div>
-              <Badge className="bg-orange-100 text-orange-700">
+              <Badge className="bg-amber-100 text-amber-800">
                 {project.year}
               </Badge>
             </div>
 
             <div className="p-4 space-y-3">
               <Button
-                className="w-full bg-green-600 hover:bg-green-700"
+                className="w-full bg-emerald-700 hover:bg-emerald-800"
                 onClick={() => setShowPDF(true)}
               >
                 <Eye className="w-4 h-4 mr-2" />
@@ -146,7 +146,7 @@ export function ProjectDetail({
                   disabled={isBookmarking}
                   className={
                     isBookmarked
-                      ? "text-yellow-600 border-yellow-300"
+                      ? "text-amber-600 border-amber-300"
                       : ""
                   }
                 >
@@ -162,8 +162,8 @@ export function ProjectDetail({
           </div>
 
           {/* Stats */}
-          <div className="bg-white rounded-xl border border-slate-200 p-4">
-            <h3 className="text-sm font-semibold text-slate-700 mb-3">
+          <div className="bg-white rounded-2xl border border-amber-100 p-4">
+            <h3 className="font-serif font-bold text-emerald-950 text-sm mb-3">
               Statistics
             </h3>
             <div className="space-y-2">
@@ -200,8 +200,8 @@ export function ProjectDetail({
 
         {/* Right */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
-            <h1 className="text-2xl font-bold text-slate-900 leading-snug">
+          <div className="bg-white rounded-2xl border border-amber-100 p-6">
+            <h1 className="font-serif text-2xl font-bold text-emerald-950 leading-snug">
               {project.title}
             </h1>
 
@@ -210,7 +210,7 @@ export function ProjectDetail({
             {/* Abstract */}
             {project.abstract && (
               <div className="mb-4">
-                <h3 className="text-sm font-semibold text-slate-700 mb-2">
+                <h3 className="font-serif font-bold text-emerald-950 text-sm mb-2">
                   Abstract
                 </h3>
                 <p className="text-sm text-slate-600 leading-relaxed">
