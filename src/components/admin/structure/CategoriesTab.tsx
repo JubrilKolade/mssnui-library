@@ -140,7 +140,7 @@ export function CategoriesTab({
         </p>
         <Button
           size="sm"
-          className="bg-green-600 hover:bg-green-700"
+          className="bg-emerald-700 hover:bg-emerald-800"
           onClick={() => setIsAddOpen(true)}
         >
           <Plus className="w-4 h-4 mr-2" />
@@ -153,9 +153,9 @@ export function CategoriesTab({
         {categories.map((category) => (
           <div
             key={category.id}
-            className="flex items-center gap-3 bg-white border border-slate-200 rounded-lg px-4 py-3 group"
+            className="flex items-center gap-3 bg-white border border-amber-100 rounded-lg px-4 py-3 group"
           >
-            <Tag className="w-4 h-4 text-slate-400 flex-shrink-0" />
+            <Tag className="w-4 h-4 text-slate-400 shrink-0" />
             <span className="text-sm text-slate-700 flex-1 truncate">
               {category.name}
             </span>
@@ -163,7 +163,7 @@ export function CategoriesTab({
               <Button
                 variant="ghost"
                 size="icon"
-                className="w-7 h-7 text-slate-400 hover:text-blue-600"
+                className="w-7 h-7 text-slate-400 hover:text-emerald-700"
                 onClick={() => {
                   setEditCategory(category);
                   setEditName(category.name);
@@ -208,7 +208,7 @@ export function CategoriesTab({
                 Cancel
               </Button>
               <Button
-                className="flex-1 bg-green-600 hover:bg-green-700"
+                className="flex-1 bg-emerald-700 hover:bg-emerald-800"
                 onClick={handleAdd}
                 disabled={isLoading || !newName.trim()}
               >
@@ -249,7 +249,7 @@ export function CategoriesTab({
                 Cancel
               </Button>
               <Button
-                className="flex-1 bg-green-600 hover:bg-green-700"
+                className="flex-1 bg-emerald-700 hover:bg-emerald-800"
                 onClick={handleEdit}
                 disabled={isLoading || !editName.trim()}
               >

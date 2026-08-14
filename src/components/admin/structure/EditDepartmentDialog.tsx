@@ -161,7 +161,7 @@ export function EditDepartmentDialog({
               </Button>
               <Button
                 type="submit"
-                className="flex-1 bg-green-600 hover:bg-green-700"
+                className="flex-1 bg-emerald-700 hover:bg-emerald-800"
                 disabled={isLoading}
               >
                 {isLoading ? (

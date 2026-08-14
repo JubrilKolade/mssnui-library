@@ -45,11 +45,11 @@ export function AcademicUnitsTab({
   const schools = units.filter((u) => u.type === "school");
 
   const groups = [
-    { label: "Colleges", units: colleges, color: "bg-blue-50 border-blue-200" },
-    { label: "Faculties", units: faculties, color: "bg-purple-50 border-purple-200" },
-    { label: "Institutes", units: institutes, color: "bg-orange-50 border-orange-200" },
-    { label: "Centres", units: centres, color: "bg-green-50 border-green-200" },
-    { label: "Schools", units: schools, color: "bg-pink-50 border-pink-200" },
+    { label: "Colleges", units: colleges, color: "bg-teal-50 border-teal-200" },
+    { label: "Faculties", units: faculties, color: "bg-amber-50 border-amber-200" },
+    { label: "Institutes", units: institutes, color: "bg-emerald-50 border-emerald-200" },
+    { label: "Centres", units: centres, color: "bg-emerald-50 border-emerald-200" },
+    { label: "Schools", units: schools, color: "bg-yellow-50 border-yellow-200" },
   ].filter((g) => g.units.length > 0);
 
   return (
@@ -73,7 +73,7 @@ export function AcademicUnitsTab({
           </Button>
           <Button
             size="sm"
-            className="bg-green-600 hover:bg-green-700"
+            className="bg-emerald-700 hover:bg-emerald-800"
             onClick={() => setIsAddOpen(true)}
           >
             <Plus className="w-4 h-4 mr-2" />

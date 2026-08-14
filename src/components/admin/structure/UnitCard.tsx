@@ -27,11 +27,11 @@ interface UnitCardProps {
 }
 
 const unitTypeColors: Record<string, string> = {
-  college: "bg-blue-100 text-blue-700",
-  faculty: "bg-purple-100 text-purple-700",
-  institute: "bg-orange-100 text-orange-700",
-  centre: "bg-green-100 text-green-700",
-  school: "bg-pink-100 text-pink-700",
+  college: "bg-emerald-100 text-emerald-800",
+  faculty: "bg-teal-100 text-teal-800",
+  institute: "bg-amber-100 text-amber-800",
+  centre: "bg-emerald-100 text-emerald-800",
+  school: "bg-yellow-100 text-yellow-800",
 };
 
 export function UnitCard({ unit, onRefresh, depth = 0 }: UnitCardProps) {
@@ -62,8 +62,8 @@ export function UnitCard({ unit, onRefresh, depth = 0 }: UnitCardProps) {
       className={cn(
         "border rounded-xl overflow-hidden",
         depth === 0
-          ? "border-slate-200 bg-white"
-          : "border-slate-100 bg-slate-50"
+          ? "border-amber-100 bg-white"
+          : "border-amber-100 bg-amber-50/40"
       )}
     >
       {/* Unit Header */}
@@ -72,7 +72,7 @@ export function UnitCard({ unit, onRefresh, depth = 0 }: UnitCardProps) {
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className={cn(
-            "w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0",
+            "w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors shrink-0",
             !hasContent && "invisible"
           )}
         >
@@ -84,7 +84,7 @@ export function UnitCard({ unit, onRefresh, depth = 0 }: UnitCardProps) {
         </button>
 
         {/* Icon */}
-        <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0">
+        <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
           <Building2 className="w-4 h-4 text-slate-500" />
         </div>
 
@@ -120,11 +120,11 @@ export function UnitCard({ unit, onRefresh, depth = 0 }: UnitCardProps) {
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-1 flex-shrink-0">
+        <div className="flex items-center gap-1 shrink-0">
           <Button
             variant="ghost"
             size="icon"
-            className="w-8 h-8 text-slate-400 hover:text-green-600"
+            className="w-8 h-8 text-slate-400 hover:text-emerald-700"
             onClick={() => setIsAddChildOpen(true)}
             title="Add sub-unit"
           >
@@ -133,7 +133,7 @@ export function UnitCard({ unit, onRefresh, depth = 0 }: UnitCardProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="w-8 h-8 text-slate-400 hover:text-blue-600"
+            className="w-8 h-8 text-slate-400 hover:text-emerald-700"
             onClick={() => setIsEditOpen(true)}
             title="Edit unit"
           >
@@ -178,7 +178,7 @@ export function UnitCard({ unit, onRefresh, depth = 0 }: UnitCardProps) {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-7 text-xs text-green-600 hover:text-green-700"
+                  className="h-7 text-xs text-emerald-700 hover:text-emerald-800"
                   onClick={() => setIsAddDeptOpen(true)}
                 >
                   <Plus className="w-3 h-3 mr-1" />
