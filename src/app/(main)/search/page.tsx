@@ -101,8 +101,8 @@ export default async function SearchPage({
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Search className="w-6 h-6" />
+        <h1 className="font-serif text-2xl font-bold text-emerald-950 flex items-center gap-2">
+          <Search className="w-6 h-6 text-emerald-700" />
           Search Results
         </h1>
         {query ? (

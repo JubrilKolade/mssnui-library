@@ -75,8 +75,8 @@ export default async function BookmarksPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Bookmark className="w-6 h-6 text-yellow-500" />
+        <h1 className="font-serif text-2xl font-bold text-emerald-950 flex items-center gap-2">
+          <Bookmark className="w-6 h-6 text-amber-500" />
           My Bookmarks
         </h1>
         <p className="text-slate-500 text-sm mt-1">
