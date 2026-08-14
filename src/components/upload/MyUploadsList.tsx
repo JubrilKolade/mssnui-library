@@ -26,7 +26,7 @@ const statusConfig = {
   approved: {
     label: "Approved",
     icon: CheckCircle,
-    color: "bg-green-100 text-green-700",
+    color: "bg-emerald-100 text-emerald-700",
   },
   rejected: {
     label: "Rejected",
@@ -42,9 +42,9 @@ const typeIcons = {
 };
 
 const typeColors = {
-  book: "bg-blue-50 text-blue-600",
-  course: "bg-purple-50 text-purple-600",
-  project: "bg-orange-50 text-orange-600",
+  book: "bg-emerald-50 text-emerald-700",
+  course: "bg-teal-50 text-teal-700",
+  project: "bg-amber-50 text-amber-700",
 };
 
 function getItemTitle(item: any, type: string) {
@@ -73,7 +73,7 @@ export function MyUploadsList({ items, type }: MyUploadsListProps) {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+    <div className="bg-white rounded-2xl border border-amber-100 divide-y divide-amber-50">
       {items.map((item) => {
         const status = statusConfig[item.status as keyof typeof statusConfig];
         const StatusIcon = status.icon;

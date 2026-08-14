@@ -121,9 +121,9 @@ export function ProjectUploadForm({ departments }: ProjectUploadFormProps) {
 
   return (
     <div className="space-y-6">
-      <Alert className="border-blue-200 bg-blue-50">
-        <Info className="w-4 h-4 text-blue-600" />
-        <AlertDescription className="text-blue-700 text-sm">
+      <Alert className="border-amber-200 bg-amber-50">
+        <Info className="w-4 h-4 text-amber-600" />
+        <AlertDescription className="text-amber-800 text-sm">
           All uploads are reviewed by admins before becoming visible.
         </AlertDescription>
       </Alert>
@@ -307,7 +307,7 @@ export function ProjectUploadForm({ departments }: ProjectUploadFormProps) {
           {/* Submit */}
           <Button
             type="submit"
-            className="w-full bg-green-600 hover:bg-green-700"
+            className="w-full bg-emerald-700 hover:bg-emerald-800"
             disabled={isSubmitting || progress.status === "uploading"}
           >
             {isSubmitting ? (
