@@ -102,40 +102,40 @@ export default async function DashboardPage() {
           label="Total Books"
           value={stats.totalBooks}
           icon={BookOpen}
-          iconColor="text-blue-600"
-          iconBg="bg-blue-50"
+          iconColor="text-emerald-700"
+          iconBg="bg-emerald-50"
           href="/books"
         />
         <StatCard
           label="Course Materials"
           value={stats.totalCourses}
           icon={GraduationCap}
-          iconColor="text-purple-600"
-          iconBg="bg-purple-50"
+          iconColor="text-teal-700"
+          iconBg="bg-teal-50"
           href="/courses"
         />
         <StatCard
           label="Past Questions"
           value={stats.totalPastQuestions}
           icon={FileQuestion}
-          iconColor="text-red-600"
-          iconBg="bg-red-50"
+          iconColor="text-amber-700"
+          iconBg="bg-amber-50"
           href="/courses?type=past_question"
         />
         <StatCard
           label="Projects"
           value={stats.totalProjects}
           icon={ScrollText}
-          iconColor="text-orange-600"
-          iconBg="bg-orange-50"
+          iconColor="text-amber-700"
+          iconBg="bg-amber-50"
           href="/projects"
         />
         <StatCard
           label="My Downloads"
           value={stats.totalDownloads}
           icon={Download}
-          iconColor="text-green-600"
-          iconBg="bg-green-50"
+          iconColor="text-emerald-700"
+          iconBg="bg-emerald-50"
           href="/profile"
         />
       </div>

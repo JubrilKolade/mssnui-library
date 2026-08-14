@@ -42,7 +42,7 @@ export function RecentUploads({
 
         {/* Books Tab */}
         <TabsContent value="books">
-          <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+          <div className="bg-white rounded-2xl border border-amber-100 divide-y divide-amber-50">
             {books.length === 0 ? (
               <div className="p-8 text-center text-slate-400">
                 <BookOpen className="w-8 h-8 mx-auto mb-2 opacity-50" />
@@ -53,10 +53,10 @@ export function RecentUploads({
                 <Link
                   key={book.id}
                   href={`/books/${book.id}`}
-                  className="flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors"
+                  className="flex items-center gap-4 p-4 hover:bg-amber-50/50 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
-                    <BookOpen className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
+                    <BookOpen className="w-5 h-5 text-emerald-700" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-slate-900 truncate">
@@ -77,7 +77,7 @@ export function RecentUploads({
             <div className="p-3">
               <Link
                 href="/books"
-                className="flex items-center justify-center gap-1 text-sm text-green-600 hover:text-green-700 font-medium"
+                className="flex items-center justify-center gap-1 text-sm text-emerald-700 hover:text-emerald-800 font-medium"
               >
                 View all books
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -88,7 +88,7 @@ export function RecentUploads({
 
         {/* Courses Tab */}
         <TabsContent value="courses">
-          <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+          <div className="bg-white rounded-2xl border border-amber-100 divide-y divide-amber-50">
             {courses.length === 0 ? (
               <div className="p-8 text-center text-slate-400">
                 <GraduationCap className="w-8 h-8 mx-auto mb-2 opacity-50" />
@@ -99,10 +99,10 @@ export function RecentUploads({
                 <Link
                   key={course.id}
                   href={`/courses/${course.id}`}
-                  className="flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors"
+                  className="flex items-center gap-4 p-4 hover:bg-amber-50/50 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center flex-shrink-0">
-                    <GraduationCap className="w-5 h-5 text-purple-600" />
+                  <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center shrink-0">
+                    <GraduationCap className="w-5 h-5 text-teal-700" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-slate-900 truncate">
@@ -121,7 +121,7 @@ export function RecentUploads({
             <div className="p-3">
               <Link
                 href="/courses"
-                className="flex items-center justify-center gap-1 text-sm text-green-600 hover:text-green-700 font-medium"
+                className="flex items-center justify-center gap-1 text-sm text-emerald-700 hover:text-emerald-800 font-medium"
               >
                 View all courses
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -132,7 +132,7 @@ export function RecentUploads({
 
         {/* Projects Tab */}
         <TabsContent value="projects">
-          <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+          <div className="bg-white rounded-2xl border border-amber-100 divide-y divide-amber-50">
             {projects.length === 0 ? (
               <div className="p-8 text-center text-slate-400">
                 <ScrollText className="w-8 h-8 mx-auto mb-2 opacity-50" />
@@ -143,10 +143,10 @@ export function RecentUploads({
                 <Link
                   key={project.id}
                   href={`/projects/${project.id}`}
-                  className="flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors"
+                  className="flex items-center gap-4 p-4 hover:bg-amber-50/50 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">
-                    <ScrollText className="w-5 h-5 text-orange-600" />
+                  <div className="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
+                    <ScrollText className="w-5 h-5 text-amber-700" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-slate-900 truncate">
@@ -165,7 +165,7 @@ export function RecentUploads({
             <div className="p-3">
               <Link
                 href="/projects"
-                className="flex items-center justify-center gap-1 text-sm text-green-600 hover:text-green-700 font-medium"
+                className="flex items-center justify-center gap-1 text-sm text-emerald-700 hover:text-emerald-800 font-medium"
               >
                 View all projects
                 <ArrowRight className="w-3.5 h-3.5" />

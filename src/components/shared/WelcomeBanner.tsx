@@ -1,4 +1,5 @@
 import type { Role } from "@/types";
+import { GeometricPattern } from "@/src/components/shared/GeometricPattern";
 
 interface WelcomeBannerProps {
   name: string;
@@ -23,13 +24,22 @@ export function WelcomeBanner({ name, role }: WelcomeBannerProps) {
   const firstName = name.split(" ")[0];
 
   return (
-    <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-xl p-6 text-white">
-      <h1 className="text-xl md:text-2xl font-bold">
-        {getGreeting()}, {firstName} 👋
-      </h1>
-      <p className="text-green-100 text-sm mt-1">
-        {roleMessages[role]}
-      </p>
+    <div className="relative overflow-hidden bg-linear-to-br from-emerald-800 to-emerald-950 rounded-2xl p-6 md:p-8 text-amber-50">
+      <GeometricPattern
+        className="absolute inset-0 text-amber-50/6"
+        id="welcome-girih"
+      />
+      <div className="relative">
+        <p className="text-xs font-semibold uppercase tracking-widest text-amber-300">
+          As-salamu alaykum
+        </p>
+        <h1 className="font-serif text-2xl md:text-3xl font-bold mt-2">
+          {getGreeting()}, {firstName}
+        </h1>
+        <p className="text-amber-100/90 text-sm mt-2">
+          {roleMessages[role]}
+        </p>
+      </div>
     </div>
   );
 }

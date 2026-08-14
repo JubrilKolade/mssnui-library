@@ -20,11 +20,11 @@ export function StatCard({
   href,
 }: StatCardProps) {
   const content = (
-    <div className="bg-white rounded-xl border border-slate-200 p-4 md:p-5 hover:shadow-sm transition-shadow">
+    <div className="bg-white rounded-2xl border border-amber-100 p-4 md:p-5 hover:shadow-sm transition-shadow">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm text-slate-500">{label}</p>
-          <p className="text-2xl font-bold text-slate-900 mt-1">
+          <p className="font-serif text-2xl font-bold text-emerald-950 mt-1">
             {value.toLocaleString()}
           </p>
         </div>
