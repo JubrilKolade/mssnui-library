@@ -120,7 +120,7 @@ export function LoginForm() {
       {/* Divider */}
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-slate-200" />
+          <span className="w-full border-t border-amber-100" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-white px-2 text-slate-400">
@@ -168,7 +168,7 @@ export function LoginForm() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-700"
                     >
                       {showPassword ? (
                         <EyeOff className="h-4 w-4" />
@@ -185,7 +185,7 @@ export function LoginForm() {
 
           <Button
             type="submit"
-            className="w-full bg-green-600 hover:bg-green-700"
+            className="w-full bg-emerald-700 hover:bg-emerald-800"
             disabled={isLoading || isGoogleLoading}
           >
             {isLoading ? (
