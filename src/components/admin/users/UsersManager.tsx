@@ -36,9 +36,9 @@ interface UsersManagerProps {
 
 const roleColors: Record<Role, string> = {
   member: "bg-slate-100 text-slate-700",
-  contributor: "bg-blue-100 text-blue-700",
-  admin: "bg-purple-100 text-purple-700",
-  super_admin: "bg-green-100 text-green-700",
+  contributor: "bg-amber-100 text-amber-800",
+  admin: "bg-emerald-100 text-emerald-800",
+  super_admin: "bg-emerald-700 text-amber-50",
 };
 
 const roleLabels: Record<Role, string> = {
@@ -155,7 +155,7 @@ export function UsersManager({ users: initialUsers }: UsersManagerProps) {
       </div>
 
       {/* Users Table */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-amber-100 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -189,7 +189,7 @@ export function UsersManager({ users: initialUsers }: UsersManagerProps) {
                     <div className="flex items-center gap-3">
                       <Avatar className="w-8 h-8">
                         <AvatarImage src={user.avatar ?? undefined} />
-                          <AvatarFallback className="text-xs bg-green-100 text-green-700">
+                          <AvatarFallback className="text-xs bg-emerald-100 text-emerald-700">
                             {getInitials(user.name ?? "")}
                           </AvatarFallback>
                       </Avatar>
@@ -237,7 +237,7 @@ export function UsersManager({ users: initialUsers }: UsersManagerProps) {
                     <Badge
                       className={
                         user.isActive
-                          ? "bg-green-100 text-green-700"
+                          ? "bg-emerald-100 text-emerald-700"
                           : "bg-red-100 text-red-700"
                       }
                     >
@@ -296,7 +296,7 @@ export function UsersManager({ users: initialUsers }: UsersManagerProps) {
                           className={
                             user.isActive
                               ? "text-red-600"
-                              : "text-green-600"
+                              : "text-emerald-700"
                           }
                         >
                           {user.isActive ? (
