@@ -77,7 +77,7 @@ export default async function ApprovalsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">
+          <h1 className="font-serif text-2xl font-bold text-emerald-950">
             Approval Queue
           </h1>
           <p className="text-slate-500 text-sm mt-1">

@@ -50,7 +50,7 @@ export default async function StructurePage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">
+        <h1 className="font-serif text-2xl font-bold text-emerald-950">
           Structure Management
         </h1>
         <p className="text-slate-500 text-sm mt-1">
