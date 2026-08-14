@@ -31,7 +31,7 @@ interface ContentManagerProps {
 
 const statusColors = {
   pending: "bg-yellow-100 text-yellow-700",
-  approved: "bg-green-100 text-green-700",
+  approved: "bg-emerald-100 text-emerald-700",
   rejected: "bg-red-100 text-red-700",
 };
 
@@ -233,7 +233,7 @@ function ContentTable({ items, type, onDelete }: ContentTableProps) {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    <div className="bg-white rounded-2xl border border-amber-100 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
