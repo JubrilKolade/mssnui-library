@@ -60,19 +60,19 @@ export function Sidebar({ role }: SidebarProps) {
 
       <aside
         className={cn(
-          "fixed top-0 left-0 z-50 h-full w-64 bg-white border-r border-slate-200",
+          "fixed top-0 left-0 z-50 h-full w-64 bg-[#fbfaf6] border-r border-amber-100",
           "transform transition-transform duration-200 ease-in-out",
           "lg:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="flex items-center justify-between h-16 px-6 border-b border-slate-200">
+        <div className="flex items-center justify-between h-16 px-6 border-b border-amber-100">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-green-600 flex items-center justify-center">
-              <BookMarked className="w-4 h-4 text-white" />
+            <div className="w-8 h-8 rounded-lg bg-emerald-700 flex items-center justify-center">
+              <BookMarked className="w-4 h-4 text-amber-50" />
             </div>
             <div>
-              <p className="text-sm font-bold text-slate-900 leading-none">
+              <p className="font-serif text-sm font-bold text-emerald-950 leading-none">
                 MSSN UI
               </p>
               <p className="text-xs text-slate-500 leading-none mt-0.5">
@@ -114,15 +114,15 @@ export function Sidebar({ role }: SidebarProps) {
                         className={cn(
                           "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
                           isActive
-                            ? "bg-green-50 text-green-700"
-                            : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                            ? "bg-emerald-50 text-emerald-800"
+                            : "text-slate-600 hover:bg-emerald-50/60 hover:text-emerald-900"
                         )}
                       >
                         <item.icon
                           className={cn(
-                            "w-4 h-4 flex-shrink-0",
+                            "w-4 h-4 shrink-0",
                             isActive
-                              ? "text-green-600"
+                              ? "text-emerald-700"
                               : "text-slate-400"
                           )}
                         />

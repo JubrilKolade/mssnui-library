@@ -75,7 +75,7 @@ export function PDFViewer({ url, title, onClose }: PDFViewerProps) {
   return (
     <div className="fixed inset-0 z-50 bg-black/80 flex flex-col">
       {/* Toolbar */}
-      <div className="bg-slate-900 text-white px-4 py-2 flex items-center gap-3 flex-shrink-0">
+      <div className="bg-slate-900 text-white px-4 py-2 flex items-center gap-3 shrink-0">
         {/* Title */}
         <p className="text-sm font-medium truncate flex-1">{title}</p>
 
@@ -183,7 +183,7 @@ export function PDFViewer({ url, title, onClose }: PDFViewerProps) {
             scale={scale}
             rotate={rotation}
             loading={
-              <div className="w-[600px] h-[800px] bg-white animate-pulse" />
+              <div className="w-150 h-200 bg-white animate-pulse" />
             }
           />
         </Document>

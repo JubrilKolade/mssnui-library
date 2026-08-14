@@ -13,7 +13,7 @@ export default async function MainLayout({
   if (!session) redirect("/login");
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#fbfaf6]">
       {/* Sidebar */}
       <Sidebar role={session.user.role} />
 

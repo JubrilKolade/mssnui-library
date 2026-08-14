@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Bell } from "lucide-react";
+import { Bell, CheckCheck, CheckCircle2, XCircle, Upload } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import {
   Popover,
@@ -27,9 +27,9 @@ interface NotificationBellProps {
 }
 
 const notificationIcons = {
-  approval: "✅",
-  rejection: "❌",
-  new_upload: "📤",
+  approval: <CheckCircle2 className="w-4 h-4 text-emerald-600" />,
+  rejection: <XCircle className="w-4 h-4 text-red-500" />,
+  new_upload: <Upload className="w-4 h-4 text-amber-500" />,
 };
 
 export function NotificationBell({ userId }: NotificationBellProps) {
@@ -90,7 +90,7 @@ export function NotificationBell({ userId }: NotificationBellProps) {
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="w-5 h-5" />
           {unreadCount > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
+            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-amber-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
               {unreadCount > 9 ? "9+" : unreadCount}
             </span>
           )}
@@ -99,15 +99,16 @@ export function NotificationBell({ userId }: NotificationBellProps) {
 
       <PopoverContent className="w-80 p-0" align="end">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100">
-          <h3 className="font-semibold text-slate-900">Notifications</h3>
+        <div className="flex items-center justify-between px-4 py-3 border-b border-amber-100">
+          <h3 className="font-serif font-bold text-emerald-950">Notifications</h3>
           {unreadCount > 0 && (
             <Button
               variant="ghost"
               size="sm"
-              className="text-xs text-green-600 h-auto py-0.5"
+              className="text-xs text-emerald-700 h-auto py-0.5"
               onClick={markAllAsRead}
             >
+              <CheckCheck className="w-3.5 h-3.5 mr-1" />
               Mark all read
             </Button>
           )}
@@ -119,7 +120,7 @@ export function NotificationBell({ userId }: NotificationBellProps) {
             <div className="p-4 space-y-3">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="flex gap-3">
-                  <Skeleton className="w-8 h-8 rounded-full flex-shrink-0" />
+                  <Skeleton className="w-8 h-8 rounded-full shrink-0" />
                   <div className="flex-1 space-y-1">
                     <Skeleton className="h-3 w-full" />
                     <Skeleton className="h-3 w-2/3" />
@@ -133,17 +134,17 @@ export function NotificationBell({ userId }: NotificationBellProps) {
               <p className="text-sm">No notifications yet</p>
             </div>
           ) : (
-            <div className="divide-y divide-slate-50">
+            <div className="divide-y divide-amber-50">
               {notifications.map((notification) => (
                 <button
                   key={notification.id}
                   className={cn(
-                    "w-full flex items-start gap-3 px-4 py-3 text-left hover:bg-slate-50 transition-colors",
-                    !notification.isRead && "bg-green-50/50"
+                    "w-full flex items-start gap-3 px-4 py-3 text-left hover:bg-amber-50/60 transition-colors",
+                    !notification.isRead && "bg-emerald-50/50"
                   )}
                   onClick={() => markAsRead(notification.id)}
                 >
-                  <span className="text-lg flex-shrink-0">
+                  <span className="shrink-0 mt-0.5">
                     {notificationIcons[notification.type]}
                   </span>
                   <div className="flex-1 min-w-0">
@@ -155,7 +156,7 @@ export function NotificationBell({ userId }: NotificationBellProps) {
                     </p>
                   </div>
                   {!notification.isRead && (
-                    <span className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0 mt-1.5" />
+                    <span className="w-2 h-2 rounded-full bg-emerald-600 shrink-0 mt-1.5" />
                   )}
                 </button>
               ))}

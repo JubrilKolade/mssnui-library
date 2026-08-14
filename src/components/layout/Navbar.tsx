@@ -35,7 +35,7 @@ export function Navbar({ user }: NavbarProps) {
   }
 
   return (
-    <header className="sticky top-0 z-30 h-16 bg-white border-b border-slate-200 px-4 md:px-6">
+    <header className="sticky top-0 z-30 h-16 bg-[#fbfaf6]/90 backdrop-blur-md border-b border-amber-100 px-4 md:px-6">
       <div className="flex items-center justify-between h-full gap-4">
         {/* Left — Menu + Search */}
         <div className="flex items-center gap-4 flex-1">
@@ -59,7 +59,7 @@ export function Navbar({ user }: NavbarProps) {
               <Input
                 type="search"
                 placeholder="Search books, courses, projects..."
-                className="pl-9 bg-slate-50 border-slate-200 focus:bg-white"
+                className="pl-9 bg-white border-amber-100 focus-visible:ring-emerald-600"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />

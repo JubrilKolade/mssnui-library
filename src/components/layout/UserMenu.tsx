@@ -44,9 +44,9 @@ const roleLabels: Record<Role, string> = {
 
 const roleBadgeColors: Record<Role, string> = {
   member: "bg-slate-100 text-slate-700",
-  contributor: "bg-blue-100 text-blue-700",
-  admin: "bg-purple-100 text-purple-700",
-  super_admin: "bg-green-100 text-green-700",
+  contributor: "bg-amber-100 text-amber-800",
+  admin: "bg-emerald-100 text-emerald-800",
+  super_admin: "bg-emerald-700 text-amber-50",
 };
 
 export function UserMenu({ user }: UserMenuProps) {
@@ -56,7 +56,7 @@ export function UserMenu({ user }: UserMenuProps) {
         <button className="flex items-center gap-2 rounded-lg p-1.5 hover:bg-slate-100 transition-colors outline-none">
           <Avatar className="w-8 h-8">
             <AvatarImage src={user.image} alt={user.name} />
-            <AvatarFallback className="bg-green-600 text-white text-xs font-semibold">
+            <AvatarFallback className="bg-emerald-700 text-amber-50 text-xs font-semibold">
               {getInitials(user.name)}
             </AvatarFallback>
           </Avatar>
