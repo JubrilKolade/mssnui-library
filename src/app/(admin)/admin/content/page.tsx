@@ -46,10 +46,10 @@ export default async function ContentPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-serif text-2xl font-bold text-emerald-950">
+        <h1 className="font-serif text-2xl font-bold text-foreground">
           Content Management
         </h1>
-        <p className="text-slate-500 text-sm mt-1">
+        <p className="text-muted-foreground text-sm mt-1">
           View, manage and delete all library content
         </p>
       </div>

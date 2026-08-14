@@ -98,7 +98,7 @@ export function AddDepartmentDialog({
           <DialogTitle>Add Department</DialogTitle>
           <DialogDescription>
             Adding to{" "}
-            <span className="font-semibold text-slate-900">
+            <span className="font-semibold text-foreground">
               {academicUnitName}
             </span>
           </DialogDescription>
@@ -184,7 +184,7 @@ export function AddDepartmentDialog({
               </Button>
               <Button
                 type="submit"
-                className="flex-1 bg-emerald-700 hover:bg-emerald-800"
+                className="flex-1"
                 disabled={isLoading}
               >
                 {isLoading ? (

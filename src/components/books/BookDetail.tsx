@@ -113,7 +113,7 @@ export function BookDetail({
       {/* Back */}
       <Link
         href="/books"
-        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-emerald-700"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary"
       >
         <ChevronLeft className="w-4 h-4" />
         Back to Books
@@ -123,8 +123,8 @@ export function BookDetail({
         {/* Left — Book Info */}
         <div className="lg:col-span-1 space-y-4">
           {/* Cover */}
-          <div className="bg-white rounded-2xl border border-amber-100 overflow-hidden">
-            <div className="relative h-64 bg-linear-to-br from-emerald-50 to-amber-50 flex items-center justify-center">
+          <div className="bg-card rounded-2xl border border-border overflow-hidden">
+            <div className="relative h-64 bg-linear-to-br from-primary/10 to-accent flex items-center justify-center">
               {book.coverImageUrl ? (
                 <Image
                   src={book.coverImageUrl}
@@ -133,14 +133,14 @@ export function BookDetail({
                   className="object-cover"
                 />
               ) : (
-                <BookOpen className="w-16 h-16 text-emerald-300" />
+                <BookOpen className="w-16 h-16 text-primary/40" />
               )}
             </div>
 
             <div className="p-4 space-y-3">
               {/* Actions */}
               <Button
-                className="w-full bg-emerald-700 hover:bg-emerald-800"
+                className="w-full"
                 onClick={() => setShowPDF(true)}
               >
                 <Eye className="w-4 h-4 mr-2" />
@@ -161,7 +161,7 @@ export function BookDetail({
                   onClick={handleBookmark}
                   disabled={isBookmarking}
                   className={
-                    isBookmarked ? "text-amber-600 border-amber-300" : ""
+                    isBookmarked ? "text-accent-foreground border-accent-foreground/40" : ""
                   }
                 >
                   {isBookmarked ? (
@@ -176,13 +176,13 @@ export function BookDetail({
           </div>
 
           {/* Stats */}
-          <div className="bg-white rounded-2xl border border-amber-100 p-4">
-            <h3 className="font-serif font-bold text-emerald-950 text-sm mb-3">
+          <div className="bg-card rounded-2xl border border-border p-4">
+            <h3 className="font-serif font-bold text-foreground text-sm mb-3">
               Statistics
             </h3>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 flex items-center gap-1">
+                <span className="text-muted-foreground flex items-center gap-1">
                   <Download className="w-3.5 h-3.5" />
                   Downloads
                 </span>
@@ -191,7 +191,7 @@ export function BookDetail({
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 flex items-center gap-1">
+                <span className="text-muted-foreground flex items-center gap-1">
                   <Bookmark className="w-3.5 h-3.5" />
                   Bookmarks
                 </span>
@@ -200,7 +200,7 @@ export function BookDetail({
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 flex items-center gap-1">
+                <span className="text-muted-foreground flex items-center gap-1">
                   <Eye className="w-3.5 h-3.5" />
                   Views
                 </span>
@@ -215,24 +215,24 @@ export function BookDetail({
         {/* Right — Details */}
         <div className="lg:col-span-2 space-y-4">
           {/* Title & Author */}
-          <div className="bg-white rounded-2xl border border-amber-100 p-6">
+          <div className="bg-card rounded-2xl border border-border p-6">
             <div className="flex items-start gap-3 mb-4">
               {book.category && (
-                <Badge className="bg-emerald-50 text-emerald-700 hover:bg-emerald-50">
+                <Badge className="bg-primary/10 text-primary hover:bg-primary/10">
                   {book.category.name}
                 </Badge>
               )}
             </div>
 
-            <h1 className="font-serif text-2xl font-bold text-emerald-950">
+            <h1 className="font-serif text-2xl font-bold text-foreground">
               {book.title}
             </h1>
-            <p className="text-slate-600 mt-1">by {book.author}</p>
+            <p className="text-muted-foreground mt-1">by {book.author}</p>
 
             {book.description && (
               <>
                 <Separator className="my-4" />
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   {book.description}
                 </p>
               </>
@@ -240,19 +240,19 @@ export function BookDetail({
           </div>
 
           {/* Details */}
-          <div className="bg-white rounded-2xl border border-amber-100 p-6">
-            <h3 className="font-serif font-bold text-emerald-950 mb-4">
+          <div className="bg-card rounded-2xl border border-border p-6">
+            <h3 className="font-serif font-bold text-foreground mb-4">
               Book Details
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {book.publishedYear && (
                 <div className="flex items-start gap-3">
-                  <Calendar className="w-4 h-4 text-slate-400 mt-0.5" />
+                  <Calendar className="w-4 h-4 text-muted-foreground mt-0.5" />
                   <div>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-muted-foreground">
                       Published Year
                     </p>
-                    <p className="text-sm font-medium text-slate-900">
+                    <p className="text-sm font-medium text-foreground">
                       {book.publishedYear}
                     </p>
                   </div>
@@ -260,10 +260,10 @@ export function BookDetail({
               )}
 
               <div className="flex items-start gap-3">
-                <Globe className="w-4 h-4 text-slate-400 mt-0.5" />
+                <Globe className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Language</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">Language</p>
+                  <p className="text-sm font-medium text-foreground">
                     {book.language}
                   </p>
                 </div>
@@ -271,10 +271,10 @@ export function BookDetail({
 
               {book.pages && (
                 <div className="flex items-start gap-3">
-                  <Hash className="w-4 h-4 text-slate-400 mt-0.5" />
+                  <Hash className="w-4 h-4 text-muted-foreground mt-0.5" />
                   <div>
-                    <p className="text-xs text-slate-400">Pages</p>
-                    <p className="text-sm font-medium text-slate-900">
+                    <p className="text-xs text-muted-foreground">Pages</p>
+                    <p className="text-sm font-medium text-foreground">
                       {book.pages}
                     </p>
                   </div>
@@ -282,10 +282,10 @@ export function BookDetail({
               )}
 
               <div className="flex items-start gap-3">
-                <Hash className="w-4 h-4 text-slate-400 mt-0.5" />
+                <Hash className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">File Size</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">File Size</p>
+                  <p className="text-sm font-medium text-foreground">
                     {formatFileSize(book.fileSize)}
                   </p>
                 </div>
@@ -293,13 +293,13 @@ export function BookDetail({
 
               {book.department && (
                 <div className="flex items-start gap-3">
-                  <Building2 className="w-4 h-4 text-slate-400 mt-0.5" />
+                  <Building2 className="w-4 h-4 text-muted-foreground mt-0.5" />
                   <div>
-                    <p className="text-xs text-slate-400">Department</p>
-                    <p className="text-sm font-medium text-slate-900">
+                    <p className="text-xs text-muted-foreground">Department</p>
+                    <p className="text-sm font-medium text-foreground">
                       {book.department.name}
                     </p>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-muted-foreground">
                       {book.department.academicUnit.name}
                     </p>
                   </div>
@@ -307,13 +307,13 @@ export function BookDetail({
               )}
 
               <div className="flex items-start gap-3">
-                <User className="w-4 h-4 text-slate-400 mt-0.5" />
+                <User className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Uploaded by</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">Uploaded by</p>
+                  <p className="text-sm font-medium text-foreground">
                     {book.uploadedBy.name}
                   </p>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-muted-foreground">
                     {formatDate(book.createdAt)}
                   </p>
                 </div>

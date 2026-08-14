@@ -26,25 +26,25 @@ const typeHeaders: Record<
   note: {
     title: "Lecture Notes",
     icon: FileText,
-    color: "text-emerald-700",
+    color: "text-emerald-600 dark:text-emerald-400",
     description: "Course lecture notes and slides",
   },
   past_question: {
     title: "Past Questions",
     icon: FileQuestion,
-    color: "text-amber-700",
+    color: "text-amber-600 dark:text-amber-400",
     description: "Previous exam questions to help you prepare",
   },
   handout: {
     title: "Handouts",
     icon: GraduationCap,
-    color: "text-teal-700",
+    color: "text-teal-600 dark:text-teal-400",
     description: "Course handouts and materials",
   },
   assignment: {
     title: "Assignments",
     icon: ClipboardList,
-    color: "text-amber-700",
+    color: "text-amber-600 dark:text-amber-400",
     description: "Course assignments and tasks",
   },
 };
@@ -122,15 +122,15 @@ export default async function CoursesPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-serif text-2xl font-bold text-emerald-950 flex items-center gap-2">
+          <h1 className="font-serif text-2xl font-bold text-foreground flex items-center gap-2">
             <HeaderIcon
               className={`w-6 h-6 ${
-                typeConfig?.color || "text-emerald-700"
+                typeConfig?.color || "text-emerald-600 dark:text-emerald-400"
               }`}
             />
             {typeConfig?.title || "Course Materials"}
           </h1>
-          <p className="text-slate-500 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             {typeConfig?.description ||
               `${data.total.toLocaleString()} materials available`}
           </p>
@@ -201,8 +201,8 @@ function TypeChip({
       href={href}
       className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
         active
-          ? "bg-emerald-700 text-amber-50"
-          : "bg-white border border-amber-100 text-slate-600 hover:border-emerald-300 hover:text-emerald-700"
+          ? "bg-primary text-primary-foreground"
+          : "bg-card border border-border text-muted-foreground hover:border-primary/50 hover:text-primary"
       }`}
     >
       {label}

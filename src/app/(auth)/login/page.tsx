@@ -9,25 +9,25 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-8">
+    <div className="bg-card rounded-2xl shadow-sm border border-border p-8">
       <div className="mb-6">
-        <h2 className="font-serif text-xl font-bold text-emerald-950">
+        <h2 className="font-serif text-xl font-bold text-foreground">
           Welcome back
         </h2>
-        <p className="text-slate-500 text-sm mt-1">
+        <p className="text-muted-foreground text-sm mt-1">
           Sign in to access the library
         </p>
       </div>
 
-      <Suspense fallback={<div className="h-64 animate-pulse rounded-lg bg-amber-50" />}>
+      <Suspense fallback={<div className="h-64 animate-pulse rounded-lg bg-muted" />}>
         <LoginForm />
       </Suspense>
 
-      <p className="text-center text-sm text-slate-500 mt-6">
+      <p className="text-center text-sm text-muted-foreground mt-6">
         Don&apos;t have an account?{" "}
         <Link
           href="/register"
-          className="text-emerald-700 hover:text-emerald-800 font-semibold"
+          className="text-primary font-semibold"
         >
           Create one
         </Link>

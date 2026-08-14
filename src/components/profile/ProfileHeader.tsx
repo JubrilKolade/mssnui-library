@@ -18,10 +18,10 @@ const roleLabels: Record<Role, string> = {
 };
 
 const roleBadgeColors: Record<Role, string> = {
-  member: "bg-slate-100 text-slate-700",
-  contributor: "bg-amber-100 text-amber-800",
-  admin: "bg-emerald-100 text-emerald-800",
-  super_admin: "bg-emerald-700 text-amber-50",
+  member: "bg-muted text-muted-foreground",
+  contributor: "bg-accent text-accent-foreground",
+  admin: "bg-primary/15 text-primary",
+  super_admin: "bg-primary text-primary-foreground",
 };
 
 interface ProfileHeaderProps {
@@ -98,13 +98,13 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-amber-100 p-6">
+    <div className="bg-card rounded-2xl border border-border p-6">
       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
         {/* Avatar */}
         <div className="relative flex-shrink-0">
           <Avatar className="w-24 h-24">
             <AvatarImage src={avatar} alt={user.name} />
-            <AvatarFallback className="text-2xl font-bold bg-emerald-100 text-emerald-800">
+            <AvatarFallback className="text-2xl font-bold bg-primary/15 text-primary">
               {getInitials(user.name)}
             </AvatarFallback>
           </Avatar>
@@ -113,7 +113,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
-            className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-emerald-700 text-amber-50 flex items-center justify-center hover:bg-emerald-800 transition-colors shadow-md"
+            className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors shadow-md"
           >
             {isUploading ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -133,10 +133,10 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
 
         {/* Info */}
         <div className="flex-1 text-center sm:text-left">
-          <h1 className="font-serif text-2xl font-bold text-emerald-950">
+          <h1 className="font-serif text-2xl font-bold text-foreground">
             {user.name}
           </h1>
-          <p className="text-slate-500 text-sm mt-0.5">{user.email}</p>
+          <p className="text-muted-foreground text-sm mt-0.5">{user.email}</p>
 
           <div className="flex items-center gap-2 mt-2 justify-center sm:justify-start flex-wrap">
             <Badge
@@ -146,26 +146,26 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
             </Badge>
 
             {user.matricNumber && (
-              <Badge className="bg-slate-100 text-slate-600">
+              <Badge className="bg-muted text-muted-foreground">
                 {user.matricNumber}
               </Badge>
             )}
 
             {!user.isActive && (
-              <Badge className="bg-red-100 text-red-700">
+              <Badge className="bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-300">
                 Deactivated
               </Badge>
             )}
           </div>
 
           {user.department && (
-            <p className="text-sm text-slate-500 mt-2">
+            <p className="text-sm text-muted-foreground mt-2">
               {user.department.name} —{" "}
               {user.department.academicUnit.name}
             </p>
           )}
 
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-muted-foreground mt-1">
             Member since {formatDate(user.createdAt)}
           </p>
         </div>

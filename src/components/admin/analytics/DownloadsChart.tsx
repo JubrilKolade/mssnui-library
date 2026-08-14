@@ -31,6 +31,14 @@ const COLORS = {
   project: "#b45309",
 };
 
+const tooltipStyle = {
+  borderRadius: "8px",
+  fontSize: "12px",
+  border: "1px solid var(--border)",
+  backgroundColor: "var(--card)",
+  color: "var(--foreground)",
+};
+
 function formatDate(dateStr: string) {
   const date = new Date(dateStr);
   return date.toLocaleDateString("en-NG", {
@@ -52,29 +60,29 @@ export function DownloadsChart({ data }: DownloadsChartProps) {
   const totalDownloads = data.reduce((sum, d) => sum + d.total, 0);
 
   return (
-    <div className="bg-white rounded-2xl border border-amber-100 p-5">
+    <div className="bg-card rounded-2xl border border-border p-5">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="font-serif font-bold text-emerald-950 flex items-center gap-2">
-            <Download className="w-4 h-4 text-emerald-700" />
+          <h3 className="font-serif font-bold text-foreground flex items-center gap-2">
+            <Download className="w-4 h-4 text-primary" />
             Downloads Over Time
           </h3>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-muted-foreground mt-0.5">
             {totalDownloads.toLocaleString()} total
           </p>
         </div>
         <div className="flex gap-2">
           {/* Days selector */}
-          <div className="flex rounded-lg border border-amber-100 overflow-hidden">
+          <div className="flex rounded-lg border border-border overflow-hidden">
             {[7, 14, 30].map((d) => (
               <button
                 key={d}
                 onClick={() => setDays(d)}
                 className={`px-2.5 py-1 text-xs font-medium transition-colors ${
                   days === d
-                    ? "bg-emerald-700 text-amber-50"
-                    : "text-slate-500 hover:bg-amber-50"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:bg-accent"
                 }`}
               >
                 {d}d
@@ -83,13 +91,13 @@ export function DownloadsChart({ data }: DownloadsChartProps) {
           </div>
 
           {/* View toggle */}
-          <div className="flex rounded-lg border border-amber-100 overflow-hidden">
+          <div className="flex rounded-lg border border-border overflow-hidden">
             <button
               onClick={() => setView("total")}
               className={`px-2.5 py-1 text-xs font-medium transition-colors ${
                 view === "total"
-                  ? "bg-emerald-700 text-amber-50"
-                  : "text-slate-500 hover:bg-amber-50"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:bg-accent"
               }`}
             >
               Total
@@ -98,8 +106,8 @@ export function DownloadsChart({ data }: DownloadsChartProps) {
               onClick={() => setView("breakdown")}
               className={`px-2.5 py-1 text-xs font-medium transition-colors ${
                 view === "breakdown"
-                  ? "bg-emerald-700 text-amber-50"
-                  : "text-slate-500 hover:bg-amber-50"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:bg-accent"
               }`}
             >
               Breakdown
@@ -114,26 +122,20 @@ export function DownloadsChart({ data }: DownloadsChartProps) {
           data={chartData}
           margin={{ top: 5, right: 5, left: -20, bottom: 5 }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
           <XAxis
             dataKey="date"
-            tick={{ fontSize: 10, fill: "#94a3b8" }}
+            tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
             tickLine={false}
             axisLine={false}
             interval="preserveStartEnd"
           />
           <YAxis
-            tick={{ fontSize: 10, fill: "#94a3b8" }}
+            tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
             tickLine={false}
             axisLine={false}
           />
-          <Tooltip
-            contentStyle={{
-              borderRadius: "8px",
-              border: "1px solid #e2e8f0",
-              fontSize: "12px",
-            }}
-          />
+          <Tooltip contentStyle={tooltipStyle} />
           {view === "total" ? (
             <Line
               type="monotone"

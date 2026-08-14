@@ -51,8 +51,8 @@ export default async function MyUploadsPage() {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       <div>
-        <h1 className="font-serif text-2xl font-bold text-emerald-950">My Uploads</h1>
-        <p className="text-slate-500 text-sm mt-1">
+        <h1 className="font-serif text-2xl font-bold text-foreground">My Uploads</h1>
+        <p className="text-muted-foreground text-sm mt-1">
           {total} total uploads
         </p>
       </div>

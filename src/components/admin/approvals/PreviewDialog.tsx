@@ -76,15 +76,15 @@ export function PreviewDialog({
           <div className="space-y-4">
             {isLoading ? (
               <div className="flex items-center justify-center py-12">
-                <Loader2 className="w-8 h-8 animate-spin text-slate-400" />
+                <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
               </div>
             ) : signedUrl ? (
               <div className="space-y-4">
                 {/* File Info */}
-                <div className="bg-slate-50 rounded-lg p-4 space-y-2">
+                <div className="bg-muted rounded-lg p-4 space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-slate-500">File URL</span>
-                    <span className="text-slate-900 font-mono text-xs truncate max-w-xs">
+                    <span className="text-muted-foreground">File URL</span>
+                    <span className="text-foreground font-mono text-xs truncate max-w-xs">
                       {item.fileUrl}
                     </span>
                   </div>
@@ -92,7 +92,7 @@ export function PreviewDialog({
 
                 {/* Open PDF Button */}
                 <Button
-                  className="w-full bg-emerald-700 hover:bg-emerald-800"
+                  className="w-full"
                   onClick={() => {
                     onOpenChange(false);
                     setShowPDF(true);
@@ -102,7 +102,7 @@ export function PreviewDialog({
                 </Button>
               </div>
             ) : (
-              <p className="text-center text-slate-400 py-8">
+              <p className="text-center text-muted-foreground py-8">
                 Failed to load preview
               </p>
             )}

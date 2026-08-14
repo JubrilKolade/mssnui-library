@@ -102,7 +102,7 @@ export function ProjectDetail({
       {/* Back */}
       <Link
         href="/projects"
-        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-emerald-700"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary"
       >
         <ChevronLeft className="w-4 h-4" />
         Back to Projects
@@ -112,19 +112,19 @@ export function ProjectDetail({
         {/* Left */}
         <div className="lg:col-span-1 space-y-4">
           {/* Icon Card */}
-          <div className="bg-white rounded-2xl border border-amber-100 overflow-hidden">
-            <div className="h-44 bg-linear-to-br from-amber-50 to-amber-100 flex flex-col items-center justify-center gap-3">
-              <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center">
-                <ScrollText className="w-8 h-8 text-amber-700" />
+          <div className="bg-card rounded-2xl border border-border overflow-hidden">
+            <div className="h-44 bg-linear-to-br from-accent to-accent/60 flex flex-col items-center justify-center gap-3">
+              <div className="w-16 h-16 rounded-2xl bg-card shadow-sm flex items-center justify-center">
+                <ScrollText className="w-8 h-8 text-accent-foreground" />
               </div>
-              <Badge className="bg-amber-100 text-amber-800">
+              <Badge className="bg-accent text-accent-foreground">
                 {project.year}
               </Badge>
             </div>
 
             <div className="p-4 space-y-3">
               <Button
-                className="w-full bg-emerald-700 hover:bg-emerald-800"
+                className="w-full"
                 onClick={() => setShowPDF(true)}
               >
                 <Eye className="w-4 h-4 mr-2" />
@@ -146,7 +146,7 @@ export function ProjectDetail({
                   disabled={isBookmarking}
                   className={
                     isBookmarked
-                      ? "text-amber-600 border-amber-300"
+                      ? "text-accent-foreground border-accent-foreground/40"
                       : ""
                   }
                 >
@@ -162,13 +162,13 @@ export function ProjectDetail({
           </div>
 
           {/* Stats */}
-          <div className="bg-white rounded-2xl border border-amber-100 p-4">
-            <h3 className="font-serif font-bold text-emerald-950 text-sm mb-3">
+          <div className="bg-card rounded-2xl border border-border p-4">
+            <h3 className="font-serif font-bold text-foreground text-sm mb-3">
               Statistics
             </h3>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 flex items-center gap-1">
+                <span className="text-muted-foreground flex items-center gap-1">
                   <Download className="w-3.5 h-3.5" />
                   Downloads
                 </span>
@@ -177,7 +177,7 @@ export function ProjectDetail({
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 flex items-center gap-1">
+                <span className="text-muted-foreground flex items-center gap-1">
                   <Eye className="w-3.5 h-3.5" />
                   Views
                 </span>
@@ -186,7 +186,7 @@ export function ProjectDetail({
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 flex items-center gap-1">
+                <span className="text-muted-foreground flex items-center gap-1">
                   <Bookmark className="w-3.5 h-3.5" />
                   Bookmarks
                 </span>
@@ -200,8 +200,8 @@ export function ProjectDetail({
 
         {/* Right */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="bg-white rounded-2xl border border-amber-100 p-6">
-            <h1 className="font-serif text-2xl font-bold text-emerald-950 leading-snug">
+          <div className="bg-card rounded-2xl border border-border p-6">
+            <h1 className="font-serif text-2xl font-bold text-foreground leading-snug">
               {project.title}
             </h1>
 
@@ -210,10 +210,10 @@ export function ProjectDetail({
             {/* Abstract */}
             {project.abstract && (
               <div className="mb-4">
-                <h3 className="font-serif font-bold text-emerald-950 text-sm mb-2">
+                <h3 className="font-serif font-bold text-foreground text-sm mb-2">
                   Abstract
                 </h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   {project.abstract}
                 </p>
               </div>
@@ -222,10 +222,10 @@ export function ProjectDetail({
             {/* Details Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
-                <User className="w-4 h-4 text-slate-400 mt-0.5" />
+                <User className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Author</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">Author</p>
+                  <p className="text-sm font-medium text-foreground">
                     {project.authorName}
                   </p>
                 </div>
@@ -233,10 +233,10 @@ export function ProjectDetail({
 
               {project.supervisor && (
                 <div className="flex items-start gap-3">
-                  <User className="w-4 h-4 text-slate-400 mt-0.5" />
+                  <User className="w-4 h-4 text-muted-foreground mt-0.5" />
                   <div>
-                    <p className="text-xs text-slate-400">Supervisor</p>
-                    <p className="text-sm font-medium text-slate-900">
+                    <p className="text-xs text-muted-foreground">Supervisor</p>
+                    <p className="text-sm font-medium text-foreground">
                       {project.supervisor}
                     </p>
                   </div>
@@ -244,46 +244,46 @@ export function ProjectDetail({
               )}
 
               <div className="flex items-start gap-3">
-                <Building2 className="w-4 h-4 text-slate-400 mt-0.5" />
+                <Building2 className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Department</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">Department</p>
+                  <p className="text-sm font-medium text-foreground">
                     {project.department.name}
                   </p>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-muted-foreground">
                     {project.department.academicUnit.name}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <Calendar className="w-4 h-4 text-slate-400 mt-0.5" />
+                <Calendar className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Year</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">Year</p>
+                  <p className="text-sm font-medium text-foreground">
                     {project.year}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <Hash className="w-4 h-4 text-slate-400 mt-0.5" />
+                <Hash className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">File Size</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">File Size</p>
+                  <p className="text-sm font-medium text-foreground">
                     {formatFileSize(project.fileSize)}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <User className="w-4 h-4 text-slate-400 mt-0.5" />
+                <User className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Uploaded by</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">Uploaded by</p>
+                  <p className="text-sm font-medium text-foreground">
                     {project.uploadedBy.name}
                   </p>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-muted-foreground">
                     {formatDate(project.createdAt)}
                   </p>
                 </div>

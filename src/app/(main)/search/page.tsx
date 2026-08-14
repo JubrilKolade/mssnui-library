@@ -101,19 +101,19 @@ export default async function SearchPage({
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="font-serif text-2xl font-bold text-emerald-950 flex items-center gap-2">
-          <Search className="w-6 h-6 text-emerald-700" />
+        <h1 className="font-serif text-2xl font-bold text-foreground flex items-center gap-2">
+          <Search className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
           Search Results
         </h1>
         {query ? (
-          <p className="text-slate-500 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             {total} results for{" "}
-            <span className="font-medium text-slate-900">
+            <span className="font-medium text-foreground">
               &quot;{query}&quot;
             </span>
           </p>
         ) : (
-          <p className="text-slate-500 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             Enter a search term to find books, courses and projects
           </p>
         )}
@@ -139,7 +139,7 @@ export default async function SearchPage({
           <TabsContent value="all" className="mt-6 space-y-8">
             {books.length > 0 && (
               <div>
-                <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
                   Books
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -152,7 +152,7 @@ export default async function SearchPage({
 
             {courses.length > 0 && (
               <div>
-                <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
                   Courses
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -165,7 +165,7 @@ export default async function SearchPage({
 
             {projects.length > 0 && (
               <div>
-                <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
                   Projects
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -177,7 +177,7 @@ export default async function SearchPage({
             )}
 
             {total === 0 && (
-              <div className="text-center py-20 text-slate-400">
+              <div className="text-center py-20 text-muted-foreground">
                 <Search className="w-12 h-12 mx-auto mb-3 opacity-40" />
                 <p className="font-medium">No results found</p>
                 <p className="text-sm mt-1">

@@ -35,10 +35,10 @@ interface UsersManagerProps {
 }
 
 const roleColors: Record<Role, string> = {
-  member: "bg-slate-100 text-slate-700",
-  contributor: "bg-amber-100 text-amber-800",
-  admin: "bg-emerald-100 text-emerald-800",
-  super_admin: "bg-emerald-700 text-amber-50",
+  member: "bg-muted text-muted-foreground",
+  contributor: "bg-accent text-accent-foreground",
+  admin: "bg-primary/15 text-primary",
+  super_admin: "bg-primary text-primary-foreground",
 };
 
 const roleLabels: Record<Role, string> = {
@@ -132,7 +132,7 @@ export function UsersManager({ users: initialUsers }: UsersManagerProps) {
       {/* Filters */}
       <div className="flex gap-3 flex-col sm:flex-row">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             placeholder="Search by name or email..."
             className="pl-9"
@@ -155,49 +155,49 @@ export function UsersManager({ users: initialUsers }: UsersManagerProps) {
       </div>
 
       {/* Users Table */}
-      <div className="bg-white rounded-2xl border border-amber-100 overflow-hidden">
+      <div className="bg-card rounded-2xl border border-border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-slate-100 bg-slate-50">
-                <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">
+              <tr className="border-b border-border bg-muted">
+                <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3">
                   User
                 </th>
-                <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3 hidden md:table-cell">
+                <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3 hidden md:table-cell">
                   Role
                 </th>
-                <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3 hidden lg:table-cell">
+                <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3 hidden lg:table-cell">
                   Uploads
                 </th>
-                <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3 hidden lg:table-cell">
+                <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3 hidden lg:table-cell">
                   Joined
                 </th>
-                <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">
+                <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3">
                   Status
                 </th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-border">
               {filteredUsers.map((user) => (
                 <tr
                   key={user.id}
-                  className="hover:bg-slate-50 transition-colors"
+                  className="hover:bg-accent/50 transition-colors"
                 >
                   {/* User */}
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       <Avatar className="w-8 h-8">
                         <AvatarImage src={user.avatar ?? undefined} />
-                          <AvatarFallback className="text-xs bg-emerald-100 text-emerald-700">
+                          <AvatarFallback className="text-xs bg-primary/15 text-primary">
                             {getInitials(user.name ?? "")}
                           </AvatarFallback>
                       </Avatar>
                       <div>
-                        <p className="text-sm font-medium text-slate-900">
+                        <p className="text-sm font-medium text-foreground">
                           {user.name}
                         </p>
-                        <p className="text-xs text-slate-400">
+                        <p className="text-xs text-muted-foreground">
                           {user.email}
                         </p>
                       </div>
@@ -215,19 +215,19 @@ export function UsersManager({ users: initialUsers }: UsersManagerProps) {
 
                   {/* Uploads */}
                   <td className="px-4 py-3 hidden lg:table-cell">
-                    <p className="text-xs text-slate-600">
+                    <p className="text-xs text-muted-foreground">
                       {((user._count?.uploadedBooks ?? 0) +
                         (user._count?.uploadedCourses ?? 0) +
                         (user._count?.uploadedProjects ?? 0))} uploads
                     </p>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-muted-foreground">
                       {user._count?.downloads ?? 0} downloads
                     </p>
                   </td>
 
                   {/* Joined */}
                   <td className="px-4 py-3 hidden lg:table-cell">
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-muted-foreground">
                       {formatDate(user.createdAt)}
                     </p>
                   </td>
@@ -237,8 +237,8 @@ export function UsersManager({ users: initialUsers }: UsersManagerProps) {
                     <Badge
                       className={
                         user.isActive
-                          ? "bg-emerald-100 text-emerald-700"
-                          : "bg-red-100 text-red-700"
+                          ? "bg-emerald-500/15 text-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-300"
+                          : "bg-red-500/15 text-red-300 dark:bg-red-500/15 dark:text-red-300"
                       }
                     >
                       {user.isActive ? "Active" : "Inactive"}
@@ -295,8 +295,8 @@ export function UsersManager({ users: initialUsers }: UsersManagerProps) {
                           }
                           className={
                             user.isActive
-                              ? "text-red-600"
-                              : "text-emerald-700"
+                              ? "text-red-600 dark:text-red-400"
+                              : "text-emerald-600 dark:text-emerald-400"
                           }
                         >
                           {user.isActive ? (

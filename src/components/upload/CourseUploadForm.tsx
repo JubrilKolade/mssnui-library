@@ -130,9 +130,9 @@ export function CourseUploadForm({ departments }: CourseUploadFormProps) {
 
   return (
     <div className="space-y-6">
-      <Alert className="border-amber-200 bg-amber-50">
-        <Info className="w-4 h-4 text-amber-600" />
-        <AlertDescription className="text-amber-800 text-sm">
+      <Alert className="border-border bg-accent">
+        <Info className="w-4 h-4 text-accent-foreground" />
+        <AlertDescription className="text-accent-foreground text-sm">
           All uploads are reviewed by admins before becoming visible.
         </AlertDescription>
       </Alert>
@@ -326,7 +326,7 @@ export function CourseUploadForm({ departments }: CourseUploadFormProps) {
           {/* Submit */}
           <Button
             type="submit"
-            className="w-full bg-emerald-700 hover:bg-emerald-800"
+            className="w-full"
             disabled={isSubmitting || progress.status === "uploading"}
           >
             {isSubmitting ? (

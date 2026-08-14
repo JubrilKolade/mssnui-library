@@ -41,6 +41,14 @@ const CATEGORY_COLORS = [
   "#84cc16",
 ];
 
+const tooltipStyle = {
+  borderRadius: "8px",
+  fontSize: "12px",
+  border: "1px solid var(--border)",
+  backgroundColor: "var(--card)",
+  color: "var(--foreground)",
+};
+
 export function DistributionCharts({ data }: DistributionChartsProps) {
   const approvalData = [
     {
@@ -63,8 +71,8 @@ export function DistributionCharts({ data }: DistributionChartsProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* Content by Type */}
-      <div className="bg-white rounded-2xl border border-amber-100 p-4">
-        <h3 className="text-sm font-semibold text-slate-900 mb-4">
+      <div className="bg-card rounded-2xl border border-border p-4">
+        <h3 className="text-sm font-semibold text-foreground mb-4">
           Content by Type
         </h3>
         <ResponsiveContainer width="100%" height={180}>
@@ -82,13 +90,7 @@ export function DistributionCharts({ data }: DistributionChartsProps) {
                 <Cell key={index} fill={entry.color} />
               ))}
             </Pie>
-            <Tooltip
-              contentStyle={{
-                borderRadius: "8px",
-                fontSize: "12px",
-                border: "1px solid #e2e8f0",
-              }}
-            />
+            <Tooltip contentStyle={tooltipStyle} />
             <Legend
               wrapperStyle={{ fontSize: "11px" }}
               iconType="circle"
@@ -99,8 +101,8 @@ export function DistributionCharts({ data }: DistributionChartsProps) {
       </div>
 
       {/* Users by Role */}
-      <div className="bg-white rounded-2xl border border-amber-100 p-4">
-        <h3 className="text-sm font-semibold text-slate-900 mb-4">
+      <div className="bg-card rounded-2xl border border-border p-4">
+        <h3 className="text-sm font-semibold text-foreground mb-4">
           Users by Role
         </h3>
         <ResponsiveContainer width="100%" height={180}>
@@ -118,13 +120,7 @@ export function DistributionCharts({ data }: DistributionChartsProps) {
                 <Cell key={index} fill={entry.color} />
               ))}
             </Pie>
-            <Tooltip
-              contentStyle={{
-                borderRadius: "8px",
-                fontSize: "12px",
-                border: "1px solid #e2e8f0",
-              }}
-            />
+            <Tooltip contentStyle={tooltipStyle} />
             <Legend
               wrapperStyle={{ fontSize: "11px" }}
               iconType="circle"
@@ -135,8 +131,8 @@ export function DistributionCharts({ data }: DistributionChartsProps) {
       </div>
 
       {/* Approval Status */}
-      <div className="bg-white rounded-2xl border border-amber-100 p-4">
-        <h3 className="text-sm font-semibold text-slate-900 mb-4">
+      <div className="bg-card rounded-2xl border border-border p-4">
+        <h3 className="text-sm font-semibold text-foreground mb-4">
           Approval Status
         </h3>
         <ResponsiveContainer width="100%" height={180}>
@@ -154,13 +150,7 @@ export function DistributionCharts({ data }: DistributionChartsProps) {
                 <Cell key={index} fill={entry.color} />
               ))}
             </Pie>
-            <Tooltip
-              contentStyle={{
-                borderRadius: "8px",
-                fontSize: "12px",
-                border: "1px solid #e2e8f0",
-              }}
-            />
+            <Tooltip contentStyle={tooltipStyle} />
             <Legend
               wrapperStyle={{ fontSize: "11px" }}
               iconType="circle"
@@ -171,8 +161,8 @@ export function DistributionCharts({ data }: DistributionChartsProps) {
       </div>
 
       {/* Courses by Level */}
-      <div className="bg-white rounded-2xl border border-amber-100 p-4">
-        <h3 className="text-sm font-semibold text-slate-900 mb-4">
+      <div className="bg-card rounded-2xl border border-border p-4">
+        <h3 className="text-sm font-semibold text-foreground mb-4">
           Courses by Level
         </h3>
         <ResponsiveContainer width="100%" height={180}>
@@ -182,26 +172,20 @@ export function DistributionCharts({ data }: DistributionChartsProps) {
           >
             <CartesianGrid
               strokeDasharray="3 3"
-              stroke="#f1f5f9"
+              stroke="var(--border)"
             />
             <XAxis
               dataKey="level"
-              tick={{ fontSize: 10, fill: "#94a3b8" }}
+              tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
               tickLine={false}
               axisLine={false}
             />
             <YAxis
-              tick={{ fontSize: 10, fill: "#94a3b8" }}
+              tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
               tickLine={false}
               axisLine={false}
             />
-            <Tooltip
-              contentStyle={{
-                borderRadius: "8px",
-                fontSize: "12px",
-                border: "1px solid #e2e8f0",
-              }}
-            />
+            <Tooltip contentStyle={tooltipStyle} />
             <Bar
               dataKey="count"
               name="Courses"

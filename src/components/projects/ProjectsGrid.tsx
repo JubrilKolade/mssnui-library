@@ -19,7 +19,7 @@ export function ProjectsGrid({
 }: ProjectsGridProps) {
   if (projects.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-slate-400">
+      <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
         <ScrollText className="w-12 h-12 mb-3 opacity-40" />
         <p className="font-medium">No projects found</p>
         <p className="text-sm mt-1">Try adjusting your filters</p>

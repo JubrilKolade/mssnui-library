@@ -115,8 +115,8 @@ export function EditProfileForm({
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-amber-100 p-6">
-      <h3 className="font-serif font-bold text-emerald-950 mb-4">
+    <div className="bg-card rounded-2xl border border-border p-6">
+      <h3 className="font-serif font-bold text-foreground mb-4">
         Edit Profile
       </h3>
 
@@ -148,7 +148,7 @@ export function EditProfileForm({
               <FormItem>
                 <FormLabel>
                   Matric Number{" "}
-                  <span className="text-slate-400 font-normal">
+                  <span className="text-muted-foreground font-normal">
                     (optional)
                   </span>
                 </FormLabel>
@@ -168,7 +168,7 @@ export function EditProfileForm({
           <FormItem>
             <FormLabel>
               Faculty / Institute{" "}
-              <span className="text-slate-400 font-normal">
+              <span className="text-muted-foreground font-normal">
                 (optional)
               </span>
             </FormLabel>
@@ -203,7 +203,7 @@ export function EditProfileForm({
                 <FormItem>
                   <FormLabel>
                     Department{" "}
-                    <span className="text-slate-400 font-normal">
+                    <span className="text-muted-foreground font-normal">
                       (optional)
                     </span>
                   </FormLabel>
@@ -234,7 +234,6 @@ export function EditProfileForm({
 
           <Button
             type="submit"
-            className="bg-emerald-700 hover:bg-emerald-800"
             disabled={isLoading}
           >
             {isLoading ? (

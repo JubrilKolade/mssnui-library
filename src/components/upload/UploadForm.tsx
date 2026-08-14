@@ -19,7 +19,7 @@ export function UploadForm({
   userId,
 }: UploadFormProps) {
   return (
-    <div className="bg-white rounded-2xl border border-amber-100 p-6">
+    <div className="bg-card rounded-2xl border border-border p-6">
       <Tabs defaultValue="book">
         <TabsList className="w-full mb-6">
           <TabsTrigger value="book" className="flex-1 gap-2">

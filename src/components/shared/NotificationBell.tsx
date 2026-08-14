@@ -27,9 +27,9 @@ interface NotificationBellProps {
 }
 
 const notificationIcons = {
-  approval: <CheckCircle2 className="w-4 h-4 text-emerald-600" />,
-  rejection: <XCircle className="w-4 h-4 text-red-500" />,
-  new_upload: <Upload className="w-4 h-4 text-amber-500" />,
+  approval: <CheckCircle2 className="w-4 h-4 text-primary" />,
+  rejection: <XCircle className="w-4 h-4 text-destructive" />,
+  new_upload: <Upload className="w-4 h-4 text-accent-foreground" />,
 };
 
 export function NotificationBell({ userId }: NotificationBellProps) {
@@ -99,13 +99,13 @@ export function NotificationBell({ userId }: NotificationBellProps) {
 
       <PopoverContent className="w-80 p-0" align="end">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-amber-100">
-          <h3 className="font-serif font-bold text-emerald-950">Notifications</h3>
+        <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+          <h3 className="font-serif font-bold text-foreground">Notifications</h3>
           {unreadCount > 0 && (
             <Button
               variant="ghost"
               size="sm"
-              className="text-xs text-emerald-700 h-auto py-0.5"
+              className="text-xs text-primary h-auto py-0.5"
               onClick={markAllAsRead}
             >
               <CheckCheck className="w-3.5 h-3.5 mr-1" />
@@ -129,18 +129,18 @@ export function NotificationBell({ userId }: NotificationBellProps) {
               ))}
             </div>
           ) : notifications.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full py-8 text-slate-400">
+            <div className="flex flex-col items-center justify-center h-full py-8 text-muted-foreground">
               <Bell className="w-8 h-8 mb-2 opacity-50" />
               <p className="text-sm">No notifications yet</p>
             </div>
           ) : (
-            <div className="divide-y divide-amber-50">
+            <div className="divide-y divide-border">
               {notifications.map((notification) => (
                 <button
                   key={notification.id}
                   className={cn(
-                    "w-full flex items-start gap-3 px-4 py-3 text-left hover:bg-amber-50/60 transition-colors",
-                    !notification.isRead && "bg-emerald-50/50"
+                    "w-full flex items-start gap-3 px-4 py-3 text-left hover:bg-accent/50 transition-colors",
+                    !notification.isRead && "bg-primary/10"
                   )}
                   onClick={() => markAsRead(notification.id)}
                 >
@@ -148,15 +148,15 @@ export function NotificationBell({ userId }: NotificationBellProps) {
                     {notificationIcons[notification.type]}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-slate-700 leading-snug">
+                    <p className="text-sm text-foreground leading-snug">
                       {notification.message}
                     </p>
-                    <p className="text-xs text-slate-400 mt-0.5">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {formatDate(notification.createdAt)}
                     </p>
                   </div>
                   {!notification.isRead && (
-                    <span className="w-2 h-2 rounded-full bg-emerald-600 shrink-0 mt-1.5" />
+                    <span className="w-2 h-2 rounded-full bg-primary shrink-0 mt-1.5" />
                   )}
                 </button>
               ))}

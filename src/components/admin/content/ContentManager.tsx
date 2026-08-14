@@ -30,9 +30,9 @@ interface ContentManagerProps {
 }
 
 const statusColors = {
-  pending: "bg-yellow-100 text-yellow-700",
-  approved: "bg-emerald-100 text-emerald-700",
-  rejected: "bg-red-100 text-red-700",
+  pending: "bg-yellow-500/15 text-yellow-300 dark:bg-yellow-500/15 dark:text-yellow-300",
+  approved: "bg-emerald-500/15 text-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-300",
+  rejected: "bg-red-500/15 text-red-300 dark:bg-red-500/15 dark:text-red-300",
 };
 
 export function ContentManager({
@@ -113,7 +113,7 @@ export function ContentManager({
       {/* Filters */}
       <div className="flex gap-3 flex-col sm:flex-row">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             placeholder="Search content..."
             className="pl-9"
@@ -226,60 +226,60 @@ interface ContentTableProps {
 function ContentTable({ items, type, onDelete }: ContentTableProps) {
   if (items.length === 0) {
     return (
-      <div className="text-center py-12 text-slate-400">
+      <div className="text-center py-12 text-muted-foreground">
         <p>No {type}s found</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-amber-100 overflow-hidden">
+    <div className="bg-card rounded-2xl border border-border overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-slate-100 bg-slate-50">
-              <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">
+            <tr className="border-b border-border bg-muted">
+              <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3">
                 Title
               </th>
-              <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3 hidden md:table-cell">
+              <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3 hidden md:table-cell">
                 Details
               </th>
-              <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3 hidden lg:table-cell">
+              <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3 hidden lg:table-cell">
                 Uploaded By
               </th>
-              <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">
+              <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3">
                 Status
               </th>
-              <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3 hidden lg:table-cell">
+              <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3 hidden lg:table-cell">
                 Date
               </th>
               <th className="px-4 py-3" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-50">
+          <tbody className="divide-y divide-border">
             {items.map((item) => (
               <tr
                 key={item.id}
-                className="hover:bg-slate-50 transition-colors"
+                className="hover:bg-accent/50 transition-colors"
               >
                 <td className="px-4 py-3">
-                  <p className="text-sm font-medium text-slate-900 line-clamp-1">
+                  <p className="text-sm font-medium text-foreground line-clamp-1">
                     {item.title}
                   </p>
                   {item.subtitle && (
-                    <p className="text-xs text-slate-500 truncate">
+                    <p className="text-xs text-muted-foreground truncate">
                       {item.subtitle}
                     </p>
                   )}
                 </td>
                 <td className="px-4 py-3 hidden md:table-cell">
-                  <p className="text-xs text-slate-500">{item.meta}</p>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-muted-foreground">{item.meta}</p>
+                  <p className="text-xs text-muted-foreground">
                     {formatFileSize(item.fileSize)}
                   </p>
                 </td>
                 <td className="px-4 py-3 hidden lg:table-cell">
-                  <p className="text-xs text-slate-600">
+                  <p className="text-xs text-muted-foreground">
                     {item.uploadedBy}
                   </p>
                 </td>
@@ -295,7 +295,7 @@ function ContentTable({ items, type, onDelete }: ContentTableProps) {
                   </Badge>
                 </td>
                 <td className="px-4 py-3 hidden lg:table-cell">
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-muted-foreground">
                     {formatDate(item.createdAt)}
                   </p>
                 </td>
@@ -304,7 +304,7 @@ function ContentTable({ items, type, onDelete }: ContentTableProps) {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="w-8 h-8 text-slate-400 hover:text-red-600"
+                      className="w-8 h-8 text-muted-foreground hover:text-destructive"
                       onClick={() => onDelete(item.id)}
                     >
                       <Trash2 className="w-3.5 h-3.5" />

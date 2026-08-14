@@ -203,10 +203,10 @@ export function RegisterForm() {
       {/* Divider */}
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-amber-100" />
+          <span className="w-full border-t border-border" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-white px-2 text-slate-400">
+          <span className="bg-card px-2 text-muted-foreground">
             or register with email
           </span>
         </div>
@@ -262,7 +262,7 @@ export function RegisterForm() {
               <FormItem>
                 <FormLabel>
                   Matric number{" "}
-                  <span className="text-slate-400 font-normal">
+                  <span className="text-muted-foreground font-normal">
                     (optional)
                   </span>
                 </FormLabel>
@@ -282,7 +282,7 @@ export function RegisterForm() {
           <FormItem>
             <FormLabel>
               Faculty / Institute{" "}
-              <span className="text-slate-400 font-normal">(optional)</span>
+              <span className="text-muted-foreground font-normal">(optional)</span>
             </FormLabel>
               <Select
               onValueChange={(val: string | null) => {
@@ -313,7 +313,7 @@ export function RegisterForm() {
                 <FormItem>
                   <FormLabel>
                     Department{" "}
-                    <span className="text-slate-400 font-normal">
+                    <span className="text-muted-foreground font-normal">
                       (optional)
                     </span>
                   </FormLabel>
@@ -358,7 +358,7 @@ export function RegisterForm() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
                       {showPassword ? (
                         <EyeOff className="h-4 w-4" />
@@ -393,7 +393,7 @@ export function RegisterForm() {
                       onClick={() =>
                         setShowConfirmPassword(!showConfirmPassword)
                       }
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
                       {showConfirmPassword ? (
                         <EyeOff className="h-4 w-4" />
@@ -410,7 +410,7 @@ export function RegisterForm() {
 
           <Button
             type="submit"
-            className="w-full bg-emerald-700 hover:bg-emerald-800"
+            className="w-full"
             disabled={isLoading || isGoogleLoading}
           >
             {isLoading ? (

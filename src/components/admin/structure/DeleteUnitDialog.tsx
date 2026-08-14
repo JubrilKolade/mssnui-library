@@ -64,13 +64,13 @@ export function DeleteUnitDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-red-600">
+          <DialogTitle className="flex items-center gap-2 text-destructive">
             <AlertTriangle className="w-5 h-5" />
             Delete Unit
           </DialogTitle>
           <DialogDescription>
             Are you sure you want to delete{" "}
-            <span className="font-semibold text-slate-900">
+            <span className="font-semibold text-foreground">
               {unit.name}
             </span>
             ? This will also delete all sub-units and departments.

@@ -192,9 +192,9 @@ export function BookUploadForm({
   return (
     <div className="space-y-6">
       {/* Info Banner */}
-      <Alert className="border-amber-200 bg-amber-50">
-        <Info className="w-4 h-4 text-amber-600" />
-        <AlertDescription className="text-amber-800 text-sm">
+      <Alert className="border-border bg-accent">
+        <Info className="w-4 h-4 text-accent-foreground" />
+        <AlertDescription className="text-accent-foreground text-sm">
           All uploads are reviewed by admins before becoming visible to
           other users.
         </AlertDescription>
@@ -228,7 +228,7 @@ export function BookUploadForm({
           <div className="space-y-2">
             <FormLabel>
               Cover Image{" "}
-              <span className="text-slate-400 font-normal">(optional)</span>
+              <span className="text-muted-foreground font-normal">(optional)</span>
             </FormLabel>
             <FileUploadInput
               accept={IMAGE_ACCEPT}
@@ -292,7 +292,7 @@ export function BookUploadForm({
               <FormItem>
                 <FormLabel>
                   Description{" "}
-                  <span className="text-slate-400 font-normal">
+                  <span className="text-muted-foreground font-normal">
                     (optional)
                   </span>
                 </FormLabel>
@@ -452,7 +452,7 @@ export function BookUploadForm({
           {/* Submit */}
           <Button
             type="submit"
-            className="w-full bg-emerald-700 hover:bg-emerald-800"
+            className="w-full"
             disabled={
               isSubmitting ||
               pdfProgress.status === "uploading" ||

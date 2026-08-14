@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
 import { Badge } from "@/src/components/ui/badge";
 import { BookOpen, GraduationCap, ScrollText, ArrowRight } from "lucide-react";
-import { formatDate, formatFileSize } from "@/src/lib/utils";
+import { formatDate } from "@/src/lib/utils";
 
 interface RecentUploadsProps {
   books: any[];
@@ -20,7 +19,7 @@ export function RecentUploads({
 }: RecentUploadsProps) {
   return (
     <div>
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
         Recently Added
       </h2>
 
@@ -42,9 +41,9 @@ export function RecentUploads({
 
         {/* Books Tab */}
         <TabsContent value="books">
-          <div className="bg-white rounded-2xl border border-amber-100 divide-y divide-amber-50">
+          <div className="bg-card rounded-2xl border border-border divide-y divide-border">
             {books.length === 0 ? (
-              <div className="p-8 text-center text-slate-400">
+              <div className="p-8 text-center text-muted-foreground">
                 <BookOpen className="w-8 h-8 mx-auto mb-2 opacity-50" />
                 <p className="text-sm">No books yet</p>
               </div>
@@ -53,16 +52,16 @@ export function RecentUploads({
                 <Link
                   key={book.id}
                   href={`/books/${book.id}`}
-                  className="flex items-center gap-4 p-4 hover:bg-amber-50/50 transition-colors"
+                  className="flex items-center gap-4 p-4 hover:bg-accent/50 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
-                    <BookOpen className="w-5 h-5 text-emerald-700" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <BookOpen className="w-5 h-5 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-slate-900 truncate">
+                    <p className="text-sm font-medium text-foreground truncate">
                       {book.title}
                     </p>
-                    <p className="text-xs text-slate-500 truncate">
+                    <p className="text-xs text-muted-foreground truncate">
                       {book.author} • {formatDate(book.createdAt)}
                     </p>
                   </div>
@@ -77,7 +76,7 @@ export function RecentUploads({
             <div className="p-3">
               <Link
                 href="/books"
-                className="flex items-center justify-center gap-1 text-sm text-emerald-700 hover:text-emerald-800 font-medium"
+                className="flex items-center justify-center gap-1 text-sm text-primary hover:text-primary/80 font-medium"
               >
                 View all books
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -88,9 +87,9 @@ export function RecentUploads({
 
         {/* Courses Tab */}
         <TabsContent value="courses">
-          <div className="bg-white rounded-2xl border border-amber-100 divide-y divide-amber-50">
+          <div className="bg-card rounded-2xl border border-border divide-y divide-border">
             {courses.length === 0 ? (
-              <div className="p-8 text-center text-slate-400">
+              <div className="p-8 text-center text-muted-foreground">
                 <GraduationCap className="w-8 h-8 mx-auto mb-2 opacity-50" />
                 <p className="text-sm">No course materials yet</p>
               </div>
@@ -99,16 +98,16 @@ export function RecentUploads({
                 <Link
                   key={course.id}
                   href={`/courses/${course.id}`}
-                  className="flex items-center gap-4 p-4 hover:bg-amber-50/50 transition-colors"
+                  className="flex items-center gap-4 p-4 hover:bg-accent/50 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center shrink-0">
-                    <GraduationCap className="w-5 h-5 text-teal-700" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <GraduationCap className="w-5 h-5 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-slate-900 truncate">
+                    <p className="text-sm font-medium text-foreground truncate">
                       {course.courseCode} — {course.courseTitle}
                     </p>
-                    <p className="text-xs text-slate-500 truncate">
+                    <p className="text-xs text-muted-foreground truncate">
                       {course.department.name} • Level {course.level}
                     </p>
                   </div>
@@ -121,7 +120,7 @@ export function RecentUploads({
             <div className="p-3">
               <Link
                 href="/courses"
-                className="flex items-center justify-center gap-1 text-sm text-emerald-700 hover:text-emerald-800 font-medium"
+                className="flex items-center justify-center gap-1 text-sm text-primary hover:text-primary/80 font-medium"
               >
                 View all courses
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -132,9 +131,9 @@ export function RecentUploads({
 
         {/* Projects Tab */}
         <TabsContent value="projects">
-          <div className="bg-white rounded-2xl border border-amber-100 divide-y divide-amber-50">
+          <div className="bg-card rounded-2xl border border-border divide-y divide-border">
             {projects.length === 0 ? (
-              <div className="p-8 text-center text-slate-400">
+              <div className="p-8 text-center text-muted-foreground">
                 <ScrollText className="w-8 h-8 mx-auto mb-2 opacity-50" />
                 <p className="text-sm">No projects yet</p>
               </div>
@@ -143,16 +142,16 @@ export function RecentUploads({
                 <Link
                   key={project.id}
                   href={`/projects/${project.id}`}
-                  className="flex items-center gap-4 p-4 hover:bg-amber-50/50 transition-colors"
+                  className="flex items-center gap-4 p-4 hover:bg-accent/50 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
-                    <ScrollText className="w-5 h-5 text-amber-700" />
+                  <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center shrink-0">
+                    <ScrollText className="w-5 h-5 text-accent-foreground" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-slate-900 truncate">
+                    <p className="text-sm font-medium text-foreground truncate">
                       {project.title}
                     </p>
-                    <p className="text-xs text-slate-500 truncate">
+                    <p className="text-xs text-muted-foreground truncate">
                       {project.authorName} • {project.year}
                     </p>
                   </div>
@@ -165,7 +164,7 @@ export function RecentUploads({
             <div className="p-3">
               <Link
                 href="/projects"
-                className="flex items-center justify-center gap-1 text-sm text-emerald-700 hover:text-emerald-800 font-medium"
+                className="flex items-center justify-center gap-1 text-sm text-primary hover:text-primary/80 font-medium"
               >
                 View all projects
                 <ArrowRight className="w-3.5 h-3.5" />

@@ -105,15 +105,15 @@ export default async function LandingPage() {
   const stats = await getPublicStats();
 
   return (
-    <div className="min-h-screen bg-[#fbfaf6]">
+    <div className="min-h-screen bg-background">
       {/* Nav */}
-      <header className="sticky top-0 z-50 border-b border-amber-100/80 bg-[#fbfaf6]/85 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-700 shadow-sm">
-              <BookMarked className="h-5 w-5 text-amber-50" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary shadow-sm">
+              <BookMarked className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="font-serif text-lg font-bold text-emerald-950">
+            <span className="font-serif text-lg font-bold text-foreground">
               MSSN UI Library
             </span>
           </Link>
@@ -122,7 +122,7 @@ export default async function LandingPage() {
             {session ? (
               <Link
                 href="/dashboard"
-                className="inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-800"
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 Dashboard
                 <ArrowRight className="h-4 w-4" />
@@ -131,13 +131,13 @@ export default async function LandingPage() {
               <>
                 <Link
                   href="/login"
-                  className="text-sm font-medium text-slate-600 transition-colors hover:text-emerald-800"
+                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
                 >
                   Sign in
                 </Link>
                 <Link
                   href="/register"
-                  className="inline-flex items-center rounded-lg bg-emerald-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-800"
+                  className="inline-flex items-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
                 >
                   Get started
                 </Link>
@@ -149,24 +149,24 @@ export default async function LandingPage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-[#fbfaf6] to-amber-50" />
-        <GeometricPattern className="absolute inset-0 text-emerald-900/[0.06]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/20" />
+        <GeometricPattern className="absolute inset-0 text-foreground/[0.05]" />
         {/* soft glows */}
-        <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl" />
-        <div className="absolute -right-16 bottom-0 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
+        <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
+        <div className="absolute -right-16 bottom-0 h-72 w-72 rounded-full bg-accent/30 blur-3xl" />
 
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-[1.1fr_0.9fr] lg:py-32">
           <div className="max-w-2xl">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white/70 px-3.5 py-1.5 text-xs font-medium text-emerald-800 shadow-sm backdrop-blur">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-background/70 px-3.5 py-1.5 text-xs font-medium text-primary shadow-sm backdrop-blur">
               <Sparkles className="h-3.5 w-3.5" />
               Assalamu alaikum — welcome to your library
             </div>
-            <h1 className="font-serif text-4xl font-bold leading-[1.1] tracking-tight text-emerald-950 sm:text-5xl lg:text-6xl">
+            <h1 className="font-serif text-4xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               Knowledge that
               <br />
-              <span className="text-emerald-700">brings us together</span>
+              <span className="text-primary">brings us together</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
               Books, course materials, past questions and final-year projects —
               gathered in one welcoming place for the students of MSSN,
               University of Ibadan. Built by students, for students.
@@ -175,7 +175,7 @@ export default async function LandingPage() {
               {session ? (
                 <Link
                   href="/dashboard"
-                  className="inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-6 py-3 text-base font-medium text-white shadow-sm transition-all hover:bg-emerald-800 hover:shadow-md"
+                  className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-medium text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
                 >
                   Go to Dashboard
                   <ArrowRight className="h-5 w-5" />
@@ -184,29 +184,29 @@ export default async function LandingPage() {
                 <>
                   <Link
                     href="/register"
-                    className="inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-6 py-3 text-base font-medium text-white shadow-sm transition-all hover:bg-emerald-800 hover:shadow-md"
+                    className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-medium text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
                   >
                     Create free account
                     <ArrowRight className="h-5 w-5" />
                   </Link>
                   <Link
                     href="/login"
-                    className="inline-flex items-center gap-2 rounded-lg border border-emerald-200 bg-white/70 px-6 py-3 text-base font-medium text-emerald-900 backdrop-blur transition-colors hover:bg-white"
+                    className="inline-flex items-center gap-2 rounded-lg border border-primary/30 bg-background/70 px-6 py-3 text-base font-medium text-foreground backdrop-blur transition-colors hover:bg-background"
                   >
                     Sign in
                   </Link>
                 </>
               )}
             </div>
-            <p className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-500">
+            <p className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
               <span className="inline-flex items-center gap-1.5">
-                <CheckCircle className="h-4 w-4 text-emerald-600" /> Free forever
+                <CheckCircle className="h-4 w-4 text-primary" /> Free forever
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <CheckCircle className="h-4 w-4 text-emerald-600" /> No ads
+                <CheckCircle className="h-4 w-4 text-primary" /> No ads
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <CheckCircle className="h-4 w-4 text-emerald-600" /> Curated by MSSN UI
+                <CheckCircle className="h-4 w-4 text-primary" /> Curated by MSSN UI
               </span>
             </p>
           </div>
@@ -219,7 +219,7 @@ export default async function LandingPage() {
       </section>
 
       {/* Stats */}
-      <section className="border-y border-amber-100 bg-emerald-950">
+      <section className="border-y border-border bg-emerald-950">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-px sm:grid-cols-4">
           {[
             {
@@ -264,10 +264,10 @@ export default async function LandingPage() {
       {/* Features */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="text-center">
-          <h2 className="font-serif text-3xl font-bold tracking-tight text-emerald-950 sm:text-4xl">
+          <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             Everything you need to succeed
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
             A warm, comprehensive library platform designed for the academic
             journey of every MSSN UI member.
           </p>
@@ -280,7 +280,7 @@ export default async function LandingPage() {
               title: "Smart Search",
               description:
                 "Find exactly what you need across books, courses, and projects with instant full-text search.",
-              color: "bg-emerald-50 text-emerald-700",
+              color: "bg-primary/15 text-primary",
               accent: "before:bg-emerald-500",
             },
             {
@@ -288,7 +288,7 @@ export default async function LandingPage() {
               title: "Easy Downloads",
               description:
                 "Download course materials, past questions, and projects directly to your device.",
-              color: "bg-amber-50 text-amber-700",
+              color: "bg-accent text-accent-foreground",
               accent: "before:bg-amber-500",
             },
             {
@@ -296,7 +296,7 @@ export default async function LandingPage() {
               title: "Bookmark & Save",
               description:
                 "Save your favourite resources for quick access later. Build your personal reading list.",
-              color: "bg-teal-50 text-teal-700",
+              color: "bg-teal-500/15 text-teal-600 dark:text-teal-400",
               accent: "before:bg-teal-500",
             },
             {
@@ -304,7 +304,7 @@ export default async function LandingPage() {
               title: "Curated Content",
               description:
                 "Every upload is reviewed by admins to ensure quality and accuracy before it goes live.",
-              color: "bg-rose-50 text-rose-700",
+              color: "bg-rose-500/15 text-rose-600 dark:text-rose-400",
               accent: "before:bg-rose-500",
             },
             {
@@ -312,7 +312,7 @@ export default async function LandingPage() {
               title: "Community Driven",
               description:
                 "Upload and share your own notes, materials, and projects with fellow students.",
-              color: "bg-indigo-50 text-indigo-700",
+              color: "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400",
               accent: "before:bg-indigo-500",
             },
             {
@@ -320,23 +320,23 @@ export default async function LandingPage() {
               title: "All Levels Covered",
               description:
                 "Materials organised by department, level, and semester — from 100 to 600 level.",
-              color: "bg-stone-100 text-stone-700",
+              color: "bg-muted text-muted-foreground",
               accent: "before:bg-stone-500",
             },
           ].map((feature) => (
             <div
               key={feature.title}
-              className={`group relative overflow-hidden rounded-xl border border-amber-100 bg-white p-6 shadow-sm transition-all before:absolute before:inset-x-0 before:top-0 before:h-1 before:origin-left before:scale-x-0 before:transition-transform before:duration-300 hover:-translate-y-1 hover:border-amber-200 hover:shadow-md group-hover:before:scale-x-100 hover:before:scale-x-100 ${feature.accent}`}
+              className={`group relative overflow-hidden rounded-xl border border-border bg-card p-6 shadow-sm transition-all before:absolute before:inset-x-0 before:top-0 before:h-1 before:origin-left before:scale-x-0 before:transition-transform before:duration-300 hover:-translate-y-1 hover:border-border hover:shadow-md group-hover:before:scale-x-100 hover:before:scale-x-100 ${feature.accent}`}
             >
               <div
                 className={`inline-flex h-11 w-11 items-center justify-center rounded-lg ${feature.color}`}
               >
                 <feature.icon className="h-5 w-5" />
               </div>
-              <h3 className="mt-4 font-serif text-lg font-semibold text-emerald-950">
+              <h3 className="mt-4 font-serif text-lg font-semibold text-foreground">
                 {feature.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {feature.description}
               </p>
             </div>
@@ -345,21 +345,21 @@ export default async function LandingPage() {
       </section>
 
       {/* Knowledge quote band */}
-      <section className="relative overflow-hidden border-y border-amber-100 bg-emerald-50/60">
-        <GeometricPattern className="absolute inset-0 text-emerald-900/[0.05]" />
+      <section className="relative overflow-hidden border-y border-border bg-primary/5">
+        <GeometricPattern className="absolute inset-0 text-foreground/[0.05]" />
         <div className="relative mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
-          <BookOpen className="mx-auto h-8 w-8 text-emerald-600" />
-          <blockquote className="mt-5 font-serif text-2xl font-medium italic leading-relaxed text-emerald-950 sm:text-3xl">
+          <BookOpen className="mx-auto h-8 w-8 text-primary" />
+          <blockquote className="mt-5 font-serif text-2xl font-medium italic leading-relaxed text-foreground sm:text-3xl">
             &ldquo;Seeking knowledge is an obligation upon every Muslim.&rdquo;
           </blockquote>
-          <p className="mt-4 text-sm font-medium text-emerald-700">
+          <p className="mt-4 text-sm font-medium text-primary">
             — Prophet Muhammad ﷺ (Sunan Ibn Majah)
           </p>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-[#fbfaf6]">
+      <section className="bg-background">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-800 to-emerald-950 px-6 py-16 text-center shadow-xl sm:px-16">
             <GeometricPattern className="absolute inset-0 text-white/[0.07]" />

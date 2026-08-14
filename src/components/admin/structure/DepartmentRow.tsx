@@ -20,21 +20,21 @@ export function DepartmentRow({
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   return (
-    <div className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 group">
-      <GraduationCap className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-      <span className="text-sm text-slate-700 flex-1 truncate">
+    <div className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent group">
+      <GraduationCap className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+      <span className="text-sm text-foreground flex-1 truncate">
         {department.name}
       </span>
 
       {/* Badges */}
       <div className="flex items-center gap-1">
         {department.isDLC && (
-          <Badge className="text-xs bg-teal-100 text-teal-800 h-5">
+          <Badge className="text-xs bg-teal-500/15 text-teal-300 dark:bg-teal-500/15 dark:text-teal-300 h-5">
             DLC
           </Badge>
         )}
         {department.isPostgraduate && (
-          <Badge className="text-xs bg-emerald-100 text-emerald-800 h-5">
+          <Badge className="text-xs bg-emerald-500/15 text-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-300 h-5">
             PG
           </Badge>
         )}
@@ -45,7 +45,7 @@ export function DepartmentRow({
         <Button
           variant="ghost"
           size="icon"
-          className="w-6 h-6 text-slate-400 hover:text-emerald-700"
+          className="w-6 h-6 text-muted-foreground hover:text-primary"
           onClick={() => setIsEditOpen(true)}
         >
           <Pencil className="w-3 h-3" />
@@ -53,7 +53,7 @@ export function DepartmentRow({
         <Button
           variant="ghost"
           size="icon"
-          className="w-6 h-6 text-slate-400 hover:text-red-600"
+          className="w-6 h-6 text-muted-foreground hover:text-destructive"
           onClick={() => setIsDeleteOpen(true)}
         >
           <Trash2 className="w-3 h-3" />

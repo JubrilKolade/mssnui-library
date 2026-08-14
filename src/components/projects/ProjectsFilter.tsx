@@ -52,14 +52,14 @@ export function ProjectsFilter({
   );
 
   return (
-    <div className="bg-white rounded-2xl border border-amber-100 p-4 space-y-5">
+    <div className="bg-card rounded-2xl border border-border p-4 space-y-5">
       <div className="flex items-center justify-between">
-        <h3 className="font-serif font-bold text-emerald-950 text-sm">Filters</h3>
+        <h3 className="font-serif font-bold text-foreground text-sm">Filters</h3>
         {hasFilters && (
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 text-xs text-amber-600 hover:text-amber-700"
+            className="h-7 text-xs text-accent-foreground hover:text-accent-foreground/80"
             onClick={() => router.push(pathname)}
           >
             <X className="w-3 h-3 mr-1" />
@@ -70,7 +70,7 @@ export function ProjectsFilter({
 
       {/* Department */}
       <div className="space-y-2">
-        <Label className="text-xs font-medium text-slate-600">
+        <Label className="text-xs font-medium text-muted-foreground">
           Department
         </Label>
         <Select
@@ -93,7 +93,7 @@ export function ProjectsFilter({
 
       {/* Year */}
       <div className="space-y-2">
-        <Label className="text-xs font-medium text-slate-600">Year</Label>
+        <Label className="text-xs font-medium text-muted-foreground">Year</Label>
         <Select
           value={searchParams.year || "all"}
           onValueChange={(val) => updateFilter("year", val)}

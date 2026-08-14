@@ -27,18 +27,26 @@ const COLORS = [
   "#ec4899",
 ];
 
+const tooltipStyle = {
+  borderRadius: "8px",
+  fontSize: "12px",
+  border: "1px solid var(--border)",
+  backgroundColor: "var(--card)",
+  color: "var(--foreground)",
+};
+
 export function CategoryChart({ data }: CategoryChartProps) {
   const chartData = data.slice(0, 8);
 
   return (
-    <div className="bg-white rounded-2xl border border-amber-100 p-5">
-      <h3 className="font-semibold text-slate-900 flex items-center gap-2 mb-4">
-        <Tag className="w-4 h-4 text-emerald-700" />
+    <div className="bg-card rounded-2xl border border-border p-5">
+      <h3 className="font-semibold text-foreground flex items-center gap-2 mb-4">
+        <Tag className="w-4 h-4 text-primary" />
         Books by Category
       </h3>
 
       {chartData.length === 0 ? (
-        <div className="flex items-center justify-center h-40 text-slate-400 text-sm">
+        <div className="flex items-center justify-center h-40 text-muted-foreground text-sm">
           No data yet
         </div>
       ) : (
@@ -50,30 +58,24 @@ export function CategoryChart({ data }: CategoryChartProps) {
           >
             <CartesianGrid
               strokeDasharray="3 3"
-              stroke="#f1f5f9"
+              stroke="var(--border)"
               horizontal={false}
             />
             <XAxis
               type="number"
-              tick={{ fontSize: 10, fill: "#94a3b8" }}
+              tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
               tickLine={false}
               axisLine={false}
             />
             <YAxis
               type="category"
               dataKey="name"
-              tick={{ fontSize: 10, fill: "#94a3b8" }}
+              tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
               tickLine={false}
               axisLine={false}
               width={80}
             />
-            <Tooltip
-              contentStyle={{
-                borderRadius: "8px",
-                fontSize: "12px",
-                border: "1px solid #e2e8f0",
-              }}
-            />
+            <Tooltip contentStyle={tooltipStyle} />
             <Bar
               dataKey="value"
               name="Books"

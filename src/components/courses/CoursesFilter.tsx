@@ -64,14 +64,14 @@ export function CoursesFilter({
   );
 
   return (
-    <div className="bg-white rounded-2xl border border-amber-100 p-4 space-y-5">
+    <div className="bg-card rounded-2xl border border-border p-4 space-y-5">
       <div className="flex items-center justify-between">
-        <h3 className="font-serif font-bold text-emerald-950 text-sm">Filters</h3>
+        <h3 className="font-serif font-bold text-foreground text-sm">Filters</h3>
         {hasFilters && (
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 text-xs text-amber-600 hover:text-amber-700"
+            className="h-7 text-xs text-accent-foreground hover:text-accent-foreground/80"
             onClick={() => router.push(pathname)}
           >
             <X className="w-3 h-3 mr-1" />
@@ -82,7 +82,7 @@ export function CoursesFilter({
 
       {/* Department */}
       <div className="space-y-2">
-        <Label className="text-xs font-medium text-slate-600">
+        <Label className="text-xs font-medium text-muted-foreground">
           Department
         </Label>
         <Select
@@ -105,7 +105,7 @@ export function CoursesFilter({
 
       {/* Level */}
       <div className="space-y-2">
-        <Label className="text-xs font-medium text-slate-600">Level</Label>
+        <Label className="text-xs font-medium text-muted-foreground">Level</Label>
         <Select
           value={searchParams.level || "all"}
           onValueChange={(val) => updateFilter("level", val)}
@@ -126,7 +126,7 @@ export function CoursesFilter({
 
       {/* Semester */}
       <div className="space-y-2">
-        <Label className="text-xs font-medium text-slate-600">
+        <Label className="text-xs font-medium text-muted-foreground">
           Semester
         </Label>
         <Select
@@ -149,7 +149,7 @@ export function CoursesFilter({
 
       {/* Type */}
       <div className="space-y-2">
-        <Label className="text-xs font-medium text-slate-600">
+        <Label className="text-xs font-medium text-muted-foreground">
           Material Type
         </Label>
         <Select
