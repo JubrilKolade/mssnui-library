@@ -48,10 +48,15 @@ export function LoginForm() {
       });
 
       if (result?.error) {
+        const isBadCredentials =
+          result.error === "CredentialsSignin" ||
+          result.code === "CredentialsSignin";
         toast({
           variant: "destructive",
           title: "Login failed",
-          description: result.error,
+          description: isBadCredentials
+            ? "Invalid email or password"
+            : `Sign-in error: ${result.error}. If this persists, the site owner should check AUTH_SECRET in the deployment settings.`,
         });
         return;
       }

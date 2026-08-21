@@ -6,6 +6,8 @@ import { getToken } from "next-auth/jwt";
 const publicRoutes = [
   "/login",
   "/register",
+  "/forgot-password",
+  "/reset-password",
   "/api/auth",
 ];
 
@@ -57,7 +59,15 @@ export default async function middleware(req: NextRequest) {
   // Allow public routes
   if (isPublicRoute(pathname)) {
     // Redirect logged in users away from auth pages
-    if (session && (pathname === "/login" || pathname === "/register")) {
+    // (but let deactivated accounts through so they can see the error)
+    if (
+      session &&
+      req.nextUrl.searchParams.get("error") !== "inactive" &&
+      (pathname === "/login" ||
+        pathname === "/register" ||
+        pathname.startsWith("/forgot-password") ||
+        pathname.startsWith("/reset-password"))
+    ) {
       return NextResponse.redirect(new URL("/dashboard", req.url));
     }
     return NextResponse.next();
