@@ -53,6 +53,16 @@ export default async function proxy(req: NextRequest) {
       }
     : null;
 
+  // Landing page: public entry point.
+  // Anonymous visitors see the landing first;
+  // signed-in users go straight to their library.
+  if (pathname === "/") {
+    if (session) {
+      return NextResponse.redirect(new URL("/dashboard", req.url));
+    }
+    return NextResponse.next();
+  }
+
   // Allow public routes
   if (isPublicRoute(pathname)) {
     // Redirect logged in users away from auth pages
