@@ -40,10 +40,7 @@ export default async function proxy(req: NextRequest) {
   const token = await getToken({
     req,
     secret: process.env.AUTH_SECRET,
-    salt:
-      process.env.NODE_ENV === "production"
-        ? "__Secure-authjs.session-token"
-        : "authjs.session-token",
+    secureCookie: process.env.NODE_ENV === "production",
   });
 
   const session = token
