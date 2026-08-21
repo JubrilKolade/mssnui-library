@@ -29,7 +29,7 @@ async function getUsers() {
 }
 
 export default async function UsersPage() {
-  await requireAdmin();
+  const session = await requireAdmin();
   const users = await getUsers();
 
   return (
@@ -43,7 +43,11 @@ export default async function UsersPage() {
         </p>
       </div>
 
-      <UsersManager users={users} />
+      <UsersManager
+        users={users}
+        currentUserId={session.user.id}
+        currentUserRole={session.user.role}
+      />
     </div>
   );
 }

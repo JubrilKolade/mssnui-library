@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/src/lib/auth";
 import { prisma } from "@/src/lib/prisma";
+import { canToggleActive } from "@/src/lib/permissions";
 import { z } from "zod";
+import type { Role } from "@/types";
 
 const schema = z.object({
   isActive: z.boolean(),
@@ -36,11 +38,28 @@ export async function PATCH(
       );
     }
 
-    // Prevent deactivating yourself
-    if (params.id === session.user.id) {
+    const targetUser = await prisma.user.findUnique({
+      where: { id: params.id },
+      select: { role: true },
+    });
+
+    if (!targetUser) {
       return NextResponse.json(
-        { success: false, error: "Cannot deactivate your own account" },
-        { status: 400 }
+        { success: false, error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    const check = canToggleActive(
+      session.user.role as Role,
+      targetUser.role as Role,
+      { isSelf: params.id === session.user.id }
+    );
+
+    if (!check.allowed) {
+      return NextResponse.json(
+        { success: false, error: check.reason },
+        { status: 403 }
       );
     }
 

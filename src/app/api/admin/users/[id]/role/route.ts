@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/src/lib/auth";
 import { prisma } from "@/src/lib/prisma";
+import { canChangeRole } from "@/src/lib/permissions";
 import { z } from "zod";
+import type { Role } from "@/types";
 
 const schema = z.object({
   role: z.enum(["member", "contributor", "admin", "super_admin"]),
@@ -36,32 +38,28 @@ export async function PATCH(
       );
     }
 
-    // Prevent admins from creating super_admins
-    if (
-      validated.data.role === "super_admin" &&
-      session.user.role !== "super_admin"
-    ) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Only super admins can assign super admin role",
-        },
-        { status: 403 }
-      );
-    }
-
-    // Prevent modifying super admin accounts
     const targetUser = await prisma.user.findUnique({
       where: { id: params.id },
       select: { role: true },
     });
 
-    if (
-      targetUser?.role === "super_admin" &&
-      session.user.role !== "super_admin"
-    ) {
+    if (!targetUser) {
       return NextResponse.json(
-        { success: false, error: "Cannot modify super admin accounts" },
+        { success: false, error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    const check = canChangeRole(
+      session.user.role as Role,
+      targetUser.role as Role,
+      validated.data.role,
+      { isSelf: params.id === session.user.id }
+    );
+
+    if (!check.allowed) {
+      return NextResponse.json(
+        { success: false, error: check.reason },
         { status: 403 }
       );
     }
