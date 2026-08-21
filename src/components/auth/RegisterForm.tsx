@@ -98,6 +98,15 @@ export function RegisterForm() {
 
   async function onSubmit(data: RegisterInput) {
     try {
+      if (!selectedUnit) {
+        toast({
+          variant: "destructive",
+          title: "Missing information",
+          description: "Please select your faculty",
+        });
+        return;
+      }
+
       setIsLoading(true);
 
       const res = await fetch("/api/auth/register", {
@@ -261,10 +270,7 @@ export function RegisterForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  Matric number{" "}
-                  <span className="text-muted-foreground font-normal">
-                    (optional)
-                  </span>
+                  Matric number <span className="text-destructive">*</span>
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -281,8 +287,7 @@ export function RegisterForm() {
           {/* Academic Unit */}
           <FormItem>
             <FormLabel>
-              Faculty / Institute{" "}
-              <span className="text-muted-foreground font-normal">(optional)</span>
+              Faculty / Institute <span className="text-destructive">*</span>
             </FormLabel>
               <Select
               onValueChange={(val: string | null) => {

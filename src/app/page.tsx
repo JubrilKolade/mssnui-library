@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { auth } from "@/src/lib/auth";
 import { prisma } from "@/src/lib/prisma";
 import { Footer } from "@/src/components/layout/Footer";
@@ -65,40 +66,9 @@ function GeometricPattern({ className = "" }: { className?: string }) {
   );
 }
 
-// Decorative shelf of book spines — the "library" centrepiece of the hero.
-const SPINES = [
-  { label: "Linguistics", color: "bg-emerald-700", text: "text-emerald-50", h: "h-56" },
-  { label: "Economics", color: "bg-amber-600", text: "text-amber-50", h: "h-64" },
-  { label: "Geography", color: "bg-teal-800", text: "text-teal-50", h: "h-52" },
-  { label: "Physics", color: "bg-rose-800", text: "text-rose-50", h: "h-60" },
-  { label: "Law", color: "bg-indigo-800", text: "text-indigo-50", h: "h-56" },
-  { label: "Anatomy", color: "bg-stone-700", text: "text-stone-50", h: "h-64" },
-];
-
-function Bookshelf() {
-  return (
-    <div className="relative">
-      <div className="flex items-end justify-center gap-2">
-        {SPINES.map((s, i) => (
-          <div
-            key={s.label}
-            className={`${s.color} ${s.h} flex w-11 items-center justify-center rounded-t-md shadow-lg ring-1 ring-black/10 transition-transform duration-300 hover:-translate-y-2`}
-            style={{ transform: `rotate(${i % 2 === 0 ? -1.5 : 1.5}deg)` }}
-          >
-            <span
-              className={`${s.text} rotate-180 text-xs font-semibold tracking-wide [writing-mode:vertical-rl]`}
-            >
-              {s.label}
-            </span>
-          </div>
-        ))}
-      </div>
-      {/* Shelf plank */}
-      <div className="mt-1 h-4 rounded-md bg-gradient-to-b from-amber-800 to-amber-950 shadow-md" />
-      <div className="mx-4 h-2 rounded-b-md bg-amber-950/60" />
-    </div>
-  );
-}
+// Hero photograph — a grand library interior to anchor the page.
+const HERO_IMAGE =
+  "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1600&auto=format&fit=crop";
 
 export default async function LandingPage() {
   const session = await auth();
@@ -211,9 +181,27 @@ export default async function LandingPage() {
             </p>
           </div>
 
-          {/* Bookshelf */}
-          <div className="hidden lg:block">
-            <Bookshelf />
+          {/* Hero image */}
+          <div className="relative hidden lg:block">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-2xl ring-1 ring-border">
+              <Image
+                src={HERO_IMAGE}
+                alt="A grand library interior with towering wooden bookshelves"
+                fill
+                priority
+                sizes="(max-width: 1024px) 0px, 45vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/15 bg-black/40 px-5 py-4 backdrop-blur-md">
+                <p className="font-serif text-lg font-bold text-white">
+                  A library within reach
+                </p>
+                <p className="text-sm text-white/70">
+                  {(stats.totalBooks + stats.totalCourses + stats.totalProjects).toLocaleString()}+ resources, free for every MSSN UI student.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

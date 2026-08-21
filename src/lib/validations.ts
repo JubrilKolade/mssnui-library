@@ -48,7 +48,11 @@ export const registerSchema = z
       .email("Invalid email address"),
     password: passwordSchema,
     confirmPassword: z.string().min(1, "Please confirm your password"),
-    matricNumber: z.string().optional(),
+    matricNumber: z
+      .string()
+      .min(1, "Matric number is required")
+      .min(3, "Matric number looks too short")
+      .max(50, "Matric number is too long"),
     departmentId: z.string().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {

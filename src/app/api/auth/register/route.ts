@@ -54,20 +54,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check matric number if provided
-    if (matricNumber) {
-      const existingMatric = await prisma.user.findUnique({
-        where: { matricNumber },
-      });
-      if (existingMatric) {
-        return NextResponse.json(
-          {
-            success: false,
-            error: "Matric number already registered",
-          },
-          { status: 409 }
-        );
-      }
+    // Check matric number
+    const existingMatric = await prisma.user.findUnique({
+      where: { matricNumber },
+    });
+    if (existingMatric) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Matric number already registered",
+        },
+        { status: 409 }
+      );
     }
 
     // Hash password
@@ -79,7 +77,7 @@ export async function POST(req: NextRequest) {
         name,
         email,
         password: hashedPassword,
-        matricNumber: matricNumber || null,
+        matricNumber,
         departmentId: departmentId || null,
         role: "member",
       },
