@@ -9,6 +9,8 @@ const publicRoutes = [
   "/forgot-password",
   "/reset-password",
   "/api/auth",
+  // Public read-only structure data used by the register form
+  "/api/structure",
 ];
 
 // Routes only for admins and super admins
@@ -18,7 +20,6 @@ const adminRoutes = [
 
 // Routes only for super admins
 const superAdminRoutes = [
-  "/admin/users",
   "/admin/structure",
 ];
 
