@@ -2,6 +2,7 @@ import { prisma } from "@/src/lib/prisma";
 import { auth } from "@/src/lib/auth";
 import { notFound } from "next/navigation";
 import { generateDownloadUrl } from "@/src/lib/r2";
+import { isGlobalDownloadPaused } from "@/src/lib/settings";
 import { BookDetail } from "@/src/components/books/BookDetail";
 import type { Metadata } from "next";
 
@@ -27,7 +28,7 @@ export async function generateMetadata({
 }
 
 async function getBook(id: string, userId: string) {
-  const [book, isBookmarked, downloadCount] = await Promise.all([
+  const [book, isBookmarked, downloadCount, globalPaused] = await Promise.all([
     prisma.book.findUnique({
       where: { id, status: "approved" },
       include: {
@@ -55,6 +56,7 @@ async function getBook(id: string, userId: string) {
     prisma.download.count({
       where: { bookId: id },
     }),
+    isGlobalDownloadPaused(),
   ]);
 
   if (!book) return null;
@@ -88,6 +90,7 @@ async function getBook(id: string, userId: string) {
     signedUrl,
     isBookmarked: !!isBookmarked,
     downloadCount,
+    downloadsPaused: globalPaused || book.downloadsPaused,
   };
 }
 
@@ -106,6 +109,7 @@ export default async function BookPage({ params }: BookPageProps) {
       signedUrl={data.signedUrl}
       isBookmarked={data.isBookmarked}
       userId={session.user.id}
+      downloadsPaused={data.downloadsPaused}
     />
   );
 }

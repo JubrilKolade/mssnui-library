@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   ScrollText,
   Download,
+  Ban,
   Bookmark,
   BookMarked,
   ChevronLeft,
@@ -18,20 +20,26 @@ import {
 import { Button } from "@/src/components/ui/button";
 import { Badge } from "@/src/components/ui/badge";
 import { Separator } from "@/src/components/ui/separator";
-import { PDFViewer } from "@/src/components/shared/PDFViewer";
 import { formatDate, formatFileSize } from "@/src/lib/utils";
 import { useToast } from "@/src/hooks/use-toast";
+
+const PDFViewer = dynamic(
+  () => import("@/src/components/shared/PDFViewer").then((m) => m.PDFViewer),
+  { ssr: false }
+);
 
 interface ProjectDetailProps {
   project: any;
   signedUrl: string;
   isBookmarked: boolean;
+  downloadsPaused?: boolean;
 }
 
 export function ProjectDetail({
   project,
   signedUrl,
   isBookmarked: initialIsBookmarked,
+  downloadsPaused = false,
 }: ProjectDetailProps) {
   const [isBookmarked, setIsBookmarked] = useState(
     initialIsBookmarked
@@ -131,33 +139,60 @@ export function ProjectDetail({
                 Read Project
               </Button>
 
-              <div className="grid grid-cols-2 gap-2">
-                <Button
-                  variant="outline"
-                  onClick={handleDownload}
-                  disabled={isDownloading}
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  Download
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={handleBookmark}
-                  disabled={isBookmarking}
-                  className={
-                    isBookmarked
-                      ? "text-accent-foreground border-accent-foreground/40"
-                      : ""
-                  }
-                >
-                  {isBookmarked ? (
-                    <BookMarked className="w-4 h-4 mr-2" />
-                  ) : (
-                    <Bookmark className="w-4 h-4 mr-2" />
-                  )}
-                  {isBookmarked ? "Saved" : "Save"}
-                </Button>
-              </div>
+              {downloadsPaused ? (
+                <>
+                  <Button
+                    variant="outline"
+                    onClick={handleBookmark}
+                    disabled={isBookmarking}
+                    className={
+                      isBookmarked
+                        ? "w-full text-accent-foreground border-accent-foreground/40"
+                        : "w-full"
+                    }
+                  >
+                    {isBookmarked ? (
+                      <BookMarked className="w-4 h-4 mr-2" />
+                    ) : (
+                      <Bookmark className="w-4 h-4 mr-2" />
+                    )}
+                    {isBookmarked ? "Saved" : "Save"}
+                  </Button>
+                  <p className="flex items-start gap-1.5 text-xs text-muted-foreground px-1">
+                    <Ban className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                    Downloads are currently paused for this project — read it
+                    online instead.
+                  </p>
+                </>
+              ) : (
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={handleDownload}
+                    disabled={isDownloading}
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Download
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={handleBookmark}
+                    disabled={isBookmarking}
+                    className={
+                      isBookmarked
+                        ? "text-accent-foreground border-accent-foreground/40"
+                        : ""
+                    }
+                  >
+                    {isBookmarked ? (
+                      <BookMarked className="w-4 h-4 mr-2" />
+                    ) : (
+                      <Bookmark className="w-4 h-4 mr-2" />
+                    )}
+                    {isBookmarked ? "Saved" : "Save"}
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
 

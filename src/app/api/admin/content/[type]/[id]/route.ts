@@ -3,6 +3,23 @@ import { auth } from "@/src/lib/auth";
 import { prisma } from "@/src/lib/prisma";
 import { r2Client } from "@/src/lib/r2";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { z } from "zod";
+
+const patchSchema = z.object({
+  downloadsPaused: z.boolean(),
+});
+
+async function requireAdminSession() {
+  const session = await auth();
+  if (
+    !session ||
+    (session.user.role !== "admin" &&
+      session.user.role !== "super_admin")
+  ) {
+    return null;
+  }
+  return session;
+}
 
 async function deleteFromR2(url: string) {
   try {
@@ -121,6 +138,77 @@ export async function DELETE(
     console.error("Delete content error:", error);
     return NextResponse.json(
       { success: false, error: "Failed to delete content" },
+      { status: 500 }
+    );
+  }
+}
+
+// PATCH — toggle per-item download pause
+export async function PATCH(
+  req: NextRequest,
+  context: any
+) {
+  const params = await Promise.resolve(context.params);
+  try {
+    const session = await requireAdminSession();
+    if (!session) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    const { type, id } = params;
+
+    if (!["book", "course", "project"].includes(type)) {
+      return NextResponse.json(
+        { success: false, error: "Invalid content type" },
+        { status: 400 }
+      );
+    }
+
+    const body = await req.json();
+    const validated = patchSchema.safeParse(body);
+
+    if (!validated.success) {
+      return NextResponse.json(
+        { success: false, error: "Invalid data" },
+        { status: 400 }
+      );
+    }
+
+    const { downloadsPaused } = validated.data;
+
+    const updated =
+      type === "book"
+        ? await prisma.book.update({
+            where: { id },
+            data: { downloadsPaused },
+            select: { id: true, downloadsPaused: true },
+          })
+        : type === "course"
+          ? await prisma.course.update({
+              where: { id },
+              data: { downloadsPaused },
+              select: { id: true, downloadsPaused: true },
+            })
+          : await prisma.project.update({
+              where: { id },
+              data: { downloadsPaused },
+              select: { id: true, downloadsPaused: true },
+            });
+
+    return NextResponse.json({
+      success: true,
+      message: downloadsPaused
+        ? "Downloads paused"
+        : "Downloads resumed",
+      data: updated,
+    });
+  } catch (error) {
+    console.error("Update content error:", error);
+    return NextResponse.json(
+      { success: false, error: "Failed to update content" },
       { status: 500 }
     );
   }
