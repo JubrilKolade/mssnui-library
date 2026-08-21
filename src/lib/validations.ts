@@ -1,15 +1,39 @@
 import { z } from "zod";
 
+export const passwordSchema = z
+  .string()
+  .min(1, "Password is required")
+  .min(8, "Password must be at least 8 characters")
+  .regex(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+    "Password must contain uppercase, lowercase and number"
+  );
+
 export const loginSchema = z.object({
   email: z
     .string()
     .min(1, "Email is required")
     .email("Invalid email address"),
-  password: z
-    .string()
-    .min(1, "Password is required")
-    .min(6, "Password must be at least 6 characters"),
+  password: z.string().min(1, "Password is required"),
 });
+
+export const forgotPasswordSchema = z.object({
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Invalid email address"),
+});
+
+export const resetPasswordSchema = z
+  .object({
+    token: z.string().min(1, "Reset token is missing"),
+    password: passwordSchema,
+    confirmPassword: z.string().min(1, "Please confirm your password"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 export const registerSchema = z
   .object({
@@ -22,14 +46,7 @@ export const registerSchema = z
       .string()
       .min(1, "Email is required")
       .email("Invalid email address"),
-    password: z
-      .string()
-      .min(1, "Password is required")
-      .min(8, "Password must be at least 8 characters")
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-        "Password must contain uppercase, lowercase and number"
-      ),
+    password: passwordSchema,
     confirmPassword: z.string().min(1, "Please confirm your password"),
     matricNumber: z.string().optional(),
     departmentId: z.string().optional(),
@@ -37,7 +54,7 @@ export const registerSchema = z
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
-});
+  });
 
 // Book upload
 export const bookUploadSchema = z.object({
@@ -113,6 +130,8 @@ export const projectUploadSchema = z.object({
 
 export type BookUploadInput = z.infer<typeof bookUploadSchema>;
 export type CourseUploadInput = z.infer<typeof courseUploadSchema>;
-export type ProjectUploadInput = z.infer<typeof projectUploadSchema>;  
+export type ProjectUploadInput = z.infer<typeof projectUploadSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
