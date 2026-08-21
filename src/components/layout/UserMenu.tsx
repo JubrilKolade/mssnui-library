@@ -43,32 +43,32 @@ const roleLabels: Record<Role, string> = {
 };
 
 const roleBadgeColors: Record<Role, string> = {
-  member: "bg-slate-100 text-slate-700",
-  contributor: "bg-blue-100 text-blue-700",
-  admin: "bg-purple-100 text-purple-700",
-  super_admin: "bg-green-100 text-green-700",
+  member: "bg-muted text-muted-foreground",
+  contributor: "bg-accent text-accent-foreground",
+  admin: "bg-primary/15 text-primary",
+  super_admin: "bg-primary text-primary-foreground",
 };
 
 export function UserMenu({ user }: UserMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 rounded-lg p-1.5 hover:bg-slate-100 transition-colors outline-none">
+        <button className="flex items-center gap-2 rounded-lg p-1.5 hover:bg-muted transition-colors outline-none">
           <Avatar className="w-8 h-8">
             <AvatarImage src={user.image} alt={user.name} />
-            <AvatarFallback className="bg-green-600 text-white text-xs font-semibold">
+            <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
               {getInitials(user.name)}
             </AvatarFallback>
           </Avatar>
           <div className="hidden md:block text-left">
-            <p className="text-sm font-medium text-slate-900 leading-none">
+            <p className="text-sm font-medium text-foreground leading-none">
               {user.name.split(" ")[0]}
             </p>
-            <p className="text-xs text-slate-500 leading-none mt-0.5">
+            <p className="text-xs text-muted-foreground leading-none mt-0.5">
               {roleLabels[user.role]}
             </p>
           </div>
-          <ChevronDown className="w-3 h-3 text-slate-400 hidden md:block" />
+          <ChevronDown className="w-3 h-3 text-muted-foreground hidden md:block" />
         </button>
       </DropdownMenuTrigger>
 
@@ -76,10 +76,10 @@ export function UserMenu({ user }: UserMenuProps) {
         {/* User info */}
         <DropdownMenuLabel>
           <div className="flex flex-col gap-1">
-            <p className="text-sm font-semibold text-slate-900">
+            <p className="text-sm font-semibold text-foreground">
               {user.name}
             </p>
-            <p className="text-xs text-slate-500 font-normal">
+            <p className="text-xs text-muted-foreground font-normal">
               {user.email}
             </p>
             <span
@@ -125,7 +125,7 @@ export function UserMenu({ user }: UserMenuProps) {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem
-          className="text-red-600 focus:text-red-600 cursor-pointer"
+          className="text-destructive focus:text-destructive cursor-pointer"
           onClick={() => signOut({ callbackUrl: "/login" })}
         >
           <LogOut className="mr-2 h-4 w-4" />

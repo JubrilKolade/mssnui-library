@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { Loader2, Info, ChevronDown } from "lucide-react";
+import { Loader2, Info } from "lucide-react";
 import { bookUploadSchema, type BookUploadInput } from "@/src/lib/validations";
 import { useFileUpload } from "@/src/hooks/useFileUpload";
 import { FileUploadInput } from "./FileUploadInput";
@@ -18,7 +18,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/src/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/src/components/ui/select";
 import { Alert, AlertDescription } from "@/src/components/ui/alert";
 import { useToast } from "@/src/hooks/use-toast";
 
@@ -45,9 +53,6 @@ const IMAGE_ACCEPT = {
   "image/png": [".png"],
   "image/webp": [".webp"],
 };
-
-const selectClass =
-  "w-full h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring cursor-pointer disabled:cursor-not-allowed disabled:opacity-50";
 
 export function BookUploadForm({
   categories,
@@ -187,9 +192,9 @@ export function BookUploadForm({
   return (
     <div className="space-y-6">
       {/* Info Banner */}
-      <Alert className="border-blue-200 bg-blue-50">
-        <Info className="w-4 h-4 text-blue-600" />
-        <AlertDescription className="text-blue-700 text-sm">
+      <Alert className="border-border bg-accent">
+        <Info className="w-4 h-4 text-accent-foreground" />
+        <AlertDescription className="text-accent-foreground text-sm">
           All uploads are reviewed by admins before becoming visible to
           other users.
         </AlertDescription>
@@ -223,7 +228,7 @@ export function BookUploadForm({
           <div className="space-y-2">
             <FormLabel>
               Cover Image{" "}
-              <span className="text-slate-400 font-normal">(optional)</span>
+              <span className="text-muted-foreground font-normal">(optional)</span>
             </FormLabel>
             <FileUploadInput
               accept={IMAGE_ACCEPT}
@@ -287,7 +292,7 @@ export function BookUploadForm({
               <FormItem>
                 <FormLabel>
                   Description{" "}
-                  <span className="text-slate-400 font-normal">
+                  <span className="text-muted-foreground font-normal">
                     (optional)
                   </span>
                 </FormLabel>
@@ -312,24 +317,23 @@ export function BookUploadForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Category</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <select
-                        value={field.value ?? ""}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        disabled={isSubmitting}
-                        className={selectClass}
-                      >
-                        <option value="">Select category</option>
-                        {categories.map((cat) => (
-                          <option key={cat.id} value={cat.id}>
-                            {cat.name}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    </div>
-                  </FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    disabled={isSubmitting}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.map((cat) => (
+                        <SelectItem key={cat.id} value={cat.id}>
+                          {cat.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -341,24 +345,23 @@ export function BookUploadForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Department</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <select
-                        value={field.value ?? ""}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        disabled={isSubmitting}
-                        className={selectClass}
-                      >
-                        <option value="">Select department</option>
-                        {departments.map((dept) => (
-                          <option key={dept.id} value={dept.id}>
-                            {dept.name}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    </div>
-                  </FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    disabled={isSubmitting}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select department" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {departments.map((dept) => (
+                        <SelectItem key={dept.id} value={dept.id}>
+                          {dept.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -373,23 +376,24 @@ export function BookUploadForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Language</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <select
-                        value={field.value ?? "English"}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        disabled={isSubmitting}
-                        className={selectClass}
-                      >
-                        {languages.map((lang) => (
-                          <option key={lang} value={lang}>
-                            {lang}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    </div>
-                  </FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    disabled={isSubmitting}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {languages.map((lang) => (
+                        <SelectItem key={lang} value={lang}>
+                          {lang}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -401,28 +405,23 @@ export function BookUploadForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Published Year</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <select
-                        value={field.value ?? ""}
-                        onChange={(e) =>
-                          field.onChange(
-                            e.target.value ? parseInt(e.target.value) : undefined
-                          )
-                        }
-                        disabled={isSubmitting}
-                        className={selectClass}
-                      >
-                        <option value="">Select year</option>
-                        {years.map((year) => (
-                          <option key={year} value={String(year)}>
-                            {year}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    </div>
-                  </FormControl>
+                  <Select
+                    onValueChange={(v) => field.onChange(parseInt(v as string))}
+                    disabled={isSubmitting}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select year" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {years.map((year) => (
+                        <SelectItem key={year} value={String(year)}>
+                          {year}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -453,7 +452,7 @@ export function BookUploadForm({
           {/* Submit */}
           <Button
             type="submit"
-            className="w-full bg-green-600 hover:bg-green-700"
+            className="w-full"
             disabled={
               isSubmitting ||
               pdfProgress.status === "uploading" ||

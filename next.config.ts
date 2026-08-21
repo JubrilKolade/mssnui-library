@@ -10,11 +10,15 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "*.r2.dev", // R2 public bucket URLs
+      },
+      {
+        protocol: "https",
         hostname: "lh3.googleusercontent.com", // Google profile images
       },
     ],
   },
-  serverExternalPackages: ["pdfjs-dist"],
+  serverExternalPackages: ["pdfjs-dist", "pg", "@prisma/adapter-pg"],
   turbopack: {
     root: __dirname,
   },

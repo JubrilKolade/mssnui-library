@@ -2,6 +2,7 @@ import { prisma } from "@/src/lib/prisma";
 import { auth } from "@/src/lib/auth";
 import { notFound } from "next/navigation";
 import { generateDownloadUrl } from "@/src/lib/r2";
+import { isGlobalDownloadPaused } from "@/src/lib/settings";
 import { ProjectDetail } from "@/src/components/projects/ProjectDetail";
 import type { Metadata } from "next";
 
@@ -27,7 +28,7 @@ export async function generateMetadata({
 }
 
 async function getProject(id: string, userId: string) {
-  const [project, isBookmarked] = await Promise.all([
+  const [project, isBookmarked, globalPaused] = await Promise.all([
     prisma.project.findUnique({
       where: { id, status: "approved" },
       include: {
@@ -55,6 +56,7 @@ async function getProject(id: string, userId: string) {
     prisma.bookmark.findFirst({
       where: { userId, projectId: id },
     }),
+    isGlobalDownloadPaused(),
   ]);
 
   if (!project) return null;
@@ -81,6 +83,7 @@ async function getProject(id: string, userId: string) {
     project,
     signedUrl,
     isBookmarked: !!isBookmarked,
+    downloadsPaused: globalPaused || project.downloadsPaused,
   };
 }
 
@@ -99,6 +102,7 @@ export default async function ProjectPage({
       project={data.project}
       signedUrl={data.signedUrl}
       isBookmarked={data.isBookmarked}
+      downloadsPaused={data.downloadsPaused}
     />
   );
 }

@@ -94,12 +94,12 @@ export function ChangePasswordForm({
 
   if (!hasPassword) {
     return (
-      <div className="bg-white rounded-xl border border-slate-200 p-6">
-        <h3 className="font-semibold text-slate-900 mb-4">
+      <div className="bg-card rounded-2xl border border-border p-6">
+        <h3 className="font-serif font-bold text-foreground mb-4">
           Change Password
         </h3>
-        <Alert className="border-blue-200 bg-blue-50">
-          <AlertDescription className="text-blue-700 text-sm">
+        <Alert className="border-border bg-accent">
+          <AlertDescription className="text-accent-foreground text-sm">
             Your account uses Google Sign-In. Password management is
             handled through your Google account.
           </AlertDescription>
@@ -109,8 +109,8 @@ export function ChangePasswordForm({
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6">
-      <h3 className="font-semibold text-slate-900 mb-4">
+    <div className="bg-card rounded-2xl border border-border p-6">
+      <h3 className="font-serif font-bold text-foreground mb-4">
         Change Password
       </h3>
 
@@ -136,7 +136,7 @@ export function ChangePasswordForm({
                     <button
                       type="button"
                       onClick={() => setShowCurrent(!showCurrent)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
                       {showCurrent ? (
                         <EyeOff className="h-4 w-4" />
@@ -168,7 +168,7 @@ export function ChangePasswordForm({
                     <button
                       type="button"
                       onClick={() => setShowNew(!showNew)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
                       {showNew ? (
                         <EyeOff className="h-4 w-4" />
@@ -200,7 +200,7 @@ export function ChangePasswordForm({
                     <button
                       type="button"
                       onClick={() => setShowConfirm(!showConfirm)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
                       {showConfirm ? (
                         <EyeOff className="h-4 w-4" />
@@ -217,7 +217,6 @@ export function ChangePasswordForm({
 
           <Button
             type="submit"
-            className="bg-green-600 hover:bg-green-700"
             disabled={isLoading}
           >
             {isLoading ? (

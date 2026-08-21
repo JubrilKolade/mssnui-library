@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Loader2, ChevronDown } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -15,8 +15,15 @@ import {
 } from "@/src/components/ui/form";
 import { Input } from "@/src/components/ui/input";
 import { Button } from "@/src/components/ui/button";
-import { Label } from "@/src/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/src/components/ui/select";
 import { useToast } from "@/src/hooks/use-toast";
+import { useEffect } from "react";
 
 const schema = z.object({
   name: z
@@ -33,9 +40,6 @@ interface EditProfileFormProps {
   user: any;
   onUpdate: (user: any) => void;
 }
-
-const selectClass =
-  "w-full h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring cursor-pointer disabled:cursor-not-allowed disabled:opacity-50";
 
 export function EditProfileForm({
   user,
@@ -111,11 +115,16 @@ export function EditProfileForm({
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6">
-      <h3 className="font-semibold text-slate-900 mb-4">Edit Profile</h3>
+    <div className="bg-card rounded-2xl border border-border p-6">
+      <h3 className="font-serif font-bold text-foreground mb-4">
+        Edit Profile
+      </h3>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-5"
+        >
           {/* Name */}
           <FormField
             control={form.control}
@@ -139,7 +148,9 @@ export function EditProfileForm({
               <FormItem>
                 <FormLabel>
                   Matric Number{" "}
-                  <span className="text-slate-400 font-normal">(optional)</span>
+                  <span className="text-muted-foreground font-normal">
+                    (optional)
+                  </span>
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -155,29 +166,32 @@ export function EditProfileForm({
 
           {/* Academic Unit */}
           <FormItem>
-            <Label>
+            <FormLabel>
               Faculty / Institute{" "}
-              <span className="text-slate-400 font-normal">(optional)</span>
-            </Label>
-            <div className="relative">
-              <select
-                value={selectedUnit}
-                onChange={(e) => {
-                  setSelectedUnit(e.target.value);
-                  form.setValue("departmentId", "");
-                }}
-                disabled={isLoading}
-                className={selectClass}
-              >
-                <option value="">None</option>
+              <span className="text-muted-foreground font-normal">
+                (optional)
+              </span>
+            </FormLabel>
+            <Select
+              value={selectedUnit}
+              onValueChange={(val) => {
+                setSelectedUnit(val ?? "");
+                form.setValue("departmentId", "");
+              }}
+              disabled={isLoading}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select faculty" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="">None</SelectItem>
                 {academicUnits.map((unit) => (
-                  <option key={unit.id} value={unit.id}>
+                  <SelectItem key={unit.id} value={unit.id}>
                     {unit.name}
-                  </option>
+                  </SelectItem>
                 ))}
-              </select>
-              <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            </div>
+              </SelectContent>
+            </Select>
           </FormItem>
 
           {/* Department */}
@@ -189,26 +203,29 @@ export function EditProfileForm({
                 <FormItem>
                   <FormLabel>
                     Department{" "}
-                    <span className="text-slate-400 font-normal">(optional)</span>
+                    <span className="text-muted-foreground font-normal">
+                      (optional)
+                    </span>
                   </FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <select
-                        value={field.value ?? ""}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        disabled={isLoading}
-                        className={selectClass}
-                      >
-                        <option value="">None</option>
-                        {departments.map((dept) => (
-                          <option key={dept.id} value={dept.id}>
-                            {dept.name}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    </div>
-                  </FormControl>
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    disabled={isLoading}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select department" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="">None</SelectItem>
+                      {departments.map((dept) => (
+                        <SelectItem key={dept.id} value={dept.id}>
+                          {dept.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -217,7 +234,6 @@ export function EditProfileForm({
 
           <Button
             type="submit"
-            className="bg-green-600 hover:bg-green-700"
             disabled={isLoading}
           >
             {isLoading ? (

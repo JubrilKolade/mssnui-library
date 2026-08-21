@@ -46,7 +46,7 @@ export function Pagination({ page, totalPages, total }: PaginationProps) {
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-      <p className="text-sm text-slate-500">
+      <p className="text-sm text-muted-foreground">
         Page {page} of {totalPages} ({total.toLocaleString()} total)
       </p>
 
@@ -63,7 +63,7 @@ export function Pagination({ page, totalPages, total }: PaginationProps) {
 
         {getPageNumbers().map((pageNum, i) =>
           pageNum === "..." ? (
-            <span key={i} className="px-2 text-slate-400 text-sm">
+            <span key={i} className="px-2 text-muted-foreground text-sm">
               ...
             </span>
           ) : (
@@ -73,7 +73,7 @@ export function Pagination({ page, totalPages, total }: PaginationProps) {
               size="icon"
               className={cn(
                 "w-8 h-8 text-sm",
-                pageNum === page && "bg-green-600 hover:bg-green-700"
+                pageNum === page && "bg-primary hover:bg-primary/80"
               )}
               onClick={() => goToPage(pageNum as number)}
             >

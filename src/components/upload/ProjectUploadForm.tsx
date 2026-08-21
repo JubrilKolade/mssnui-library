@@ -121,9 +121,9 @@ export function ProjectUploadForm({ departments }: ProjectUploadFormProps) {
 
   return (
     <div className="space-y-6">
-      <Alert className="border-blue-200 bg-blue-50">
-        <Info className="w-4 h-4 text-blue-600" />
-        <AlertDescription className="text-blue-700 text-sm">
+      <Alert className="border-border bg-accent">
+        <Info className="w-4 h-4 text-accent-foreground" />
+        <AlertDescription className="text-accent-foreground text-sm">
           All uploads are reviewed by admins before becoming visible.
         </AlertDescription>
       </Alert>
@@ -197,7 +197,7 @@ export function ProjectUploadForm({ departments }: ProjectUploadFormProps) {
                 <FormItem>
                   <FormLabel>
                     Supervisor{" "}
-                    <span className="text-slate-400 font-normal">(optional)</span>
+                    <span className="text-muted-foreground font-normal">(optional)</span>
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -289,7 +289,7 @@ export function ProjectUploadForm({ departments }: ProjectUploadFormProps) {
               <FormItem>
                 <FormLabel>
                   Abstract{" "}
-                  <span className="text-slate-400 font-normal">(optional)</span>
+                  <span className="text-muted-foreground font-normal">(optional)</span>
                 </FormLabel>
                 <FormControl>
                   <Textarea
@@ -307,7 +307,7 @@ export function ProjectUploadForm({ departments }: ProjectUploadFormProps) {
           {/* Submit */}
           <Button
             type="submit"
-            className="w-full bg-green-600 hover:bg-green-700"
+            className="w-full"
             disabled={isSubmitting || progress.status === "uploading"}
           >
             {isSubmitting ? (

@@ -29,23 +29,23 @@ const typeIcons = {
 };
 
 const typeColors = {
-  book: "text-blue-600",
-  course: "text-purple-600",
-  project: "text-orange-600",
+  book: "text-emerald-600 dark:text-emerald-400",
+  course: "text-teal-600 dark:text-teal-400",
+  project: "text-amber-600 dark:text-amber-400",
 };
 
 const roleBadgeColors: Record<string, string> = {
-  member: "bg-slate-100 text-slate-700",
-  contributor: "bg-blue-100 text-blue-700",
-  admin: "bg-purple-100 text-purple-700",
-  super_admin: "bg-green-100 text-green-700",
+  member: "bg-muted text-muted-foreground",
+  contributor: "bg-accent text-accent-foreground",
+  admin: "bg-primary/15 text-primary",
+  super_admin: "bg-primary text-primary-foreground",
 };
 
 export function ActivityFeed({ data }: ActivityFeedProps) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5 h-full">
-      <h3 className="font-semibold text-slate-900 flex items-center gap-2 mb-4">
-        <Activity className="w-4 h-4 text-green-600" />
+    <div className="bg-card rounded-2xl border border-border p-5 h-full">
+      <h3 className="font-serif font-bold text-foreground flex items-center gap-2 mb-4">
+        <Activity className="w-4 h-4 text-primary" />
         Recent Activity
       </h3>
 
@@ -66,7 +66,7 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
         <TabsContent value="downloads">
           <div className="space-y-3">
             {data.recentDownloads.length === 0 ? (
-              <p className="text-xs text-slate-400 text-center py-4">
+              <p className="text-xs text-muted-foreground text-center py-4">
                 No downloads yet
               </p>
             ) : (
@@ -78,31 +78,31 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
                 const color =
                   typeColors[
                     download.resourceType as keyof typeof typeColors
-                  ] || "text-slate-600";
+                  ] || "text-muted-foreground";
 
                 return (
                   <div
                     key={download.id}
                     className="flex items-start gap-2.5"
                   >
-                    <Avatar className="w-7 h-7 flex-shrink-0">
+                    <Avatar className="w-7 h-7 shrink-0">
                       <AvatarImage src={download.user?.avatar} />
-                      <AvatarFallback className="text-xs bg-slate-100">
+                      <AvatarFallback className="text-xs bg-muted">
                         {getInitials(download.user?.name || "?")}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs text-slate-700">
+                      <p className="text-xs text-foreground">
                         <span className="font-medium">
                           {download.user?.name}
                         </span>{" "}
                         downloaded
                       </p>
-                      <p className="text-xs text-slate-500 truncate flex items-center gap-1">
-                        <Icon className={`w-3 h-3 ${color} flex-shrink-0`} />
+                      <p className="text-xs text-muted-foreground truncate flex items-center gap-1">
+                        <Icon className={`w-3 h-3 ${color} shrink-0`} />
                         {download.resourceTitle}
                       </p>
-                      <p className="text-xs text-slate-400 mt-0.5">
+                      <p className="text-xs text-muted-foreground mt-0.5">
                         {formatDate(download.downloadedAt)}
                       </p>
                     </div>
@@ -117,33 +117,33 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
         <TabsContent value="users">
           <div className="space-y-3">
             {data.recentRegistrations.length === 0 ? (
-              <p className="text-xs text-slate-400 text-center py-4">
+              <p className="text-xs text-muted-foreground text-center py-4">
                 No new users yet
               </p>
             ) : (
               data.recentRegistrations.map((user) => (
                 <div key={user.id} className="flex items-center gap-2.5">
-                  <Avatar className="w-7 h-7 flex-shrink-0">
+                  <Avatar className="w-7 h-7 shrink-0">
                     <AvatarImage src={user.avatar} />
-                    <AvatarFallback className="text-xs bg-green-100 text-green-700">
+                    <AvatarFallback className="text-xs bg-primary/15 text-primary">
                       {getInitials(user.name)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium text-slate-900 truncate">
+                    <p className="text-xs font-medium text-foreground truncate">
                       {user.name}
                     </p>
-                    <p className="text-xs text-slate-400 truncate">
+                    <p className="text-xs text-muted-foreground truncate">
                       {user.email}
                     </p>
-                    <p className="text-xs text-slate-400 mt-0.5">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {formatDate(user.createdAt)}
                     </p>
                   </div>
                   <Badge
-                    className={`text-xs flex-shrink-0 ${
+                    className={`text-xs shrink-0 ${
                       roleBadgeColors[user.role] ||
-                      "bg-slate-100 text-slate-700"
+                      "bg-muted text-muted-foreground"
                     }`}
                   >
                     {user.role}
@@ -158,7 +158,7 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
         <TabsContent value="uploads">
           <div className="space-y-3">
             {data.recentUploads.length === 0 ? (
-              <p className="text-xs text-slate-400 text-center py-4">
+              <p className="text-xs text-muted-foreground text-center py-4">
                 No pending uploads
               </p>
             ) : (
@@ -168,7 +168,7 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
                   BookOpen;
                 const color =
                   typeColors[upload.type as keyof typeof typeColors] ||
-                  "text-slate-600";
+                  "text-muted-foreground";
 
                 return (
                   <div
@@ -176,22 +176,22 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
                     className="flex items-start gap-2.5"
                   >
                     <div
-                      className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-slate-100`}
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 bg-muted`}
                     >
                       <Icon className={`w-3.5 h-3.5 ${color}`} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs text-slate-700 truncate font-medium">
+                      <p className="text-xs text-foreground truncate font-medium">
                         {upload.title}
                       </p>
-                      <p className="text-xs text-slate-400">
+                      <p className="text-xs text-muted-foreground">
                         by {upload.uploadedBy}
                       </p>
-                      <p className="text-xs text-slate-400 mt-0.5">
+                      <p className="text-xs text-muted-foreground mt-0.5">
                         {formatDate(upload.createdAt)}
                       </p>
                     </div>
-                    <Badge className="text-xs bg-yellow-100 text-yellow-700 flex-shrink-0">
+                    <Badge className="text-xs bg-yellow-500/15 text-yellow-300 dark:bg-yellow-500/15 dark:text-yellow-300 shrink-0">
                       Pending
                     </Badge>
                   </div>

@@ -38,13 +38,13 @@ export function BulkApproveDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-green-600">
+          <DialogTitle className="flex items-center gap-2 text-primary">
             <CheckCircle className="w-5 h-5" />
             Bulk Approve
           </DialogTitle>
           <DialogDescription>
             You are about to approve{" "}
-            <span className="font-semibold text-slate-900">
+            <span className="font-semibold text-foreground">
               {count} {type}
               {count !== 1 ? "s" : ""}
             </span>
@@ -63,7 +63,7 @@ export function BulkApproveDialog({
             Cancel
           </Button>
           <Button
-            className="flex-1 bg-green-600 hover:bg-green-700"
+            className="flex-1"
             onClick={handleConfirm}
             disabled={isLoading}
           >

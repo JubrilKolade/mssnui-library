@@ -30,6 +30,14 @@ function formatMonth(monthStr: string) {
   });
 }
 
+const tooltipStyle = {
+  borderRadius: "8px",
+  fontSize: "12px",
+  border: "1px solid var(--border)",
+  backgroundColor: "var(--card)",
+  color: "var(--foreground)",
+};
+
 export function RegistrationsChart({ data }: RegistrationsChartProps) {
   const chartData = data.map((d) => ({
     ...d,
@@ -39,15 +47,15 @@ export function RegistrationsChart({ data }: RegistrationsChartProps) {
   const totalRegistrations = data.reduce((sum, d) => sum + d.total, 0);
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5">
+    <div className="bg-card rounded-2xl border border-border p-5">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="font-semibold text-slate-900 flex items-center gap-2">
-            <Users className="w-4 h-4 text-blue-600" />
+          <h3 className="font-semibold text-foreground flex items-center gap-2">
+            <Users className="w-4 h-4 text-primary" />
             User Registrations
           </h3>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-muted-foreground mt-0.5">
             {totalRegistrations.toLocaleString()} total registrations
           </p>
         </div>
@@ -59,25 +67,19 @@ export function RegistrationsChart({ data }: RegistrationsChartProps) {
           data={chartData}
           margin={{ top: 5, right: 5, left: -20, bottom: 5 }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
           <XAxis
             dataKey="month"
-            tick={{ fontSize: 10, fill: "#94a3b8" }}
+            tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
             tickLine={false}
             axisLine={false}
           />
           <YAxis
-            tick={{ fontSize: 10, fill: "#94a3b8" }}
+            tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
             tickLine={false}
             axisLine={false}
           />
-          <Tooltip
-            contentStyle={{
-              borderRadius: "8px",
-              border: "1px solid #e2e8f0",
-              fontSize: "12px",
-            }}
-          />
+          <Tooltip contentStyle={tooltipStyle} />
           <Legend wrapperStyle={{ fontSize: "11px" }} />
           <Bar
             dataKey="member"

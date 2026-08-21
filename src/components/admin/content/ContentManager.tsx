@@ -12,6 +12,9 @@ import {
   Search,
   Trash2,
   Eye,
+  PauseCircle,
+  PlayCircle,
+  Globe,
 } from "lucide-react";
 import { formatDate, formatFileSize } from "@/src/lib/utils";
 import { useToast } from "@/src/hooks/use-toast";
@@ -27,25 +30,105 @@ interface ContentManagerProps {
   books: any[];
   courses: any[];
   projects: any[];
+  downloadsPausedGlobally: boolean;
 }
 
 const statusColors = {
-  pending: "bg-yellow-100 text-yellow-700",
-  approved: "bg-green-100 text-green-700",
-  rejected: "bg-red-100 text-red-700",
+  pending: "bg-yellow-500/15 text-yellow-300 dark:bg-yellow-500/15 dark:text-yellow-300",
+  approved: "bg-emerald-500/15 text-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-300",
+  rejected: "bg-red-500/15 text-red-300 dark:bg-red-500/15 dark:text-red-300",
 };
 
 export function ContentManager({
   books: initialBooks,
   courses: initialCourses,
   projects: initialProjects,
+  downloadsPausedGlobally,
 }: ContentManagerProps) {
   const [books, setBooks] = useState(initialBooks);
   const [courses, setCourses] = useState(initialCourses);
   const [projects, setProjects] = useState(initialProjects);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [globalPaused, setGlobalPaused] = useState(
+    downloadsPausedGlobally
+  );
   const { toast } = useToast();
+
+  async function handleToggleGlobal() {
+    const next = !globalPaused;
+    try {
+      const res = await fetch("/api/admin/settings/downloads", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ paused: next }),
+      });
+      const data = await res.json();
+
+      if (!data.success) {
+        toast({
+          variant: "destructive",
+          title: "Update failed",
+          description: data.error,
+        });
+        return;
+      }
+
+      setGlobalPaused(next);
+      toast({ title: data.message });
+    } catch {
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+      });
+    }
+  }
+
+  async function handleToggleDownload(
+    id: string,
+    type: "book" | "course" | "project"
+  ) {
+    const list =
+      type === "book" ? books : type === "course" ? courses : projects;
+    const item = list.find((i) => i.id === id);
+    if (!item) return;
+
+    const next = !item.downloadsPaused;
+
+    try {
+      const res = await fetch(`/api/admin/content/${type}/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ downloadsPaused: next }),
+      });
+      const data = await res.json();
+
+      if (!data.success) {
+        toast({
+          variant: "destructive",
+          title: "Update failed",
+          description: data.error,
+        });
+        return;
+      }
+
+      const updater = (prev: any[]) =>
+        prev.map((i) =>
+          i.id === id ? { ...i, downloadsPaused: next } : i
+        );
+
+      if (type === "book") setBooks(updater);
+      else if (type === "course") setCourses(updater);
+      else setProjects(updater);
+
+      toast({ title: data.message });
+    } catch {
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+      });
+    }
+  }
 
   async function handleDelete(
     id: string,
@@ -110,10 +193,44 @@ export function ContentManager({
 
   return (
     <div className="space-y-4">
+      {/* Global download pause */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-border bg-card p-4">
+        <div className="flex items-start gap-3">
+          <Globe className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+          <div>
+            <p className="text-sm font-medium text-foreground">
+              Downloads for all content
+            </p>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              {globalPaused
+                ? "Paused — users can only view content in-app. Per-item overrides are ignored."
+                : "Enabled — pause individual items below to drive in-app views."}
+            </p>
+          </div>
+        </div>
+        <Button
+          variant={globalPaused ? "default" : "outline"}
+          onClick={handleToggleGlobal}
+          className="shrink-0"
+        >
+          {globalPaused ? (
+            <>
+              <PlayCircle className="w-4 h-4 mr-2" />
+              Resume all downloads
+            </>
+          ) : (
+            <>
+              <PauseCircle className="w-4 h-4 mr-2" />
+              Pause all downloads
+            </>
+          )}
+        </Button>
+      </div>
+
       {/* Filters */}
       <div className="flex gap-3 flex-col sm:flex-row">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             placeholder="Search content..."
             className="pl-9"
@@ -162,9 +279,12 @@ export function ContentManager({
               uploadedBy: b.uploadedBy?.name,
               createdAt: b.createdAt,
               fileSize: b.fileSize,
+              downloadsPaused: !!b.downloadsPaused,
             }))}
             type="book"
+            globalPaused={globalPaused}
             onDelete={(id) => handleDelete(id, "book")}
+            onToggleDownload={(id) => handleToggleDownload(id, "book")}
           />
         </TabsContent>
 
@@ -180,9 +300,12 @@ export function ContentManager({
               uploadedBy: c.uploadedBy?.name,
               createdAt: c.createdAt,
               fileSize: c.fileSize,
+              downloadsPaused: !!c.downloadsPaused,
             }))}
             type="course"
+            globalPaused={globalPaused}
             onDelete={(id) => handleDelete(id, "course")}
+            onToggleDownload={(id) => handleToggleDownload(id, "course")}
           />
         </TabsContent>
 
@@ -198,9 +321,12 @@ export function ContentManager({
               uploadedBy: p.uploadedBy?.name,
               createdAt: p.createdAt,
               fileSize: p.fileSize,
+              downloadsPaused: !!p.downloadsPaused,
             }))}
             type="project"
+            globalPaused={globalPaused}
             onDelete={(id) => handleDelete(id, "project")}
+            onToggleDownload={(id) => handleToggleDownload(id, "project")}
           />
         </TabsContent>
       </Tabs>
@@ -218,68 +344,77 @@ interface ContentTableProps {
     uploadedBy?: string;
     createdAt: Date;
     fileSize: number;
+    downloadsPaused: boolean;
   }[];
   type: string;
+  globalPaused: boolean;
   onDelete: (id: string) => void;
+  onToggleDownload: (id: string) => void;
 }
 
-function ContentTable({ items, type, onDelete }: ContentTableProps) {
+function ContentTable({
+  items,
+  type,
+  globalPaused,
+  onDelete,
+  onToggleDownload,
+}: ContentTableProps) {
   if (items.length === 0) {
     return (
-      <div className="text-center py-12 text-slate-400">
+      <div className="text-center py-12 text-muted-foreground">
         <p>No {type}s found</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    <div className="bg-card rounded-2xl border border-border overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-slate-100 bg-slate-50">
-              <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">
+            <tr className="border-b border-border bg-muted">
+              <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3">
                 Title
               </th>
-              <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3 hidden md:table-cell">
+              <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3 hidden md:table-cell">
                 Details
               </th>
-              <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3 hidden lg:table-cell">
+              <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3 hidden lg:table-cell">
                 Uploaded By
               </th>
-              <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">
+              <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3">
                 Status
               </th>
-              <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3 hidden lg:table-cell">
+              <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3 hidden lg:table-cell">
                 Date
               </th>
               <th className="px-4 py-3" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-50">
+          <tbody className="divide-y divide-border">
             {items.map((item) => (
               <tr
                 key={item.id}
-                className="hover:bg-slate-50 transition-colors"
+                className="hover:bg-accent/50 transition-colors"
               >
                 <td className="px-4 py-3">
-                  <p className="text-sm font-medium text-slate-900 line-clamp-1">
+                  <p className="text-sm font-medium text-foreground line-clamp-1">
                     {item.title}
                   </p>
                   {item.subtitle && (
-                    <p className="text-xs text-slate-500 truncate">
+                    <p className="text-xs text-muted-foreground truncate">
                       {item.subtitle}
                     </p>
                   )}
                 </td>
                 <td className="px-4 py-3 hidden md:table-cell">
-                  <p className="text-xs text-slate-500">{item.meta}</p>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-muted-foreground">{item.meta}</p>
+                  <p className="text-xs text-muted-foreground">
                     {formatFileSize(item.fileSize)}
                   </p>
                 </td>
                 <td className="px-4 py-3 hidden lg:table-cell">
-                  <p className="text-xs text-slate-600">
+                  <p className="text-xs text-muted-foreground">
                     {item.uploadedBy}
                   </p>
                 </td>
@@ -295,7 +430,7 @@ function ContentTable({ items, type, onDelete }: ContentTableProps) {
                   </Badge>
                 </td>
                 <td className="px-4 py-3 hidden lg:table-cell">
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-muted-foreground">
                     {formatDate(item.createdAt)}
                   </p>
                 </td>
@@ -304,7 +439,31 @@ function ContentTable({ items, type, onDelete }: ContentTableProps) {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="w-8 h-8 text-slate-400 hover:text-red-600"
+                      title={
+                        globalPaused
+                          ? "All downloads are paused globally"
+                          : item.downloadsPaused
+                            ? "Resume downloads for this item"
+                            : "Pause downloads for this item"
+                      }
+                      disabled={globalPaused}
+                      className={`w-8 h-8 ${
+                        item.downloadsPaused && !globalPaused
+                          ? "text-amber-600 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-400"
+                          : "text-muted-foreground hover:text-primary"
+                      }`}
+                      onClick={() => onToggleDownload(item.id)}
+                    >
+                      {item.downloadsPaused ? (
+                        <PauseCircle className="w-3.5 h-3.5" />
+                      ) : (
+                        <PlayCircle className="w-3.5 h-3.5" />
+                      )}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="w-8 h-8 text-muted-foreground hover:text-destructive"
                       onClick={() => onDelete(item.id)}
                     >
                       <Trash2 className="w-3.5 h-3.5" />

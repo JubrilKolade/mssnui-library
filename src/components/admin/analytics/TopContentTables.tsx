@@ -26,9 +26,9 @@ interface TopContentTablesProps {
 
 export function TopContentTables({ data }: TopContentTablesProps) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5">
-      <h3 className="font-semibold text-slate-900 flex items-center gap-2 mb-4">
-        <Trophy className="w-4 h-4 text-yellow-500" />
+    <div className="bg-card rounded-2xl border border-border p-5">
+      <h3 className="font-semibold text-foreground flex items-center gap-2 mb-4">
+        <Trophy className="w-4 h-4 text-yellow-500 dark:text-yellow-400" />
         Top Performing Content
       </h3>
 
@@ -56,7 +56,7 @@ export function TopContentTables({ data }: TopContentTablesProps) {
         <TabsContent value="books">
           <div className="space-y-2">
             {data.topBooks.length === 0 ? (
-              <p className="text-sm text-slate-400 text-center py-6">
+              <p className="text-sm text-muted-foreground text-center py-6">
                 No data yet
               </p>
             ) : (
@@ -70,8 +70,8 @@ export function TopContentTables({ data }: TopContentTablesProps) {
                   downloads={book._count.downloads}
                   views={book._count.views}
                   bookmarks={book._count.bookmarks}
-                  color="text-blue-600"
-                  bg="bg-blue-50"
+                  color="text-emerald-600 dark:text-emerald-400"
+                  bg="bg-emerald-500/15"
                   icon={BookOpen}
                 />
               ))
@@ -83,7 +83,7 @@ export function TopContentTables({ data }: TopContentTablesProps) {
         <TabsContent value="courses">
           <div className="space-y-2">
             {data.topCourses.length === 0 ? (
-              <p className="text-sm text-slate-400 text-center py-6">
+              <p className="text-sm text-muted-foreground text-center py-6">
                 No data yet
               </p>
             ) : (
@@ -95,8 +95,8 @@ export function TopContentTables({ data }: TopContentTablesProps) {
                   subtitle={course.department?.name}
                   downloads={course._count.downloads}
                   views={course._count.views}
-                  color="text-purple-600"
-                  bg="bg-purple-50"
+                  color="text-teal-600 dark:text-teal-400"
+                  bg="bg-teal-500/15"
                   icon={GraduationCap}
                 />
               ))
@@ -108,7 +108,7 @@ export function TopContentTables({ data }: TopContentTablesProps) {
         <TabsContent value="projects">
           <div className="space-y-2">
             {data.topProjects.length === 0 ? (
-              <p className="text-sm text-slate-400 text-center py-6">
+              <p className="text-sm text-muted-foreground text-center py-6">
                 No data yet
               </p>
             ) : (
@@ -120,8 +120,8 @@ export function TopContentTables({ data }: TopContentTablesProps) {
                   subtitle={project.department?.name}
                   downloads={project._count.downloads}
                   views={project._count.views}
-                  color="text-orange-600"
-                  bg="bg-orange-50"
+                  color="text-amber-600 dark:text-amber-400"
+                  bg="bg-amber-500/15"
                   icon={ScrollText}
                 />
               ))
@@ -133,7 +133,7 @@ export function TopContentTables({ data }: TopContentTablesProps) {
         <TabsContent value="contributors">
           <div className="space-y-2">
             {data.topContributors.length === 0 ? (
-              <p className="text-sm text-slate-400 text-center py-6">
+              <p className="text-sm text-muted-foreground text-center py-6">
                 No data yet
               </p>
             ) : (
@@ -146,27 +146,27 @@ export function TopContentTables({ data }: TopContentTablesProps) {
                 return (
                   <div
                     key={user.id}
-                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50"
+                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-accent/50"
                   >
                     {/* Rank */}
-                    <span className="w-5 text-center text-xs font-bold text-slate-400">
+                    <span className="w-5 text-center text-xs font-bold text-muted-foreground">
                       #{index + 1}
                     </span>
 
                     {/* Avatar */}
                     <Avatar className="w-8 h-8">
                       <AvatarImage src={user.avatar} />
-                      <AvatarFallback className="text-xs bg-green-100 text-green-700">
+                      <AvatarFallback className="text-xs bg-primary/15 text-primary">
                         {getInitials(user.name)}
                       </AvatarFallback>
                     </Avatar>
 
                     {/* Info */}
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-slate-900 truncate">
+                      <p className="text-sm font-medium text-foreground truncate">
                         {user.name}
                       </p>
-                      <p className="text-xs text-slate-400">
+                      <p className="text-xs text-muted-foreground">
                         {user._count.uploadedBooks}B ·{" "}
                         {user._count.uploadedCourses}C ·{" "}
                         {user._count.uploadedProjects}P
@@ -175,10 +175,10 @@ export function TopContentTables({ data }: TopContentTablesProps) {
 
                     {/* Total */}
                     <div className="text-right">
-                      <p className="text-sm font-bold text-slate-900">
+                      <p className="text-sm font-bold text-foreground">
                         {totalUploads}
                       </p>
-                      <p className="text-xs text-slate-400">uploads</p>
+                      <p className="text-xs text-muted-foreground">uploads</p>
                     </div>
                   </div>
                 );
@@ -217,17 +217,17 @@ function TopContentRow({
   icon: Icon,
 }: TopContentRowProps) {
   return (
-    <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50">
+    <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-accent/50">
       {/* Rank */}
       <span
         className={`w-5 text-center text-xs font-bold ${
           rank === 1
-            ? "text-yellow-500"
+            ? "text-yellow-500 dark:text-yellow-400"
             : rank === 2
-            ? "text-slate-400"
+            ? "text-muted-foreground"
             : rank === 3
-            ? "text-amber-600"
-            : "text-slate-300"
+            ? "text-amber-600 dark:text-amber-400"
+            : "text-muted-foreground/60"
         }`}
       >
         #{rank}
@@ -235,33 +235,33 @@ function TopContentRow({
 
       {/* Icon */}
       <div
-        className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${bg}`}
+        className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${bg}`}
       >
         <Icon className={`w-4 h-4 ${color}`} />
       </div>
 
       {/* Title */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-slate-900 truncate">
+        <p className="text-sm font-medium text-foreground truncate">
           {title}
         </p>
         {subtitle && (
-          <p className="text-xs text-slate-400 truncate">{subtitle}</p>
+          <p className="text-xs text-muted-foreground truncate">{subtitle}</p>
         )}
       </div>
 
       {/* Stats */}
-      <div className="flex items-center gap-3 flex-shrink-0">
-        <span className="flex items-center gap-1 text-xs text-slate-400">
+      <div className="flex items-center gap-3 shrink-0">
+        <span className="flex items-center gap-1 text-xs text-muted-foreground">
           <Download className="w-3 h-3" />
           {downloads}
         </span>
-        <span className="flex items-center gap-1 text-xs text-slate-400">
+        <span className="flex items-center gap-1 text-xs text-muted-foreground">
           <Eye className="w-3 h-3" />
           {views}
         </span>
         {bookmarks !== undefined && (
-          <span className="flex items-center gap-1 text-xs text-slate-400">
+          <span className="flex items-center gap-1 text-xs text-muted-foreground">
             <Bookmark className="w-3 h-3" />
             {bookmarks}
           </span>

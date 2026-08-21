@@ -2,9 +2,16 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import { useCallback } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/src/components/ui/select";
 import { Button } from "@/src/components/ui/button";
 import { Label } from "@/src/components/ui/label";
-import { X, ChevronDown } from "lucide-react";
+import { X } from "lucide-react";
 
 interface CoursesFilterProps {
   departments: {
@@ -41,7 +48,7 @@ export function CoursesFilter({
   );
 
   const updateFilter = useCallback(
-    (key: string, value: string) => {
+    (key: string, value: string | null) => {
       const params = new URLSearchParams();
       Object.entries(searchParams).forEach(([k, v]) => {
         if (v && k !== "page") params.set(k, v);
@@ -57,14 +64,14 @@ export function CoursesFilter({
   );
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4 space-y-5">
+    <div className="bg-card rounded-2xl border border-border p-4 space-y-5">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-slate-900 text-sm">Filters</h3>
+        <h3 className="font-serif font-bold text-foreground text-sm">Filters</h3>
         {hasFilters && (
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 text-xs text-red-500"
+            className="h-7 text-xs text-accent-foreground hover:text-accent-foreground/80"
             onClick={() => router.push(pathname)}
           >
             <X className="w-3 h-3 mr-1" />
@@ -75,84 +82,92 @@ export function CoursesFilter({
 
       {/* Department */}
       <div className="space-y-2">
-        <Label className="text-xs font-medium text-slate-600">Department</Label>
-        <div className="relative">
-          <select
-            value={searchParams.department || "all"}
-            onChange={(e) => updateFilter("department", e.target.value)}
-            className="w-full h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring cursor-pointer"
-          >
-            <option value="all">All departments</option>
+        <Label className="text-xs font-medium text-muted-foreground">
+          Department
+        </Label>
+        <Select
+          value={searchParams.department || "all"}
+          onValueChange={(val) => updateFilter("department", val)}
+        >
+          <SelectTrigger className="h-9 text-sm">
+            <SelectValue placeholder="All departments" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All departments</SelectItem>
             {departments.map((dept) => (
-              <option key={dept.id} value={dept.id}>
+              <SelectItem key={dept.id} value={dept.id}>
                 {dept.name}
-              </option>
+              </SelectItem>
             ))}
-          </select>
-          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        </div>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Level */}
       <div className="space-y-2">
-        <Label className="text-xs font-medium text-slate-600">Level</Label>
-        <div className="relative">
-          <select
-            value={searchParams.level || "all"}
-            onChange={(e) => updateFilter("level", e.target.value)}
-            className="w-full h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring cursor-pointer"
-          >
-            <option value="all">All levels</option>
+        <Label className="text-xs font-medium text-muted-foreground">Level</Label>
+        <Select
+          value={searchParams.level || "all"}
+          onValueChange={(val) => updateFilter("level", val)}
+        >
+          <SelectTrigger className="h-9 text-sm">
+            <SelectValue placeholder="All levels" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All levels</SelectItem>
             {levels.map((level) => (
-              <option key={level} value={String(level)}>
+              <SelectItem key={level} value={String(level)}>
                 {level} Level
-              </option>
+              </SelectItem>
             ))}
-          </select>
-          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        </div>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Semester */}
       <div className="space-y-2">
-        <Label className="text-xs font-medium text-slate-600">Semester</Label>
-        <div className="relative">
-          <select
-            value={searchParams.semester || "all"}
-            onChange={(e) => updateFilter("semester", e.target.value)}
-            className="w-full h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring cursor-pointer"
-          >
-            <option value="all">Both semesters</option>
+        <Label className="text-xs font-medium text-muted-foreground">
+          Semester
+        </Label>
+        <Select
+          value={searchParams.semester || "all"}
+          onValueChange={(val) => updateFilter("semester", val)}
+        >
+          <SelectTrigger className="h-9 text-sm">
+            <SelectValue placeholder="Both semesters" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Both semesters</SelectItem>
             {semesters.map((sem) => (
-              <option key={sem.value} value={sem.value}>
+              <SelectItem key={sem.value} value={sem.value}>
                 {sem.label}
-              </option>
+              </SelectItem>
             ))}
-          </select>
-          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        </div>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Type */}
       <div className="space-y-2">
-        <Label className="text-xs font-medium text-slate-600">
+        <Label className="text-xs font-medium text-muted-foreground">
           Material Type
         </Label>
-        <div className="relative">
-          <select
-            value={searchParams.type || "all"}
-            onChange={(e) => updateFilter("type", e.target.value)}
-            className="w-full h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring cursor-pointer"
-          >
-            <option value="all">All types</option>
+        <Select
+          value={searchParams.type || "all"}
+          onValueChange={(val) => updateFilter("type", val)}
+        >
+          <SelectTrigger className="h-9 text-sm">
+            <SelectValue placeholder="All types" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All types</SelectItem>
             {courseTypes.map((type) => (
-              <option key={type.value} value={type.value}>
+              <SelectItem key={type.value} value={type.value}>
                 {type.label}
-              </option>
+              </SelectItem>
             ))}
-          </select>
-          <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        </div>
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );

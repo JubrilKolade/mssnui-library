@@ -2,6 +2,7 @@ import { prisma } from "@/src/lib/prisma";
 import { auth } from "@/src/lib/auth";
 import { notFound } from "next/navigation";
 import { generateDownloadUrl } from "@/src/lib/r2";
+import { isGlobalDownloadPaused } from "@/src/lib/settings";
 import { CourseDetail } from "@/src/components/courses/CourseDetail";
 import type { Metadata } from "next";
 
@@ -26,7 +27,7 @@ export async function generateMetadata({
 }
 
 async function getCourse(id: string, userId: string) {
-  const [course, isBookmarked] = await Promise.all([
+  const [course, isBookmarked, globalPaused] = await Promise.all([
     prisma.course.findUnique({
       where: { id, status: "approved" },
       include: {
@@ -54,6 +55,7 @@ async function getCourse(id: string, userId: string) {
     prisma.bookmark.findFirst({
       where: { userId, courseId: id },
     }),
+    isGlobalDownloadPaused(),
   ]);
 
   if (!course) return null;
@@ -80,6 +82,7 @@ async function getCourse(id: string, userId: string) {
     course,
     signedUrl,
     isBookmarked: !!isBookmarked,
+    downloadsPaused: globalPaused || course.downloadsPaused,
   };
 }
 
@@ -98,6 +101,7 @@ export default async function CoursePage({
       course={data.course}
       signedUrl={data.signedUrl}
       isBookmarked={data.isBookmarked}
+      downloadsPaused={data.downloadsPaused}
     />
   );
 }

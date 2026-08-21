@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Bell } from "lucide-react";
+import { Bell, CheckCheck, CheckCircle2, XCircle, Upload } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import {
   Popover,
@@ -27,9 +27,9 @@ interface NotificationBellProps {
 }
 
 const notificationIcons = {
-  approval: "✅",
-  rejection: "❌",
-  new_upload: "📤",
+  approval: <CheckCircle2 className="w-4 h-4 text-primary" />,
+  rejection: <XCircle className="w-4 h-4 text-destructive" />,
+  new_upload: <Upload className="w-4 h-4 text-accent-foreground" />,
 };
 
 export function NotificationBell({ userId }: NotificationBellProps) {
@@ -86,28 +86,29 @@ export function NotificationBell({ userId }: NotificationBellProps) {
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
-      <PopoverTrigger>
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="w-5 h-5" />
-          {unreadCount > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
-              {unreadCount > 9 ? "9+" : unreadCount}
-            </span>
-          )}
-        </Button>
+      <PopoverTrigger
+        render={<Button variant="ghost" size="icon" className="relative" />}
+      >
+        <Bell className="w-5 h-5" />
+        {unreadCount > 0 && (
+          <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-amber-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
+            {unreadCount > 9 ? "9+" : unreadCount}
+          </span>
+        )}
       </PopoverTrigger>
 
       <PopoverContent className="w-80 p-0" align="end">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100">
-          <h3 className="font-semibold text-slate-900">Notifications</h3>
+        <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+          <h3 className="font-serif font-bold text-foreground">Notifications</h3>
           {unreadCount > 0 && (
             <Button
               variant="ghost"
               size="sm"
-              className="text-xs text-green-600 h-auto py-0.5"
+              className="text-xs text-primary h-auto py-0.5"
               onClick={markAllAsRead}
             >
+              <CheckCheck className="w-3.5 h-3.5 mr-1" />
               Mark all read
             </Button>
           )}
@@ -119,7 +120,7 @@ export function NotificationBell({ userId }: NotificationBellProps) {
             <div className="p-4 space-y-3">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="flex gap-3">
-                  <Skeleton className="w-8 h-8 rounded-full flex-shrink-0" />
+                  <Skeleton className="w-8 h-8 rounded-full shrink-0" />
                   <div className="flex-1 space-y-1">
                     <Skeleton className="h-3 w-full" />
                     <Skeleton className="h-3 w-2/3" />
@@ -128,34 +129,34 @@ export function NotificationBell({ userId }: NotificationBellProps) {
               ))}
             </div>
           ) : notifications.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full py-8 text-slate-400">
+            <div className="flex flex-col items-center justify-center h-full py-8 text-muted-foreground">
               <Bell className="w-8 h-8 mb-2 opacity-50" />
               <p className="text-sm">No notifications yet</p>
             </div>
           ) : (
-            <div className="divide-y divide-slate-50">
+            <div className="divide-y divide-border">
               {notifications.map((notification) => (
                 <button
                   key={notification.id}
                   className={cn(
-                    "w-full flex items-start gap-3 px-4 py-3 text-left hover:bg-slate-50 transition-colors",
-                    !notification.isRead && "bg-green-50/50"
+                    "w-full flex items-start gap-3 px-4 py-3 text-left hover:bg-accent/50 transition-colors",
+                    !notification.isRead && "bg-primary/10"
                   )}
                   onClick={() => markAsRead(notification.id)}
                 >
-                  <span className="text-lg flex-shrink-0">
+                  <span className="shrink-0 mt-0.5">
                     {notificationIcons[notification.type]}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-slate-700 leading-snug">
+                    <p className="text-sm text-foreground leading-snug">
                       {notification.message}
                     </p>
-                    <p className="text-xs text-slate-400 mt-0.5">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {formatDate(notification.createdAt)}
                     </p>
                   </div>
                   {!notification.isRead && (
-                    <span className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0 mt-1.5" />
+                    <span className="w-2 h-2 rounded-full bg-primary shrink-0 mt-1.5" />
                   )}
                 </button>
               ))}

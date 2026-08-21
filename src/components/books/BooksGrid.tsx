@@ -19,7 +19,7 @@ export function BooksGrid({
 }: BooksGridProps) {
   if (books.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-slate-400">
+      <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
         <BookOpen className="w-12 h-12 mb-3 opacity-40" />
         <p className="font-medium">No books found</p>
         <p className="text-sm mt-1">Try adjusting your filters</p>

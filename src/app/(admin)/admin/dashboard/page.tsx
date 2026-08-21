@@ -12,10 +12,10 @@ export default async function AdminDashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">
+        <h1 className="font-serif text-2xl font-bold text-foreground">
           Analytics Dashboard
         </h1>
-        <p className="text-slate-500 text-sm mt-1">
+        <p className="text-muted-foreground text-sm mt-1">
           Track library activity and performance
         </p>
       </div>

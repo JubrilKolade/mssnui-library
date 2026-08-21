@@ -135,12 +135,11 @@ export function CategoriesTab({
     <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-muted-foreground">
           {categories.length} categories
         </p>
         <Button
           size="sm"
-          className="bg-green-600 hover:bg-green-700"
           onClick={() => setIsAddOpen(true)}
         >
           <Plus className="w-4 h-4 mr-2" />
@@ -153,17 +152,17 @@ export function CategoriesTab({
         {categories.map((category) => (
           <div
             key={category.id}
-            className="flex items-center gap-3 bg-white border border-slate-200 rounded-lg px-4 py-3 group"
+            className="flex items-center gap-3 bg-card border border-border rounded-lg px-4 py-3 group"
           >
-            <Tag className="w-4 h-4 text-slate-400 flex-shrink-0" />
-            <span className="text-sm text-slate-700 flex-1 truncate">
+            <Tag className="w-4 h-4 text-muted-foreground shrink-0" />
+            <span className="text-sm text-foreground flex-1 truncate">
               {category.name}
             </span>
             <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
               <Button
                 variant="ghost"
                 size="icon"
-                className="w-7 h-7 text-slate-400 hover:text-blue-600"
+                className="w-7 h-7 text-muted-foreground hover:text-primary"
                 onClick={() => {
                   setEditCategory(category);
                   setEditName(category.name);
@@ -174,7 +173,7 @@ export function CategoriesTab({
               <Button
                 variant="ghost"
                 size="icon"
-                className="w-7 h-7 text-slate-400 hover:text-red-600"
+                className="w-7 h-7 text-muted-foreground hover:text-destructive"
                 onClick={() => handleDelete(category)}
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -208,7 +207,7 @@ export function CategoriesTab({
                 Cancel
               </Button>
               <Button
-                className="flex-1 bg-green-600 hover:bg-green-700"
+                className="flex-1"
                 onClick={handleAdd}
                 disabled={isLoading || !newName.trim()}
               >
@@ -249,7 +248,7 @@ export function CategoriesTab({
                 Cancel
               </Button>
               <Button
-                className="flex-1 bg-green-600 hover:bg-green-700"
+                className="flex-1"
                 onClick={handleEdit}
                 disabled={isLoading || !editName.trim()}
               >

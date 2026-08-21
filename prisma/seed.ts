@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { PrismaClient, UnitType } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcryptjs";
@@ -473,14 +474,35 @@ async function main() {
   // ==============================
   // SUPER ADMIN
   // ==============================
-  const hashedPassword = await bcrypt.hash("Admin@123", 12);
+  const superAdminName = process.env.SUPER_ADMIN_NAME;
+  const superAdminEmail = process.env.SUPER_ADMIN_EMAIL;
+  const superAdminPassword = process.env.SUPER_ADMIN_PASSWORD;
+
+  if (!superAdminName || !superAdminEmail || !superAdminPassword) {
+    throw new Error(
+      "Super admin credentials missing. Set SUPER_ADMIN_NAME, SUPER_ADMIN_EMAIL and SUPER_ADMIN_PASSWORD in .env"
+    );
+  }
+
+  if (
+    !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(superAdminPassword)
+  ) {
+    throw new Error(
+      "SUPER_ADMIN_PASSWORD must be at least 8 characters with uppercase, lowercase and a number"
+    );
+  }
+
+  const hashedPassword = await bcrypt.hash(superAdminPassword, 12);
 
   await prisma.user.upsert({
-    where: { email: "admin@mssnui.org" },
-    update: {},
+    where: { email: superAdminEmail },
+    update: {
+      role: "super_admin",
+      isActive: true,
+    },
     create: {
-      name: "Super Admin",
-      email: "admin@mssnui.org",
+      name: superAdminName,
+      email: superAdminEmail,
       password: hashedPassword,
       role: "super_admin",
       isActive: true,
@@ -488,8 +510,7 @@ async function main() {
   });
 
   console.log("✅ Super admin seeded");
-  console.log("   Email:    admin@mssnui.org");
-  console.log("   Password: Admin@123");
+  console.log(`   Email: ${superAdminEmail}`);
   console.log("");
   console.log("🎉 Seeding complete!");
   console.log("");

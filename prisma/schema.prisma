@@ -118,6 +118,7 @@ model User {
 
   accounts         Account[]
   sessions         Session[]
+  resetTokens      PasswordResetToken[]
   uploadedBooks    Book[]          @relation("BookUploader")
   approvedBooks    Book[]          @relation("BookApprover")
   uploadedCourses  Course[]        @relation("CourseUploader")
@@ -173,6 +174,18 @@ model VerificationToken {
   @@map("verification_tokens")
 }
 
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  tokenHash String    @unique
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expires   DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("password_reset_tokens")
+}
+
 // ==============================
 // CATEGORIES
 // ==============================
@@ -203,6 +216,7 @@ model Book {
   publishedYear   Int?
   language        String      @default("English")
   status          Status      @default(pending)
+  downloadsPaused Boolean     @default(false)
   rejectionReason String?     @db.Text
   categoryId      String?
   category        Category?   @relation(fields: [categoryId], references: [id])
@@ -233,6 +247,7 @@ model Course {
   fileSize        Int
   coverImageUrl   String?
   status          Status     @default(pending)
+  downloadsPaused Boolean    @default(false)
   rejectionReason String?    @db.Text
   departmentId    String
   department      Department @relation(fields: [departmentId], references: [id])
@@ -262,6 +277,7 @@ model Project {
   year            Int
   supervisor      String?
   status          Status     @default(pending)
+  downloadsPaused Boolean    @default(false)
   rejectionReason String?    @db.Text
   departmentId    String
   department      Department @relation(fields: [departmentId], references: [id])
@@ -356,4 +372,16 @@ model Notification {
   createdAt DateTime         @default(now())
 
   @@map("notifications")
+}
+
+// ==============================
+// SITE SETTINGS
+// ==============================
+
+model Setting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+
+  @@map("settings")
 }

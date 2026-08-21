@@ -45,18 +45,18 @@ export function AcademicUnitsTab({
   const schools = units.filter((u) => u.type === "school");
 
   const groups = [
-    { label: "Colleges", units: colleges, color: "bg-blue-50 border-blue-200" },
-    { label: "Faculties", units: faculties, color: "bg-purple-50 border-purple-200" },
-    { label: "Institutes", units: institutes, color: "bg-orange-50 border-orange-200" },
-    { label: "Centres", units: centres, color: "bg-green-50 border-green-200" },
-    { label: "Schools", units: schools, color: "bg-pink-50 border-pink-200" },
+    { label: "Colleges", units: colleges, color: "bg-teal-500/70" },
+    { label: "Faculties", units: faculties, color: "bg-amber-500/70" },
+    { label: "Institutes", units: institutes, color: "bg-emerald-500/70" },
+    { label: "Centres", units: centres, color: "bg-emerald-500/70" },
+    { label: "Schools", units: schools, color: "bg-yellow-500/70" },
   ].filter((g) => g.units.length > 0);
 
   return (
     <div className="space-y-6">
       {/* Actions */}
       <div className="flex items-center justify-between">
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-muted-foreground">
           {units.length} academic units total
         </p>
         <div className="flex gap-2">
@@ -73,7 +73,6 @@ export function AcademicUnitsTab({
           </Button>
           <Button
             size="sm"
-            className="bg-green-600 hover:bg-green-700"
             onClick={() => setIsAddOpen(true)}
           >
             <Plus className="w-4 h-4 mr-2" />
@@ -85,10 +84,10 @@ export function AcademicUnitsTab({
       {/* Unit Groups */}
       {groups.map((group) => (
         <div key={group.label}>
-          <h3 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full ${group.color.split(" ")[0].replace("bg-", "bg-")}`} />
+          <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+            <span className={`w-2 h-2 rounded-full ${group.color}`} />
             {group.label}
-            <span className="text-slate-400 font-normal">
+            <span className="text-muted-foreground font-normal">
               ({group.units.length})
             </span>
           </h3>

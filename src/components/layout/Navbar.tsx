@@ -5,6 +5,7 @@ import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { UserMenu } from "@/src/components/layout/UserMenu";
 import { NotificationBell } from "@/src/components/shared/NotificationBell";
+import { ThemeToggle } from "@/src/components/shared/ThemeToggle";
 import { useSidebarStore } from "@/src/store/sidebar.store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -35,7 +36,7 @@ export function Navbar({ user }: NavbarProps) {
   }
 
   return (
-    <header className="sticky top-0 z-30 h-16 bg-white border-b border-slate-200 px-4 md:px-6">
+    <header className="sticky top-0 z-30 h-16 bg-background/90 backdrop-blur-md border-b border-border px-4 md:px-6">
       <div className="flex items-center justify-between h-full gap-4">
         {/* Left — Menu + Search */}
         <div className="flex items-center gap-4 flex-1">
@@ -55,11 +56,11 @@ export function Navbar({ user }: NavbarProps) {
             className="hidden md:flex items-center flex-1 max-w-md"
           >
             <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 type="search"
                 placeholder="Search books, courses, projects..."
-                className="pl-9 bg-slate-50 border-slate-200 focus:bg-white"
+                className="pl-9 bg-card border-border focus-visible:ring-primary"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -68,7 +69,7 @@ export function Navbar({ user }: NavbarProps) {
         </div>
 
         {/* Right — Notifications + User */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           {/* Mobile search */}
           <Button
             variant="ghost"
@@ -78,6 +79,9 @@ export function Navbar({ user }: NavbarProps) {
           >
             <Search className="w-5 h-5" />
           </Button>
+
+          {/* Theme toggle */}
+          <ThemeToggle />
 
           {/* Notifications */}
           <NotificationBell userId={user.id} />

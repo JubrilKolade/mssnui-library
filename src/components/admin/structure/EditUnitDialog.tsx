@@ -124,7 +124,7 @@ export function EditUnitDialog({
                 <FormItem>
                   <FormLabel>
                     Description{" "}
-                    <span className="text-slate-400 font-normal">
+                    <span className="text-muted-foreground font-normal">
                       (optional)
                     </span>
                   </FormLabel>
@@ -152,7 +152,7 @@ export function EditUnitDialog({
               </Button>
               <Button
                 type="submit"
-                className="flex-1 bg-green-600 hover:bg-green-700"
+                className="flex-1"
                 disabled={isLoading}
               >
                 {isLoading ? (

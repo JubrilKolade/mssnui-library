@@ -22,50 +22,50 @@ export function QuickActions({ role }: QuickActionsProps) {
       label: "Books",
       href: "/books",
       icon: BookOpen,
-      color: "text-blue-600",
-      bg: "bg-blue-50 hover:bg-blue-100",
+      color: "text-primary",
+      bg: "bg-primary/10 hover:bg-primary/15",
     },
     {
       label: "Course Materials",
       href: "/courses",
       icon: GraduationCap,
-      color: "text-purple-600",
-      bg: "bg-purple-50 hover:bg-purple-100",
+      color: "text-primary",
+      bg: "bg-primary/10 hover:bg-primary/15",
     },
     {
       label: "Past Questions",
       href: "/courses?type=past_question",
       icon: FileQuestion,
-      color: "text-red-600",
-      bg: "bg-red-50 hover:bg-red-100",
+      color: "text-accent-foreground",
+      bg: "bg-accent hover:bg-accent/80",
     },
     {
       label: "Assignments",
       href: "/courses?type=assignment",
       icon: ClipboardList,
-      color: "text-orange-600",
-      bg: "bg-orange-50 hover:bg-orange-100",
+      color: "text-accent-foreground",
+      bg: "bg-accent hover:bg-accent/80",
     },
     {
       label: "Projects",
       href: "/projects",
       icon: ScrollText,
-      color: "text-teal-600",
-      bg: "bg-teal-50 hover:bg-teal-100",
+      color: "text-primary",
+      bg: "bg-primary/10 hover:bg-primary/15",
     },
     {
       label: "Search",
       href: "/search",
       icon: Search,
-      color: "text-slate-600",
-      bg: "bg-slate-50 hover:bg-slate-100",
+      color: "text-muted-foreground",
+      bg: "bg-muted hover:bg-muted/80",
     },
     {
       label: "Bookmarks",
       href: "/bookmarks",
       icon: Bookmark,
-      color: "text-yellow-600",
-      bg: "bg-yellow-50 hover:bg-yellow-100",
+      color: "text-accent-foreground",
+      bg: "bg-accent hover:bg-accent/80",
     },
     ...(canUpload(role)
       ? [
@@ -73,8 +73,8 @@ export function QuickActions({ role }: QuickActionsProps) {
             label: "Upload",
             href: "/upload",
             icon: Upload,
-            color: "text-green-600",
-            bg: "bg-green-50 hover:bg-green-100",
+            color: "text-primary",
+            bg: "bg-primary/10 hover:bg-primary/15",
           },
         ]
       : []),
@@ -82,7 +82,7 @@ export function QuickActions({ role }: QuickActionsProps) {
 
   return (
     <div>
-      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+      <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
         Quick Actions
       </h2>
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-8 gap-3">
@@ -93,7 +93,7 @@ export function QuickActions({ role }: QuickActionsProps) {
             className={`flex flex-col items-center gap-2 p-3 rounded-xl transition-colors ${action.bg}`}
           >
             <action.icon className={`w-5 h-5 ${action.color}`} />
-            <span className="text-xs font-medium text-slate-700 text-center leading-tight">
+            <span className="text-xs font-medium text-foreground text-center leading-tight">
               {action.label}
             </span>
           </Link>

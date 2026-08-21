@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, Loader2, ChevronDown } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { registerSchema, type RegisterInput } from "@/src/lib/validations";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -17,7 +17,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form";
-import { Label } from "@/src/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/src/components/ui/select";
 import { useToast } from "@/src/hooks/use-toast";
 
 interface AcademicUnit {
@@ -197,10 +203,10 @@ export function RegisterForm() {
       {/* Divider */}
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-slate-200" />
+          <span className="w-full border-t border-border" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-white px-2 text-slate-400">
+          <span className="bg-card px-2 text-muted-foreground">
             or register with email
           </span>
         </div>
@@ -256,7 +262,7 @@ export function RegisterForm() {
               <FormItem>
                 <FormLabel>
                   Matric number{" "}
-                  <span className="text-slate-400 font-normal">
+                  <span className="text-muted-foreground font-normal">
                     (optional)
                   </span>
                 </FormLabel>
@@ -274,29 +280,28 @@ export function RegisterForm() {
 
           {/* Academic Unit */}
           <FormItem>
-            <Label>
+            <FormLabel>
               Faculty / Institute{" "}
-              <span className="text-slate-400 font-normal">(optional)</span>
-            </Label>
-            <div className="relative">
-              <select
-                value={selectedUnit}
-                onChange={(e) => {
-                  setSelectedUnit(e.target.value);
-                  form.setValue("departmentId", "");
-                }}
-                disabled={isLoading}
-                className="w-full h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <option value="">Select your faculty</option>
+              <span className="text-muted-foreground font-normal">(optional)</span>
+            </FormLabel>
+              <Select
+              onValueChange={(val: string | null) => {
+                setSelectedUnit(val ?? "");
+                form.setValue("departmentId", "");
+              }}
+              disabled={isLoading}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select your faculty" />
+              </SelectTrigger>
+              <SelectContent>
                 {academicUnits.map((unit) => (
-                  <option key={unit.id} value={unit.id}>
+                  <SelectItem key={unit.id} value={unit.id}>
                     {unit.name}
-                  </option>
+                  </SelectItem>
                 ))}
-              </select>
-              <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            </div>
+              </SelectContent>
+            </Select>
           </FormItem>
 
           {/* Department */}
@@ -308,28 +313,27 @@ export function RegisterForm() {
                 <FormItem>
                   <FormLabel>
                     Department{" "}
-                    <span className="text-slate-400 font-normal">
+                    <span className="text-muted-foreground font-normal">
                       (optional)
                     </span>
                   </FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <select
-                        value={field.value}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        disabled={isLoading}
-                        className="w-full h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
-                      >
-                        <option value="">Select your department</option>
-                        {departments.map((dept) => (
-                          <option key={dept.id} value={dept.id}>
-                            {dept.name}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    </div>
-                  </FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    disabled={isLoading}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your department" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {departments.map((dept) => (
+                        <SelectItem key={dept.id} value={dept.id}>
+                          {dept.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -354,7 +358,7 @@ export function RegisterForm() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
                       {showPassword ? (
                         <EyeOff className="h-4 w-4" />
@@ -389,7 +393,7 @@ export function RegisterForm() {
                       onClick={() =>
                         setShowConfirmPassword(!showConfirmPassword)
                       }
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
                       {showConfirmPassword ? (
                         <EyeOff className="h-4 w-4" />
@@ -406,7 +410,7 @@ export function RegisterForm() {
 
           <Button
             type="submit"
-            className="w-full bg-green-600 hover:bg-green-700"
+            className="w-full"
             disabled={isLoading || isGoogleLoading}
           >
             {isLoading ? (

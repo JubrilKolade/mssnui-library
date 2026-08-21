@@ -77,10 +77,10 @@ export default async function ApprovalsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">
+          <h1 className="font-serif text-2xl font-bold text-foreground">
             Approval Queue
           </h1>
-          <p className="text-slate-500 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             {totalPending} item{totalPending !== 1 ? "s" : ""} pending
             review
           </p>

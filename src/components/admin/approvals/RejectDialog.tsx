@@ -120,7 +120,7 @@ export function RejectDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-red-600">
+          <DialogTitle className="flex items-center gap-2 text-destructive">
             <AlertTriangle className="w-5 h-5" />
             Reject Content
           </DialogTitle>
@@ -137,7 +137,7 @@ export function RejectDialog({
           >
             {/* Quick Reasons */}
             <div>
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
                 Quick Reasons
               </p>
               <div className="flex flex-wrap gap-2">
@@ -146,7 +146,7 @@ export function RejectDialog({
                     key={reason}
                     type="button"
                     onClick={() => applyQuickReason(reason)}
-                    className="text-xs px-2.5 py-1 rounded-full border border-slate-200 text-slate-600 hover:border-red-300 hover:text-red-600 hover:bg-red-50 transition-colors text-left"
+                    className="text-xs px-2.5 py-1 rounded-full border border-border text-muted-foreground hover:border-destructive/50 hover:text-destructive hover:bg-destructive/10 transition-colors text-left"
                   >
                     {reason}
                   </button>
@@ -162,7 +162,7 @@ export function RejectDialog({
                 <FormItem>
                   <FormLabel>
                     Rejection Reason{" "}
-                    <span className="text-red-500">*</span>
+                    <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
                     <Textarea

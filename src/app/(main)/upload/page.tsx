@@ -41,17 +41,17 @@ export default async function UploadPage() {
   if (!canUpload(session.user.role)) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-4">
-          <Lock className="w-8 h-8 text-slate-400" />
+        <div className="w-16 h-16 rounded-full bg-accent flex items-center justify-center mb-4">
+          <Lock className="w-8 h-8 text-amber-600 dark:text-amber-400" />
         </div>
-        <h2 className="text-xl font-bold text-slate-900">
+        <h2 className="font-serif text-xl font-bold text-foreground">
           Contributor Access Required
         </h2>
-        <p className="text-slate-500 text-sm mt-2 max-w-sm">
+        <p className="text-muted-foreground text-sm mt-2 max-w-sm">
           You need contributor access to upload content. Contact an admin
           to upgrade your account.
         </p>
-        <Button className="mt-6 bg-green-600 hover:bg-green-700">
+        <Button className="mt-6">
           <Link href="/dashboard">Back to Dashboard</Link>
         </Button>
       </div>
@@ -64,11 +64,11 @@ export default async function UploadPage() {
     <div className="space-y-6 max-w-3xl mx-auto">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Upload className="w-6 h-6 text-green-600" />
+        <h1 className="font-serif text-2xl font-bold text-foreground flex items-center gap-2">
+          <Upload className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
           Upload Content
         </h1>
-        <p className="text-slate-500 text-sm mt-1">
+        <p className="text-muted-foreground text-sm mt-1">
           Share books, course materials or projects with the community.
           All uploads require admin approval.
         </p>

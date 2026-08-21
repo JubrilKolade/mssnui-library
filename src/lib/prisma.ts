@@ -1,5 +1,3 @@
-import "server-only";
-
 import { PrismaClient } from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
@@ -13,7 +11,14 @@ if (!databaseUrl) {
 }
 
 const prismaOptions: any = {
-  adapter: new PrismaPg(databaseUrl),
+  adapter: new PrismaPg({
+    connectionString: databaseUrl,
+    max: 10,
+    idleTimeoutMillis: 30_000,
+    connectionTimeoutMillis: 30_000,
+    keepAlive: true,
+    keepAliveInitialDelayMillis: 10_000,
+  }),
   log:
     process.env.NODE_ENV === "development"
       ? ["query", "error", "warn"]

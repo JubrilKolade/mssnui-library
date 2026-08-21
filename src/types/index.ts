@@ -8,36 +8,57 @@ export type CourseType = "note" | "past_question" | "handout" | "assignment";
 
 export type Semester = "first" | "second";
 
+export type UnitType = "college" | "faculty" | "institute" | "centre" | "school";
+
 export interface UserSession {
   id: string;
   name: string;
   email: string;
   role: Role;
+  isActive: boolean;
   avatar?: string;
 }
 
-export interface College {
+export interface AcademicUnit {
   id: string;
   name: string;
-  faculties?: Faculty[];
-  createdAt: Date;
-}
-
-export interface Faculty {
-  id: string;
-  name: string;
-  collegeId: string;
-  college?: College;
+  type: UnitType;
+  description?: string;
+  parentId?: string;
+  parent?: AcademicUnit;
+  children?: AcademicUnit[];
   departments?: Department[];
   createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Department {
   id: string;
   name: string;
-  facultyId: string;
-  faculty?: Faculty;
+  academicUnitId: string;
+  academicUnit?: AcademicUnit;
+  isDLC: boolean;
+  isPostgraduate: boolean;
+  users?: User[];
+  courses?: Course[];
+  projects?: Project[];
+  books?: Book[];
   createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: Role;
+  matricNumber?: string;
+  avatar?: string;
+  isActive: boolean;
+  departmentId?: string;
+  department?: Department;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Book {
@@ -54,9 +75,16 @@ export interface Book {
   status: Status;
   rejectionReason?: string;
   categoryId?: string;
+  category?: Category;
   departmentId?: string;
+  department?: Department;
   uploadedById: string;
+  uploadedBy?: Pick<User, "id" | "name">;
+  approvedById?: string;
+  approvedBy?: Pick<User, "id" | "name">;
+  approvedAt?: Date;
   createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Course {
@@ -69,11 +97,17 @@ export interface Course {
   fileUrl: string;
   fileSize: number;
   coverImageUrl?: string;
-  departmentId: string;
-  uploadedById: string;
   status: Status;
   rejectionReason?: string;
+  departmentId: string;
+  department?: Department;
+  uploadedById: string;
+  uploadedBy?: Pick<User, "id" | "name">;
+  approvedById?: string;
+  approvedBy?: Pick<User, "id" | "name">;
+  approvedAt?: Date;
   createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Project {
@@ -86,11 +120,52 @@ export interface Project {
   coverImageUrl?: string;
   year: number;
   supervisor?: string;
-  departmentId: string;
-  uploadedById: string;
   status: Status;
   rejectionReason?: string;
+  departmentId: string;
+  department?: Department;
+  uploadedById: string;
+  uploadedBy?: Pick<User, "id" | "name">;
+  approvedById?: string;
+  approvedBy?: Pick<User, "id" | "name">;
+  approvedAt?: Date;
   createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Bookmark {
+  id: string;
+  userId: string;
+  user?: User;
+  resourceType: ResourceType;
+  bookId?: string;
+  book?: Book;
+  courseId?: string;
+  course?: Course;
+  projectId?: string;
+  project?: Project;
+  createdAt: Date;
+}
+
+export interface Download {
+  id: string;
+  userId: string;
+  user?: User;
+  resourceType: ResourceType;
+  bookId?: string;
+  book?: Book;
+  courseId?: string;
+  course?: Course;
+  projectId?: string;
+  project?: Project;
+  downloadedAt: Date;
 }
 
 export interface Notification {

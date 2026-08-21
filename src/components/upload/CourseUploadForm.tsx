@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { Loader2, Info, ChevronDown } from "lucide-react";
+import { Loader2, Info } from "lucide-react";
 import { courseUploadSchema, type CourseUploadInput } from "@/src/lib/validations";
 import { useFileUpload } from "@/src/hooks/useFileUpload";
 import { FileUploadInput } from "./FileUploadInput";
@@ -18,6 +18,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/src/components/ui/select";
 import { Alert, AlertDescription } from "@/src/components/ui/alert";
 import { useToast } from "@/src/hooks/use-toast";
 
@@ -35,9 +42,6 @@ const courseTypes = [
 ];
 
 const PDF_ACCEPT = { "application/pdf": [".pdf"] };
-
-const selectClass =
-  "w-full h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring cursor-pointer disabled:cursor-not-allowed disabled:opacity-50";
 
 export function CourseUploadForm({ departments }: CourseUploadFormProps) {
   const [pdfFile, setPdfFile] = useState<File | null>(null);
@@ -126,9 +130,9 @@ export function CourseUploadForm({ departments }: CourseUploadFormProps) {
 
   return (
     <div className="space-y-6">
-      <Alert className="border-blue-200 bg-blue-50">
-        <Info className="w-4 h-4 text-blue-600" />
-        <AlertDescription className="text-blue-700 text-sm">
+      <Alert className="border-border bg-accent">
+        <Info className="w-4 h-4 text-accent-foreground" />
+        <AlertDescription className="text-accent-foreground text-sm">
           All uploads are reviewed by admins before becoming visible.
         </AlertDescription>
       </Alert>
@@ -207,24 +211,23 @@ export function CourseUploadForm({ departments }: CourseUploadFormProps) {
                 <FormLabel>
                   Department <span className="text-red-500">*</span>
                 </FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <select
-                      value={field.value ?? ""}
-                      onChange={(e) => field.onChange(e.target.value)}
-                      disabled={isSubmitting}
-                      className={selectClass}
-                    >
-                      <option value="">Select department</option>
-                      {departments.map((dept) => (
-                        <option key={dept.id} value={dept.id}>
-                          {dept.name} — {dept.academicUnit.name}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  </div>
-                </FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  disabled={isSubmitting}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select department" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {departments.map((dept) => (
+                      <SelectItem key={dept.id} value={dept.id}>
+                        {dept.name} — {dept.academicUnit.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
@@ -240,28 +243,23 @@ export function CourseUploadForm({ departments }: CourseUploadFormProps) {
                   <FormLabel>
                     Level <span className="text-red-500">*</span>
                   </FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <select
-                        value={field.value ?? ""}
-                        onChange={(e) =>
-                          field.onChange(
-                            e.target.value ? parseInt(e.target.value) : undefined
-                          )
-                        }
-                        disabled={isSubmitting}
-                        className={selectClass}
-                      >
-                        <option value="">Select level</option>
-                        {levels.map((level) => (
-                          <option key={level} value={String(level)}>
-                            {level} Level
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    </div>
-                  </FormControl>
+                  <Select
+                    onValueChange={(v) => field.onChange(parseInt(v as string))}
+                    disabled={isSubmitting}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select level" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {levels.map((level) => (
+                        <SelectItem key={level} value={String(level)}>
+                          {level} Level
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -275,21 +273,20 @@ export function CourseUploadForm({ departments }: CourseUploadFormProps) {
                   <FormLabel>
                     Semester <span className="text-red-500">*</span>
                   </FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <select
-                        value={field.value ?? ""}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        disabled={isSubmitting}
-                        className={selectClass}
-                      >
-                        <option value="">Select semester</option>
-                        <option value="first">First Semester</option>
-                        <option value="second">Second Semester</option>
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    </div>
-                  </FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    disabled={isSubmitting}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select semester" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="first">First Semester</SelectItem>
+                      <SelectItem value="second">Second Semester</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -303,24 +300,23 @@ export function CourseUploadForm({ departments }: CourseUploadFormProps) {
                   <FormLabel>
                     Type <span className="text-red-500">*</span>
                   </FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <select
-                        value={field.value ?? ""}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        disabled={isSubmitting}
-                        className={selectClass}
-                      >
-                        <option value="">Select type</option>
-                        {courseTypes.map((type) => (
-                          <option key={type.value} value={type.value}>
-                            {type.label}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    </div>
-                  </FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    disabled={isSubmitting}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {courseTypes.map((type) => (
+                        <SelectItem key={type.value} value={type.value}>
+                          {type.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -330,7 +326,7 @@ export function CourseUploadForm({ departments }: CourseUploadFormProps) {
           {/* Submit */}
           <Button
             type="submit"
-            className="w-full bg-green-600 hover:bg-green-700"
+            className="w-full"
             disabled={isSubmitting || progress.status === "uploading"}
           >
             {isSubmitting ? (

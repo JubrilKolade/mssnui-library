@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   GraduationCap,
   Download,
+  Ban,
   Bookmark,
   BookMarked,
   ChevronLeft,
@@ -17,10 +19,14 @@ import {
 import { Button } from "@/src/components/ui/button";
 import { Badge } from "@/src/components/ui/badge";
 import { Separator } from "@/src/components/ui/separator";
-import { PDFViewer } from "@/src/components/shared/PDFViewer";
 import { formatDate, formatFileSize } from "@/src/lib/utils";
 import { useToast } from "@/src/hooks/use-toast";
 import { cn } from "@/src/lib/utils";
+
+const PDFViewer = dynamic(
+  () => import("@/src/components/shared/PDFViewer").then((m) => m.PDFViewer),
+  { ssr: false }
+);
 
 const typeLabels: Record<string, string> = {
   note: "Lecture Note",
@@ -30,31 +36,33 @@ const typeLabels: Record<string, string> = {
 };
 
 const typeColors: Record<string, string> = {
-  note: "bg-blue-50 text-blue-700",
-  past_question: "bg-red-50 text-red-700",
-  handout: "bg-green-50 text-green-700",
-  assignment: "bg-orange-50 text-orange-700",
+  note: "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
+  past_question: "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300",
+  handout: "bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-300",
+  assignment: "bg-yellow-50 text-yellow-700 dark:bg-yellow-500/15 dark:text-yellow-300",
 };
 
 const levelColors: Record<number, string> = {
-  100: "bg-slate-100 text-slate-700",
-  200: "bg-blue-100 text-blue-700",
-  300: "bg-green-100 text-green-700",
-  400: "bg-yellow-100 text-yellow-700",
-  500: "bg-orange-100 text-orange-700",
-  600: "bg-red-100 text-red-700",
+  100: "bg-slate-100 text-slate-700 dark:bg-slate-500/15 dark:text-slate-300",
+  200: "bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-300",
+  300: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
+  400: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300",
+  500: "bg-yellow-100 text-yellow-700 dark:bg-yellow-500/15 dark:text-yellow-300",
+  600: "bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-300",
 };
 
 interface CourseDetailProps {
   course: any;
   signedUrl: string;
   isBookmarked: boolean;
+  downloadsPaused?: boolean;
 }
 
 export function CourseDetail({
   course,
   signedUrl,
   isBookmarked: initialIsBookmarked,
+  downloadsPaused = false,
 }: CourseDetailProps) {
   const [isBookmarked, setIsBookmarked] = useState(
     initialIsBookmarked
@@ -128,7 +136,7 @@ export function CourseDetail({
       {/* Back */}
       <Link
         href="/courses"
-        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary"
       >
         <ChevronLeft className="w-4 h-4" />
         Back to Courses
@@ -138,17 +146,17 @@ export function CourseDetail({
         {/* Left */}
         <div className="lg:col-span-1 space-y-4">
           {/* Icon Card */}
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-            <div className="h-44 bg-gradient-to-br from-purple-50 to-purple-100 flex flex-col items-center justify-center gap-3">
-              <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center">
-                <GraduationCap className="w-8 h-8 text-purple-600" />
+          <div className="bg-card rounded-2xl border border-border overflow-hidden">
+            <div className="h-44 bg-linear-to-br from-primary/10 to-primary/5 flex flex-col items-center justify-center gap-3">
+              <div className="w-16 h-16 rounded-2xl bg-card shadow-sm flex items-center justify-center">
+                <GraduationCap className="w-8 h-8 text-primary" />
               </div>
               <div className="flex gap-2">
                 <Badge
                   className={cn(
                     "text-xs",
                     typeColors[course.type] ||
-                      "bg-slate-100 text-slate-700"
+                      "bg-slate-100 text-slate-700 dark:bg-slate-500/15 dark:text-slate-300"
                   )}
                 >
                   {typeLabels[course.type]}
@@ -156,7 +164,7 @@ export function CourseDetail({
                 <Badge
                   className={cn(
                     "text-xs",
-                    levelColors[course.level] || "bg-slate-100"
+                    levelColors[course.level] || "bg-slate-100 dark:bg-slate-500/15"
                   )}
                 >
                   {course.level} Level
@@ -166,51 +174,78 @@ export function CourseDetail({
 
             <div className="p-4 space-y-3">
               <Button
-                className="w-full bg-green-600 hover:bg-green-700"
+                className="w-full"
                 onClick={() => setShowPDF(true)}
               >
                 <Eye className="w-4 h-4 mr-2" />
                 View Material
               </Button>
 
-              <div className="grid grid-cols-2 gap-2">
-                <Button
-                  variant="outline"
-                  onClick={handleDownload}
-                  disabled={isDownloading}
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  Download
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={handleBookmark}
-                  disabled={isBookmarking}
-                  className={
-                    isBookmarked
-                      ? "text-yellow-600 border-yellow-300"
-                      : ""
-                  }
-                >
-                  {isBookmarked ? (
-                    <BookMarked className="w-4 h-4 mr-2" />
-                  ) : (
-                    <Bookmark className="w-4 h-4 mr-2" />
-                  )}
-                  {isBookmarked ? "Saved" : "Save"}
-                </Button>
-              </div>
+              {downloadsPaused ? (
+                <>
+                  <Button
+                    variant="outline"
+                    onClick={handleBookmark}
+                    disabled={isBookmarking}
+                    className={
+                      isBookmarked
+                        ? "w-full text-accent-foreground border-accent-foreground/40"
+                        : "w-full"
+                    }
+                  >
+                    {isBookmarked ? (
+                      <BookMarked className="w-4 h-4 mr-2" />
+                    ) : (
+                      <Bookmark className="w-4 h-4 mr-2" />
+                    )}
+                    {isBookmarked ? "Saved" : "Save"}
+                  </Button>
+                  <p className="flex items-start gap-1.5 text-xs text-muted-foreground px-1">
+                    <Ban className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                    Downloads are currently paused for this material — view it
+                    online instead.
+                  </p>
+                </>
+              ) : (
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={handleDownload}
+                    disabled={isDownloading}
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Download
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={handleBookmark}
+                    disabled={isBookmarking}
+                    className={
+                      isBookmarked
+                        ? "text-accent-foreground border-accent-foreground/40"
+                        : ""
+                    }
+                  >
+                    {isBookmarked ? (
+                      <BookMarked className="w-4 h-4 mr-2" />
+                    ) : (
+                      <Bookmark className="w-4 h-4 mr-2" />
+                    )}
+                    {isBookmarked ? "Saved" : "Save"}
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
 
           {/* Stats */}
-          <div className="bg-white rounded-xl border border-slate-200 p-4">
-            <h3 className="text-sm font-semibold text-slate-700 mb-3">
+          <div className="bg-card rounded-2xl border border-border p-4">
+            <h3 className="font-serif font-bold text-foreground text-sm mb-3">
               Statistics
             </h3>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 flex items-center gap-1">
+                <span className="text-muted-foreground flex items-center gap-1">
                   <Download className="w-3.5 h-3.5" />
                   Downloads
                 </span>
@@ -219,7 +254,7 @@ export function CourseDetail({
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 flex items-center gap-1">
+                <span className="text-muted-foreground flex items-center gap-1">
                   <Eye className="w-3.5 h-3.5" />
                   Views
                 </span>
@@ -228,7 +263,7 @@ export function CourseDetail({
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 flex items-center gap-1">
+                <span className="text-muted-foreground flex items-center gap-1">
                   <Bookmark className="w-3.5 h-3.5" />
                   Bookmarks
                 </span>
@@ -242,11 +277,11 @@ export function CourseDetail({
 
         {/* Right */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
-            <h1 className="text-2xl font-bold text-slate-900">
+          <div className="bg-card rounded-2xl border border-border p-6">
+            <h1 className="font-serif text-2xl font-bold text-foreground">
               {course.courseCode}
             </h1>
-            <p className="text-slate-600 mt-1 text-lg">
+            <p className="text-muted-foreground mt-1 text-lg">
               {course.courseTitle}
             </p>
 
@@ -254,56 +289,56 @@ export function CourseDetail({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
-                <Building2 className="w-4 h-4 text-slate-400 mt-0.5" />
+                <Building2 className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Department</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">Department</p>
+                  <p className="text-sm font-medium text-foreground">
                     {course.department.name}
                   </p>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-muted-foreground">
                     {course.department.academicUnit.name}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <Hash className="w-4 h-4 text-slate-400 mt-0.5" />
+                <Hash className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Level</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">Level</p>
+                  <p className="text-sm font-medium text-foreground">
                     {course.level} Level
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <Calendar className="w-4 h-4 text-slate-400 mt-0.5" />
+                <Calendar className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Semester</p>
-                  <p className="text-sm font-medium text-slate-900 capitalize">
+                  <p className="text-xs text-muted-foreground">Semester</p>
+                  <p className="text-sm font-medium text-foreground capitalize">
                     {course.semester} Semester
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <Hash className="w-4 h-4 text-slate-400 mt-0.5" />
+                <Hash className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">File Size</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">File Size</p>
+                  <p className="text-sm font-medium text-foreground">
                     {formatFileSize(course.fileSize)}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <User className="w-4 h-4 text-slate-400 mt-0.5" />
+                <User className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Uploaded by</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">Uploaded by</p>
+                  <p className="text-sm font-medium text-foreground">
                     {course.uploadedBy.name}
                   </p>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-muted-foreground">
                     {formatDate(course.createdAt)}
                   </p>
                 </div>

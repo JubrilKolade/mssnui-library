@@ -1,5 +1,6 @@
 import { prisma } from "@/src/lib/prisma";
 import { requireAdmin } from "@/src/lib/auth-helpers";
+import { isGlobalDownloadPaused } from "@/src/lib/settings";
 import { ContentManager } from "@/src/components/admin/content/ContentManager";
 import type { Metadata } from "next";
 
@@ -41,15 +42,18 @@ async function getAllContent() {
 
 export default async function ContentPage() {
   await requireAdmin();
-  const { books, courses, projects } = await getAllContent();
+  const [{ books, courses, projects }, downloadsPaused] = await Promise.all([
+    getAllContent(),
+    isGlobalDownloadPaused(),
+  ]);
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">
+        <h1 className="font-serif text-2xl font-bold text-foreground">
           Content Management
         </h1>
-        <p className="text-slate-500 text-sm mt-1">
+        <p className="text-muted-foreground text-sm mt-1">
           View, manage and delete all library content
         </p>
       </div>
@@ -58,6 +62,7 @@ export default async function ContentPage() {
         books={books}
         courses={courses}
         projects={projects}
+        downloadsPausedGlobally={downloadsPaused}
       />
     </div>
   );

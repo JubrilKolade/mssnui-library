@@ -77,40 +77,40 @@ export function FileUploadInput({
           className={cn(
             "flex items-center gap-3 p-4 rounded-xl border",
             progress.status === "success"
-              ? "border-green-200 bg-green-50"
+              ? "border-emerald-300/60 bg-emerald-500/10 dark:border-emerald-500/30"
               : progress.status === "error"
-              ? "border-red-200 bg-red-50"
-              : "border-slate-200 bg-slate-50"
+              ? "border-red-300/60 bg-red-500/10 dark:border-red-500/30"
+              : "border-border bg-muted"
           )}
         >
           {/* File Icon */}
           <div
             className={cn(
-              "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0",
+              "w-10 h-10 rounded-lg flex items-center justify-center shrink-0",
               progress.status === "success"
-                ? "bg-green-100"
+                ? "bg-emerald-500/15"
                 : progress.status === "error"
-                ? "bg-red-100"
-                : "bg-white border border-slate-200"
+                ? "bg-red-500/15"
+                : "bg-card border border-border"
             )}
           >
             {progress.status === "uploading" ? (
-              <Loader2 className="w-5 h-5 text-slate-500 animate-spin" />
+              <Loader2 className="w-5 h-5 text-muted-foreground animate-spin" />
             ) : progress.status === "success" ? (
-              <CheckCircle className="w-5 h-5 text-green-600" />
+              <CheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             ) : progress.status === "error" ? (
-              <AlertCircle className="w-5 h-5 text-red-600" />
+              <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
             ) : (
-              <File className="w-5 h-5 text-slate-500" />
+              <File className="w-5 h-5 text-muted-foreground" />
             )}
           </div>
 
           {/* File Info */}
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-slate-900 truncate">
+            <p className="text-sm font-medium text-foreground truncate">
               {selectedFile.name}
             </p>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-muted-foreground">
               {formatFileSize(selectedFile.size)}
             </p>
           </div>
@@ -121,7 +121,7 @@ export function FileUploadInput({
               type="button"
               variant="ghost"
               size="icon"
-              className="w-8 h-8 flex-shrink-0"
+              className="w-8 h-8 shrink-0"
               onClick={onClear}
             >
               <X className="w-4 h-4" />
@@ -133,21 +133,21 @@ export function FileUploadInput({
         {progress.status === "uploading" && (
           <div className="space-y-1">
             <Progress value={progress.percentage} className="h-2" />
-            <p className="text-xs text-slate-500 text-right">
+            <p className="text-xs text-muted-foreground text-right">
               {progress.percentage}%
             </p>
           </div>
         )}
 
         {progress.status === "success" && (
-          <p className="text-xs text-green-600 flex items-center gap-1">
+          <p className="text-xs text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
             <CheckCircle className="w-3 h-3" />
             Uploaded successfully
           </p>
         )}
 
         {progress.status === "error" && (
-          <p className="text-xs text-red-600 flex items-center gap-1">
+          <p className="text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
             <AlertCircle className="w-3 h-3" />
             Upload failed. Please try again.
           </p>
@@ -163,20 +163,20 @@ export function FileUploadInput({
         className={cn(
           "border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-colors",
           isDragActive
-            ? "border-green-400 bg-green-50"
-            : "border-slate-200 hover:border-green-300 hover:bg-slate-50"
+            ? "border-primary bg-primary/10"
+            : "border-border hover:border-primary/50 hover:bg-accent"
         )}
       >
         <input {...getInputProps()} />
         <Upload
           className={cn(
             "w-8 h-8 mx-auto mb-2",
-            isDragActive ? "text-green-500" : "text-slate-400"
+            isDragActive ? "text-primary" : "text-muted-foreground"
           )}
         />
-        <p className="text-sm font-medium text-slate-700">{label}</p>
-        <p className="text-xs text-slate-400 mt-1">{description}</p>
-        <p className="text-xs text-slate-400">
+        <p className="text-sm font-medium text-foreground">{label}</p>
+        <p className="text-xs text-muted-foreground mt-1">{description}</p>
+        <p className="text-xs text-muted-foreground">
           Max size: {formatFileSize(maxSize)}
         </p>
       </div>

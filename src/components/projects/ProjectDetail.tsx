@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   ScrollText,
   Download,
+  Ban,
   Bookmark,
   BookMarked,
   ChevronLeft,
@@ -18,20 +20,26 @@ import {
 import { Button } from "@/src/components/ui/button";
 import { Badge } from "@/src/components/ui/badge";
 import { Separator } from "@/src/components/ui/separator";
-import { PDFViewer } from "@/src/components/shared/PDFViewer";
 import { formatDate, formatFileSize } from "@/src/lib/utils";
 import { useToast } from "@/src/hooks/use-toast";
+
+const PDFViewer = dynamic(
+  () => import("@/src/components/shared/PDFViewer").then((m) => m.PDFViewer),
+  { ssr: false }
+);
 
 interface ProjectDetailProps {
   project: any;
   signedUrl: string;
   isBookmarked: boolean;
+  downloadsPaused?: boolean;
 }
 
 export function ProjectDetail({
   project,
   signedUrl,
   isBookmarked: initialIsBookmarked,
+  downloadsPaused = false,
 }: ProjectDetailProps) {
   const [isBookmarked, setIsBookmarked] = useState(
     initialIsBookmarked
@@ -102,7 +110,7 @@ export function ProjectDetail({
       {/* Back */}
       <Link
         href="/projects"
-        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary"
       >
         <ChevronLeft className="w-4 h-4" />
         Back to Projects
@@ -112,63 +120,90 @@ export function ProjectDetail({
         {/* Left */}
         <div className="lg:col-span-1 space-y-4">
           {/* Icon Card */}
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-            <div className="h-44 bg-gradient-to-br from-orange-50 to-orange-100 flex flex-col items-center justify-center gap-3">
-              <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center">
-                <ScrollText className="w-8 h-8 text-orange-600" />
+          <div className="bg-card rounded-2xl border border-border overflow-hidden">
+            <div className="h-44 bg-linear-to-br from-accent to-accent/60 flex flex-col items-center justify-center gap-3">
+              <div className="w-16 h-16 rounded-2xl bg-card shadow-sm flex items-center justify-center">
+                <ScrollText className="w-8 h-8 text-accent-foreground" />
               </div>
-              <Badge className="bg-orange-100 text-orange-700">
+              <Badge className="bg-accent text-accent-foreground">
                 {project.year}
               </Badge>
             </div>
 
             <div className="p-4 space-y-3">
               <Button
-                className="w-full bg-green-600 hover:bg-green-700"
+                className="w-full"
                 onClick={() => setShowPDF(true)}
               >
                 <Eye className="w-4 h-4 mr-2" />
                 Read Project
               </Button>
 
-              <div className="grid grid-cols-2 gap-2">
-                <Button
-                  variant="outline"
-                  onClick={handleDownload}
-                  disabled={isDownloading}
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  Download
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={handleBookmark}
-                  disabled={isBookmarking}
-                  className={
-                    isBookmarked
-                      ? "text-yellow-600 border-yellow-300"
-                      : ""
-                  }
-                >
-                  {isBookmarked ? (
-                    <BookMarked className="w-4 h-4 mr-2" />
-                  ) : (
-                    <Bookmark className="w-4 h-4 mr-2" />
-                  )}
-                  {isBookmarked ? "Saved" : "Save"}
-                </Button>
-              </div>
+              {downloadsPaused ? (
+                <>
+                  <Button
+                    variant="outline"
+                    onClick={handleBookmark}
+                    disabled={isBookmarking}
+                    className={
+                      isBookmarked
+                        ? "w-full text-accent-foreground border-accent-foreground/40"
+                        : "w-full"
+                    }
+                  >
+                    {isBookmarked ? (
+                      <BookMarked className="w-4 h-4 mr-2" />
+                    ) : (
+                      <Bookmark className="w-4 h-4 mr-2" />
+                    )}
+                    {isBookmarked ? "Saved" : "Save"}
+                  </Button>
+                  <p className="flex items-start gap-1.5 text-xs text-muted-foreground px-1">
+                    <Ban className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                    Downloads are currently paused for this project — read it
+                    online instead.
+                  </p>
+                </>
+              ) : (
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={handleDownload}
+                    disabled={isDownloading}
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Download
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={handleBookmark}
+                    disabled={isBookmarking}
+                    className={
+                      isBookmarked
+                        ? "text-accent-foreground border-accent-foreground/40"
+                        : ""
+                    }
+                  >
+                    {isBookmarked ? (
+                      <BookMarked className="w-4 h-4 mr-2" />
+                    ) : (
+                      <Bookmark className="w-4 h-4 mr-2" />
+                    )}
+                    {isBookmarked ? "Saved" : "Save"}
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
 
           {/* Stats */}
-          <div className="bg-white rounded-xl border border-slate-200 p-4">
-            <h3 className="text-sm font-semibold text-slate-700 mb-3">
+          <div className="bg-card rounded-2xl border border-border p-4">
+            <h3 className="font-serif font-bold text-foreground text-sm mb-3">
               Statistics
             </h3>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 flex items-center gap-1">
+                <span className="text-muted-foreground flex items-center gap-1">
                   <Download className="w-3.5 h-3.5" />
                   Downloads
                 </span>
@@ -177,7 +212,7 @@ export function ProjectDetail({
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 flex items-center gap-1">
+                <span className="text-muted-foreground flex items-center gap-1">
                   <Eye className="w-3.5 h-3.5" />
                   Views
                 </span>
@@ -186,7 +221,7 @@ export function ProjectDetail({
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 flex items-center gap-1">
+                <span className="text-muted-foreground flex items-center gap-1">
                   <Bookmark className="w-3.5 h-3.5" />
                   Bookmarks
                 </span>
@@ -200,8 +235,8 @@ export function ProjectDetail({
 
         {/* Right */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
-            <h1 className="text-2xl font-bold text-slate-900 leading-snug">
+          <div className="bg-card rounded-2xl border border-border p-6">
+            <h1 className="font-serif text-2xl font-bold text-foreground leading-snug">
               {project.title}
             </h1>
 
@@ -210,10 +245,10 @@ export function ProjectDetail({
             {/* Abstract */}
             {project.abstract && (
               <div className="mb-4">
-                <h3 className="text-sm font-semibold text-slate-700 mb-2">
+                <h3 className="font-serif font-bold text-foreground text-sm mb-2">
                   Abstract
                 </h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   {project.abstract}
                 </p>
               </div>
@@ -222,10 +257,10 @@ export function ProjectDetail({
             {/* Details Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
-                <User className="w-4 h-4 text-slate-400 mt-0.5" />
+                <User className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Author</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">Author</p>
+                  <p className="text-sm font-medium text-foreground">
                     {project.authorName}
                   </p>
                 </div>
@@ -233,10 +268,10 @@ export function ProjectDetail({
 
               {project.supervisor && (
                 <div className="flex items-start gap-3">
-                  <User className="w-4 h-4 text-slate-400 mt-0.5" />
+                  <User className="w-4 h-4 text-muted-foreground mt-0.5" />
                   <div>
-                    <p className="text-xs text-slate-400">Supervisor</p>
-                    <p className="text-sm font-medium text-slate-900">
+                    <p className="text-xs text-muted-foreground">Supervisor</p>
+                    <p className="text-sm font-medium text-foreground">
                       {project.supervisor}
                     </p>
                   </div>
@@ -244,46 +279,46 @@ export function ProjectDetail({
               )}
 
               <div className="flex items-start gap-3">
-                <Building2 className="w-4 h-4 text-slate-400 mt-0.5" />
+                <Building2 className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Department</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">Department</p>
+                  <p className="text-sm font-medium text-foreground">
                     {project.department.name}
                   </p>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-muted-foreground">
                     {project.department.academicUnit.name}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <Calendar className="w-4 h-4 text-slate-400 mt-0.5" />
+                <Calendar className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Year</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">Year</p>
+                  <p className="text-sm font-medium text-foreground">
                     {project.year}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <Hash className="w-4 h-4 text-slate-400 mt-0.5" />
+                <Hash className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">File Size</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">File Size</p>
+                  <p className="text-sm font-medium text-foreground">
                     {formatFileSize(project.fileSize)}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <User className="w-4 h-4 text-slate-400 mt-0.5" />
+                <User className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400">Uploaded by</p>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-xs text-muted-foreground">Uploaded by</p>
+                  <p className="text-sm font-medium text-foreground">
                     {project.uploadedBy.name}
                   </p>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-muted-foreground">
                     {formatDate(project.createdAt)}
                   </p>
                 </div>

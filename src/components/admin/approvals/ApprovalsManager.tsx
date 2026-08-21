@@ -42,7 +42,7 @@ export function ApprovalsManager({
           <BookOpen className="w-4 h-4" />
           Books
           {books.length > 0 && (
-            <Badge className="bg-yellow-100 text-yellow-700 ml-1 h-5 min-w-5">
+            <Badge className="bg-yellow-500/15 text-yellow-300 dark:bg-yellow-500/15 dark:text-yellow-300 ml-1 h-5 min-w-5">
               {books.length}
             </Badge>
           )}
@@ -51,7 +51,7 @@ export function ApprovalsManager({
           <GraduationCap className="w-4 h-4" />
           Courses
           {courses.length > 0 && (
-            <Badge className="bg-yellow-100 text-yellow-700 ml-1 h-5 min-w-5">
+            <Badge className="bg-yellow-500/15 text-yellow-300 dark:bg-yellow-500/15 dark:text-yellow-300 ml-1 h-5 min-w-5">
               {courses.length}
             </Badge>
           )}
@@ -60,7 +60,7 @@ export function ApprovalsManager({
           <ScrollText className="w-4 h-4" />
           Projects
           {projects.length > 0 && (
-            <Badge className="bg-yellow-100 text-yellow-700 ml-1 h-5 min-w-5">
+            <Badge className="bg-yellow-500/15 text-yellow-300 dark:bg-yellow-500/15 dark:text-yellow-300 ml-1 h-5 min-w-5">
               {projects.length}
             </Badge>
           )}

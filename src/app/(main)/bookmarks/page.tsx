@@ -75,11 +75,11 @@ export default async function BookmarksPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Bookmark className="w-6 h-6 text-yellow-500" />
+        <h1 className="font-serif text-2xl font-bold text-foreground flex items-center gap-2">
+          <Bookmark className="w-6 h-6 text-amber-600 dark:text-amber-400" />
           My Bookmarks
         </h1>
-        <p className="text-slate-500 text-sm mt-1">
+        <p className="text-muted-foreground text-sm mt-1">
           {total} saved items
         </p>
       </div>
@@ -139,7 +139,7 @@ export default async function BookmarksPage() {
 
 function EmptyBookmarks({ type }: { type: string }) {
   return (
-    <div className="text-center py-20 text-slate-400">
+    <div className="text-center py-20 text-muted-foreground">
       <Bookmark className="w-12 h-12 mx-auto mb-3 opacity-40" />
       <p className="font-medium">No {type} bookmarked yet</p>
       <p className="text-sm mt-1">
