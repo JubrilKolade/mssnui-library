@@ -5,6 +5,7 @@ import { AuthSessionProvider } from "@/src/components/providers/session-provider
 import { ThemeProvider, THEME_STORAGE_KEY } from "@/src/components/providers/theme-provider";
 import { Toaster } from "@/src/components/ui/toaster";
 import { cn } from "@/src/lib/utils";
+import { Analytics } from "@vercel/analytics/next";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -49,6 +50,7 @@ export default function RootLayout({
             <Toaster />
           </AuthSessionProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
