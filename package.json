@@ -6,7 +6,7 @@
     "predev": "node scripts/copy-pdf-worker.mjs",
     "dev": "next dev",
     "prebuild": "node scripts/copy-pdf-worker.mjs",
-    "build": "prisma migrate deploy && prisma generate && next build",
+    "build": "node scripts/migrate-with-retry.mjs && prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
     "db:migrate": "prisma migrate dev",
