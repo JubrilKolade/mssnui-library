@@ -16,8 +16,8 @@ import { Input } from "@/src/components/ui/input";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 
-// Set worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+// Set worker (self-hosted copy of pdfjs-dist worker in /public)
+pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
 interface PDFViewerProps {
   url: string;
@@ -31,11 +31,18 @@ export function PDFViewer({ url, title, onClose }: PDFViewerProps) {
   const [scale, setScale] = useState(1.0);
   const [rotation, setRotation] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [pageInput, setPageInput] = useState("1");
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
     setIsLoading(false);
+    setLoadError(null);
+  }
+
+  function onDocumentLoadError(error: Error) {
+    setIsLoading(false);
+    setLoadError(error.message || "Failed to load PDF");
   }
 
   function goToPrevPage() {
@@ -165,28 +172,49 @@ export function PDFViewer({ url, title, onClose }: PDFViewerProps) {
 
       {/* PDF Content */}
       <div className="flex-1 overflow-auto flex items-start justify-center p-4">
-        {isLoading && (
+        {isLoading && !loadError && (
           <div className="flex items-center gap-2 text-white mt-20">
             <Loader2 className="w-6 h-6 animate-spin" />
             <span>Loading PDF...</span>
           </div>
         )}
 
-        <Document
-          file={url}
-          onLoadSuccess={onDocumentLoadSuccess}
-          loading=""
-          className="shadow-2xl"
-        >
-          <Page
-            pageNumber={currentPage}
-            scale={scale}
-            rotate={rotation}
-            loading={
-              <div className="w-150 h-200 bg-white animate-pulse" />
-            }
-          />
-        </Document>
+        {loadError && (
+          <div className="flex flex-col items-center gap-3 text-white mt-20">
+            <p className="text-sm text-red-400">
+              Failed to load PDF: {loadError}
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setLoadError(null);
+                setIsLoading(true);
+              }}
+            >
+              Retry
+            </Button>
+          </div>
+        )}
+
+        {!loadError && (
+          <Document
+            file={url}
+            onLoadSuccess={onDocumentLoadSuccess}
+            onLoadError={onDocumentLoadError}
+            loading=""
+            className="shadow-2xl"
+          >
+            <Page
+              pageNumber={currentPage}
+              scale={scale}
+              rotate={rotation}
+              loading={
+                <div className="w-150 h-200 bg-white animate-pulse" />
+              }
+            />
+          </Document>
+        )}
       </div>
     </div>
   );

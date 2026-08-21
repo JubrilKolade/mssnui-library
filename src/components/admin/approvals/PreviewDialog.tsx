@@ -1,15 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/src/components/ui/dialog";
-import { PDFViewer } from "@/src/components/shared/PDFViewer";
 import { Loader2, FileText } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
+
+const PDFViewer = dynamic(
+  () => import("@/src/components/shared/PDFViewer").then((m) => m.PDFViewer),
+  { ssr: false }
+);
 
 interface PreviewDialogProps {
   open: boolean;
