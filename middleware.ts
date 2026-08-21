@@ -1,6 +1,6 @@
-﻿import { auth } from "@/src/lib/auth";
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
 
 // Routes that dont require auth
 const publicRoutes = [
@@ -32,9 +32,27 @@ function isSuperAdminRoute(pathname: string) {
   return superAdminRoutes.some((route) => pathname.startsWith(route));
 }
 
-export default auth((req: NextRequest & { auth: any }) => {
+export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const session = req.auth;
+
+  const token = await getToken({
+    req,
+    secret: process.env.AUTH_SECRET,
+    salt:
+      process.env.NODE_ENV === "production"
+        ? "__Secure-authjs.session-token"
+        : "authjs.session-token",
+  });
+
+  const session = token
+    ? {
+        user: {
+          id: token.id as string | undefined,
+          role: token.role as string | undefined,
+          isActive: token.isActive as boolean | undefined,
+        },
+      }
+    : null;
 
   // Allow public routes
   if (isPublicRoute(pathname)) {
@@ -75,7 +93,7 @@ export default auth((req: NextRequest & { auth: any }) => {
   }
 
   return NextResponse.next();
-});
+}
 
 export const config = {
   matcher: [

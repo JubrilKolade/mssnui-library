@@ -98,15 +98,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth(
           }
 
           if (token.id) {
-            const dbUser = await prisma.user.findUnique({
-              where: { id: token.id as string },
-              select: { role: true, isActive: true, avatar: true },
-            });
+            try {
+              const dbUser = await prisma.user.findUnique({
+                where: { id: token.id as string },
+                select: { role: true, isActive: true, avatar: true },
+              });
 
-            if (dbUser) {
-              token.role = dbUser.role;
-              token.isActive = dbUser.isActive;
-              if (dbUser.avatar) token.picture = dbUser.avatar;
+              if (dbUser) {
+                token.role = dbUser.role;
+                token.isActive = dbUser.isActive;
+                if (dbUser.avatar) token.picture = dbUser.avatar;
+              }
+            } catch {
+              // Transient DB failure - fall back to cached token values
             }
           }
 
