@@ -27,11 +27,14 @@ import {
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
 import { formatDate, getInitials } from "@/src/lib/utils";
+import { canChangeRole, canToggleActive } from "@/src/lib/permissions";
 import { useToast } from "@/src/hooks/use-toast";
 import type { Role } from "@/types";
 
 interface UsersManagerProps {
   users: any[];
+  currentUserId: string;
+  currentUserRole: Role;
 }
 
 const roleColors: Record<Role, string> = {
@@ -48,11 +51,44 @@ const roleLabels: Record<Role, string> = {
   super_admin: "Super Admin",
 };
 
-export function UsersManager({ users: initialUsers }: UsersManagerProps) {
+export function UsersManager({
+  users: initialUsers,
+  currentUserId,
+  currentUserRole,
+}: UsersManagerProps) {
   const [users, setUsers] = useState(initialUsers);
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
   const { toast } = useToast();
+
+  const allRoles: Role[] = [
+    "member",
+    "contributor",
+    "admin",
+    "super_admin",
+  ];
+
+  function allowedRolesFor(user: {
+    id: string;
+    role: Role;
+  }): Role[] {
+    return allRoles.filter(
+      (next) =>
+        next !== user.role &&
+        canChangeRole(currentUserRole, user.role, next, {
+          isSelf: user.id === currentUserId,
+        }).allowed
+    );
+  }
+
+  function canManageRow(user: { id: string; role: Role }) {
+    return (
+      allowedRolesFor(user).length > 0 ||
+      canToggleActive(currentUserRole, user.role, {
+        isSelf: user.id === currentUserId,
+      }).allowed
+    );
+  }
 
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
@@ -247,72 +283,72 @@ export function UsersManager({ users: initialUsers }: UsersManagerProps) {
 
                   {/* Actions */}
                   <td className="px-4 py-3">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 gap-1"
-                        >
-                          Actions
-                          <ChevronDown className="w-3 h-3" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-48">
-                        {/* Role Changes */}
-                        <DropdownMenuItem
-                          onClick={() =>
-                            updateRole(user.id, "member")
-                          }
-                          disabled={user.role === "member"}
-                        >
-                          Set as Member
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() =>
-                            updateRole(user.id, "contributor")
-                          }
-                          disabled={user.role === "contributor"}
-                        >
-                          Set as Contributor
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() =>
-                            updateRole(user.id, "admin")
-                          }
-                          disabled={user.role === "admin"}
-                        >
-                          <Shield className="w-3.5 h-3.5 mr-2" />
-                          Set as Admin
-                        </DropdownMenuItem>
+                    {canManageRow(user) ? (
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 gap-1"
+                          >
+                            Actions
+                            <ChevronDown className="w-3 h-3" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-48">
+                          {allowedRolesFor(user).map((nextRole) => (
+                            <DropdownMenuItem
+                              key={nextRole}
+                              onClick={() => updateRole(user.id, nextRole)}
+                            >
+                              {nextRole === "admin" ||
+                              nextRole === "super_admin" ? (
+                                <Shield className="w-3.5 h-3.5 mr-2" />
+                              ) : null}
+                              Set as{" "}
+                              {roleLabels[nextRole]}
+                            </DropdownMenuItem>
+                          ))}
 
-                        <DropdownMenuSeparator />
+                          {allowedRolesFor(user).length > 0 &&
+                            canToggleActive(
+                              currentUserRole,
+                              user.role,
+                              { isSelf: user.id === currentUserId }
+                            ).allowed && <DropdownMenuSeparator />}
 
-                        {/* Toggle Active */}
-                        <DropdownMenuItem
-                          onClick={() =>
-                            toggleActive(user.id, user.isActive)
-                          }
-                          className={
-                            user.isActive
-                              ? "text-red-600 dark:text-red-400"
-                              : "text-emerald-600 dark:text-emerald-400"
-                          }
-                        >
-                          {user.isActive ? (
-                            <>
-                              <UserX className="w-3.5 h-3.5 mr-2" />
-                              Deactivate
-                            </>
-                          ) : (
-                            <>
-                              <UserCheck className="w-3.5 h-3.5 mr-2" />
-                              Activate
-                            </>
+                          {/* Toggle Active */}
+                          {canToggleActive(currentUserRole, user.role, {
+                            isSelf: user.id === currentUserId,
+                          }).allowed && (
+                            <DropdownMenuItem
+                              onClick={() =>
+                                toggleActive(user.id, user.isActive)
+                              }
+                              className={
+                                user.isActive
+                                  ? "text-red-600 dark:text-red-400"
+                                  : "text-emerald-600 dark:text-emerald-400"
+                              }
+                            >
+                              {user.isActive ? (
+                                <>
+                                  <UserX className="w-3.5 h-3.5 mr-2" />
+                                  Deactivate
+                                </>
+                              ) : (
+                                <>
+                                  <UserCheck className="w-3.5 h-3.5 mr-2" />
+                                  Activate
+                                </>
+                              )}
+                            </DropdownMenuItem>
                           )}
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">—</span>
+                    )}
                   </td>
                 </tr>
               ))}
