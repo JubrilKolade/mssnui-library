@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
@@ -46,9 +46,32 @@ export function RegisterForm() {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [academicUnits, setAcademicUnits] = useState<AcademicUnit[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
+  const [level, setLevel] = useState<"" | "undergraduate" | "postgraduate">("");
   const [selectedUnit, setSelectedUnit] = useState<string>("");
   const router = useRouter();
   const { toast } = useToast();
+
+  // Faculties selectable for the chosen level:
+  // - Postgraduate: faculties under the Postgraduate School (the only
+  //   top-level unit of type "school")
+  // - Undergraduate: every other top-level unit; parent units like the
+  //   College of Medicine expand into their child faculties
+  const facultyOptions = useMemo(() => {
+    const pgSchool = academicUnits.find((u) => u.type === "school");
+    if (level === "postgraduate") {
+      return pgSchool?.children ?? [];
+    }
+    return academicUnits
+      .filter((u) => u.type !== "school")
+      .flatMap((u) => (u.children.length > 0 ? u.children : [u]))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [academicUnits, level]);
+
+  // Changing level resets the faculty/department cascade
+  useEffect(() => {
+    setSelectedUnit("");
+    setDepartments([]);
+  }, [level]);
 
   const form = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema) as any,
@@ -98,11 +121,29 @@ export function RegisterForm() {
 
   async function onSubmit(data: RegisterInput) {
     try {
+      if (!level) {
+        toast({
+          variant: "destructive",
+          title: "Missing information",
+          description: "Please select your study level",
+        });
+        return;
+      }
+
       if (!selectedUnit) {
         toast({
           variant: "destructive",
           title: "Missing information",
           description: "Please select your faculty",
+        });
+        return;
+      }
+
+      if (departments.length > 0 && !data.departmentId) {
+        toast({
+          variant: "destructive",
+          title: "Missing information",
+          description: "Please select your department",
         });
         return;
       }
@@ -284,23 +325,46 @@ export function RegisterForm() {
             )}
           />
 
-          {/* Academic Unit */}
+          {/* Study Level */}
+          <FormItem>
+            <FormLabel>
+              Level <span className="text-destructive">*</span>
+            </FormLabel>
+            <Select
+              value={level}
+              onValueChange={(val: string | null) => setLevel((val as "undergraduate" | "postgraduate") ?? "")}
+              disabled={isLoading}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select your level" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="undergraduate">Undergraduate</SelectItem>
+                <SelectItem value="postgraduate">Postgraduate</SelectItem>
+              </SelectContent>
+            </Select>
+          </FormItem>
+
+          {/* Faculty */}
           <FormItem>
             <FormLabel>
               Faculty / Institute <span className="text-destructive">*</span>
             </FormLabel>
-              <Select
+            <Select
+              value={selectedUnit}
               onValueChange={(val: string | null) => {
                 setSelectedUnit(val ?? "");
                 form.setValue("departmentId", "");
               }}
-              disabled={isLoading}
+              disabled={isLoading || !level}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select your faculty" />
+                <SelectValue
+                  placeholder={level ? "Select your faculty" : "Select level first"}
+                />
               </SelectTrigger>
               <SelectContent>
-                {academicUnits.map((unit) => (
+                {facultyOptions.map((unit) => (
                   <SelectItem key={unit.id} value={unit.id}>
                     {unit.name}
                   </SelectItem>
@@ -317,10 +381,7 @@ export function RegisterForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    Department{" "}
-                    <span className="text-muted-foreground font-normal">
-                      (optional)
-                    </span>
+                    Department <span className="text-destructive">*</span>
                   </FormLabel>
                   <Select
                     onValueChange={field.onChange}
