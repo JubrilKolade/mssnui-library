@@ -78,7 +78,7 @@ export function ForgotPasswordForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-5 [&_[data-slot=label]]:text-[11px] [&_[data-slot=label]]:font-semibold [&_[data-slot=label]]:uppercase [&_[data-slot=label]]:tracking-wider [&_[data-slot=label]]:text-muted-foreground [&_[data-slot=input]]:h-11 [&_[data-slot=input]]:rounded-xl [&_[data-slot=input]]:border-border/60 [&_[data-slot=input]]:bg-secondary/40 [&_[data-slot=input]]:px-3.5 [&_[data-slot=input]]:text-[0.95rem]"
+        className="space-y-5 **:data-[slot=label]:text-[11px] **:data-[slot=label]:font-semibold **:data-[slot=label]:uppercase **:data-[slot=label]:tracking-wider **:data-[slot=label]:text-muted-foreground **:data-[slot=input]:h-11 **:data-[slot=input]:rounded-xl **:data-[slot=input]:border-border/60 **:data-[slot=input]:bg-secondary/40 **:data-[slot=input]:px-3.5 **:data-[slot=input]:text-[0.95rem]"
       >
         {serverError && (
           <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">

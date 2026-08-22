@@ -119,8 +119,8 @@ export default async function LandingPage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/20" />
-        <GeometricPattern className="absolute inset-0 text-foreground/[0.05]" />
+        <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-background to-accent/20" />
+        <GeometricPattern className="absolute inset-0 text-foreground/5" />
         {/* soft glows */}
         <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
         <div className="absolute -right-16 bottom-0 h-72 w-72 rounded-full bg-accent/30 blur-3xl" />
@@ -183,7 +183,7 @@ export default async function LandingPage() {
 
           {/* Hero image */}
           <div className="relative hidden lg:block">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-2xl ring-1 ring-border">
+            <div className="relative aspect-4/5 overflow-hidden rounded-3xl shadow-2xl ring-1 ring-border">
               <Image
                 src={HERO_IMAGE}
                 alt="A grand library interior with towering wooden bookshelves"
@@ -192,7 +192,7 @@ export default async function LandingPage() {
                 sizes="(max-width: 1024px) 0px, 45vw"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent" />
               <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/15 bg-black/40 px-5 py-4 backdrop-blur-md">
                 <p className="font-serif text-lg font-bold text-white">
                   A library within reach
@@ -334,7 +334,7 @@ export default async function LandingPage() {
 
       {/* Knowledge quote band */}
       <section className="relative overflow-hidden border-y border-border bg-primary/5">
-        <GeometricPattern className="absolute inset-0 text-foreground/[0.05]" />
+        <GeometricPattern className="absolute inset-0 text-foreground/5" />
         <div className="relative mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
           <BookOpen className="mx-auto h-8 w-8 text-primary" />
           <blockquote className="mt-5 font-serif text-2xl font-medium italic leading-relaxed text-foreground sm:text-3xl">
@@ -349,7 +349,7 @@ export default async function LandingPage() {
       {/* CTA */}
       <section className="bg-background">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-800 to-emerald-950 px-6 py-16 text-center shadow-xl sm:px-16">
+          <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-emerald-800 to-emerald-950 px-6 py-16 text-center shadow-xl sm:px-16">
             <GeometricPattern className="absolute inset-0 text-white/[0.07]" />
             <div className="relative">
               <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl">

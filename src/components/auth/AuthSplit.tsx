@@ -37,7 +37,7 @@ export function AuthSplit({
           sizes="(max-width: 1024px) 0px, 50vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/90 via-emerald-950/25 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-emerald-950/90 via-emerald-950/25 to-transparent" />
         {quote && (
           <figure className="absolute inset-x-10 bottom-10 text-white">
             <blockquote className="font-serif text-xl italic leading-relaxed drop-shadow-md">
