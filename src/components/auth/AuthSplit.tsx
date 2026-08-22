@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BookMarked } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 interface AuthSplitProps {
   image: string;
@@ -54,37 +54,20 @@ export function AuthSplit({
 
       {/* Form panel */}
       <div
-        className={`flex min-h-screen items-center justify-center p-6 sm:p-10 ${
+        className={`relative flex min-h-screen items-center justify-center p-6 sm:p-10 ${
           imageOnRight ? "lg:order-1" : ""
         }`}
       >
+        <Link
+          href="/"
+          aria-label="Back to home"
+          className="absolute left-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:border-primary hover:text-primary sm:left-6 sm:top-6"
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </Link>
+
         <div className="w-full max-w-md">
-          <div className="mb-8 text-center">
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-primary text-primary-foreground text-2xl font-bold shadow-md transition-transform hover:scale-105"
-            >
-              M
-            </Link>
-            <h1 className="mt-4 font-serif text-2xl font-bold text-foreground">
-              MSSN UI Library
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Muslim Students Society of Nigeria
-            </p>
-          </div>
-
           {children}
-
-          <p className="mt-6 text-center text-xs text-muted-foreground">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1.5 transition-colors hover:text-primary"
-            >
-              <BookMarked className="h-3.5 w-3.5" />
-              Back to home
-            </Link>
-          </p>
         </div>
       </div>
     </div>

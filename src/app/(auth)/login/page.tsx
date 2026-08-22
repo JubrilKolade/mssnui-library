@@ -17,12 +17,12 @@ export default function LoginPage() {
       quote="Read! In the name of your Lord who created."
       cite="Qur'an 96:1"
     >
-      <div className="bg-card rounded-2xl shadow-sm border border-border p-8">
-        <div className="mb-6">
-          <h2 className="font-serif text-xl font-bold text-foreground">
+      <div className="space-y-8">
+        <div>
+          <h2 className="font-serif text-3xl font-bold text-foreground">
             Welcome back
           </h2>
-          <p className="text-muted-foreground text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-2">
             Sign in to access the library
           </p>
         </div>
@@ -31,7 +31,7 @@ export default function LoginPage() {
           <LoginForm />
         </Suspense>
 
-        <p className="text-center text-sm text-muted-foreground mt-6">
+        <p className="text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link
             href="/register"

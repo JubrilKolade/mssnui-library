@@ -16,19 +16,19 @@ export default function RegisterPage() {
       quote="Seeking knowledge is an obligation upon every Muslim."
       cite="Prophet Muhammad ﷺ — Sunan Ibn Majah"
     >
-      <div className="bg-card rounded-2xl shadow-sm border border-border p-8">
-        <div className="mb-6">
-          <h2 className="font-serif text-xl font-bold text-foreground">
+      <div className="space-y-8">
+        <div>
+          <h2 className="font-serif text-3xl font-bold text-foreground">
             Create an account
           </h2>
-          <p className="text-muted-foreground text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-2">
             Join the MSSN UI Library
           </p>
         </div>
 
         <RegisterForm />
 
-        <p className="text-center text-sm text-muted-foreground mt-6">
+        <p className="text-center text-sm text-muted-foreground">
           Already have an account?{" "}
           <Link
             href="/login"

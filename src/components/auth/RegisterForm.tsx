@@ -216,12 +216,12 @@ export function RegisterForm() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* Google Sign Up */}
       <Button
         type="button"
         variant="outline"
-        className="w-full"
+        className="w-full h-11 rounded-xl border-border/60 bg-secondary/40 text-sm font-medium hover:bg-secondary/70"
         onClick={handleGoogleSignIn}
         disabled={isGoogleLoading || isLoading}
       >
@@ -255,8 +255,8 @@ export function RegisterForm() {
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t border-border" />
         </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-2 text-muted-foreground">
+        <div className="relative flex justify-center text-[11px] uppercase tracking-wider">
+          <span className="bg-background px-3 text-muted-foreground">
             or register with email
           </span>
         </div>
@@ -264,7 +264,10 @@ export function RegisterForm() {
 
       {/* Registration Form */}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-5 [&_[data-slot=label]]:text-[11px] [&_[data-slot=label]]:font-semibold [&_[data-slot=label]]:uppercase [&_[data-slot=label]]:tracking-wider [&_[data-slot=label]]:text-muted-foreground [&_[data-slot=input]]:h-11 [&_[data-slot=input]]:rounded-xl [&_[data-slot=input]]:border-border/60 [&_[data-slot=input]]:bg-secondary/40 [&_[data-slot=input]]:px-3.5 [&_[data-slot=input]]:text-[0.95rem] [&_[data-slot=select-trigger]]:h-11 [&_[data-slot=select-trigger]]:rounded-xl [&_[data-slot=select-trigger]]:border-border/60 [&_[data-slot=select-trigger]]:bg-secondary/40 [&_[data-slot=select-trigger]]:px-3.5"
+        >
           {/* Full Name */}
           <FormField
             control={form.control}
@@ -279,6 +282,10 @@ export function RegisterForm() {
                     {...field}
                   />
                 </FormControl>
+                <p className="text-[11px] text-muted-foreground">
+                  First name first, then surname — e.g. Abdullahi is the
+                  first name, Yusuf the surname.
+                </p>
                 <FormMessage />
               </FormItem>
             )}
@@ -476,7 +483,7 @@ export function RegisterForm() {
 
           <Button
             type="submit"
-            className="w-full"
+            className="w-full h-11 rounded-xl text-[0.95rem] font-semibold shadow-sm shadow-primary/20"
             disabled={isLoading || isGoogleLoading}
           >
             {isLoading ? (

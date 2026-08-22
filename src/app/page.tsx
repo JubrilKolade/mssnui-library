@@ -127,10 +127,10 @@ export default async function LandingPage() {
 
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-[1.1fr_0.9fr] lg:py-32">
           <div className="max-w-2xl">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-background/70 px-3.5 py-1.5 text-xs font-medium text-primary shadow-sm backdrop-blur">
+            {/* <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-background/70 px-3.5 py-1.5 text-xs font-medium text-primary shadow-sm backdrop-blur">
               <Sparkles className="h-3.5 w-3.5" />
               Assalamu alaikum — welcome to your library
-            </div>
+            </div> */}
             <h1 className="font-serif text-4xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               Knowledge that
               <br />
@@ -156,7 +156,7 @@ export default async function LandingPage() {
                     href="/register"
                     className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-medium text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
                   >
-                    Create free account
+                    Create account
                     <ArrowRight className="h-5 w-5" />
                   </Link>
                   <Link
@@ -168,7 +168,7 @@ export default async function LandingPage() {
                 </>
               )}
             </div>
-            <p className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
+            {/* <p className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
               <span className="inline-flex items-center gap-1.5">
                 <CheckCircle className="h-4 w-4 text-primary" /> Free forever
               </span>
@@ -178,7 +178,7 @@ export default async function LandingPage() {
               <span className="inline-flex items-center gap-1.5">
                 <CheckCircle className="h-4 w-4 text-primary" /> Curated by MSSN UI
               </span>
-            </p>
+            </p> */}
           </div>
 
           {/* Hero image */}
@@ -374,7 +374,7 @@ export default async function LandingPage() {
                       href="/register"
                       className="inline-flex items-center gap-2 rounded-lg bg-amber-400 px-6 py-3 text-base font-semibold text-emerald-950 transition-colors hover:bg-amber-300"
                     >
-                      Create free account
+                      Create account
                       <ArrowRight className="h-5 w-5" />
                     </Link>
                     <Link
