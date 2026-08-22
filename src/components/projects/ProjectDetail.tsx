@@ -30,14 +30,16 @@ const PDFViewer = dynamic(
 
 interface ProjectDetailProps {
   project: any;
-  signedUrl: string;
+  viewUrl: string;
+  downloadUrl: string;
   isBookmarked: boolean;
   downloadsPaused?: boolean;
 }
 
 export function ProjectDetail({
   project,
-  signedUrl,
+  viewUrl,
+  downloadUrl,
   isBookmarked: initialIsBookmarked,
   downloadsPaused = false,
 }: ProjectDetailProps) {
@@ -81,6 +83,17 @@ export function ProjectDetail({
     try {
       setIsDownloading(true);
 
+      const fileRes = await fetch(downloadUrl);
+      if (!fileRes.ok) {
+        const data = await fileRes.json().catch(() => null);
+        toast({
+          variant: "destructive",
+          title: "Download unavailable",
+          description: data?.error ?? "Please try again",
+        });
+        return;
+      }
+
       await fetch("/api/downloads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -90,12 +103,15 @@ export function ProjectDetail({
         }),
       });
 
+      const blob = await fileRes.blob();
+      const objectUrl = URL.createObjectURL(blob);
       const link = document.createElement("a");
-      link.href = signedUrl;
+      link.href = objectUrl;
       link.download = `${project.title}.pdf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      URL.revokeObjectURL(objectUrl);
 
       toast({ title: "Download started" });
     } catch {
@@ -331,7 +347,7 @@ export function ProjectDetail({
       {/* PDF Viewer */}
       {showPDF && (
         <PDFViewer
-          url={signedUrl}
+          url={viewUrl}
           title={project.title}
           onClose={() => setShowPDF(false)}
         />

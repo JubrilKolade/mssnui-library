@@ -38,6 +38,28 @@ export async function generateDownloadUrl(
   return getSignedUrl(r2Client, command, { expiresIn });
 }
 
+// Stream a file's bytes directly from R2 through our own server.
+// Used so the client never receives a raw, reusable link straight to
+// the bucket — every byte request has to go through our auth checks.
+export async function getFileStream(key: string, range?: string | null) {
+  const command = new GetObjectCommand({
+    Bucket: process.env.R2_BUCKET_NAME!,
+    Key: key,
+    ...(range ? { Range: range } : {}),
+  });
+
+  const result = await r2Client.send(command);
+
+  return {
+    body: result.Body, // web ReadableStream (Node 18+/undici based SDK)
+    contentType: result.ContentType ?? "application/pdf",
+    contentLength: result.ContentLength,
+    contentRange: result.ContentRange,
+    acceptRanges: result.AcceptRanges ?? "bytes",
+    statusCode: range ? 206 : 200,
+  };
+}
+
 // Get public URL (if bucket is public)
 export function getPublicUrl(key: string) {
   return `${process.env.R2_PUBLIC_URL}/${key}`;

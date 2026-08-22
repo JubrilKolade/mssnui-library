@@ -53,14 +53,16 @@ const levelColors: Record<number, string> = {
 
 interface CourseDetailProps {
   course: any;
-  signedUrl: string;
+  viewUrl: string;
+  downloadUrl: string;
   isBookmarked: boolean;
   downloadsPaused?: boolean;
 }
 
 export function CourseDetail({
   course,
-  signedUrl,
+  viewUrl,
+  downloadUrl,
   isBookmarked: initialIsBookmarked,
   downloadsPaused = false,
 }: CourseDetailProps) {
@@ -104,6 +106,17 @@ export function CourseDetail({
     try {
       setIsDownloading(true);
 
+      const fileRes = await fetch(downloadUrl);
+      if (!fileRes.ok) {
+        const data = await fileRes.json().catch(() => null);
+        toast({
+          variant: "destructive",
+          title: "Download unavailable",
+          description: data?.error ?? "Please try again",
+        });
+        return;
+      }
+
       await fetch("/api/downloads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -113,12 +126,15 @@ export function CourseDetail({
         }),
       });
 
+      const blob = await fileRes.blob();
+      const objectUrl = URL.createObjectURL(blob);
       const link = document.createElement("a");
-      link.href = signedUrl;
+      link.href = objectUrl;
       link.download = `${course.courseCode}-${course.courseTitle}.pdf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      URL.revokeObjectURL(objectUrl);
 
       toast({ title: "Download started" });
     } catch {
@@ -351,7 +367,7 @@ export function CourseDetail({
       {/* PDF Viewer */}
       {showPDF && (
         <PDFViewer
-          url={signedUrl}
+          url={viewUrl}
           title={`${course.courseCode} — ${course.courseTitle}`}
           onClose={() => setShowPDF(false)}
         />

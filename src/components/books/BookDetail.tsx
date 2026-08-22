@@ -31,7 +31,8 @@ const PDFViewer = dynamic(
 
 interface BookDetailProps {
   book: any;
-  signedUrl: string;
+  viewUrl: string;
+  downloadUrl: string;
   isBookmarked: boolean;
   userId: string;
   downloadsPaused?: boolean;
@@ -39,7 +40,8 @@ interface BookDetailProps {
 
 export function BookDetail({
   book,
-  signedUrl,
+  viewUrl,
+  downloadUrl,
   isBookmarked: initialIsBookmarked,
   userId,
   downloadsPaused = false,
@@ -86,6 +88,20 @@ export function BookDetail({
     try {
       setIsDownloading(true);
 
+      // Fetch the file through our gated download endpoint — never a
+      // raw R2 link, so the server can enforce the pause setting on
+      // every request, not just hide the button in the UI.
+      const fileRes = await fetch(downloadUrl);
+      if (!fileRes.ok) {
+        const data = await fileRes.json().catch(() => null);
+        toast({
+          variant: "destructive",
+          title: "Download unavailable",
+          description: data?.error ?? "Please try again",
+        });
+        return;
+      }
+
       // Log download
       await fetch("/api/downloads", {
         method: "POST",
@@ -96,13 +112,15 @@ export function BookDetail({
         }),
       });
 
-      // Trigger download
+      const blob = await fileRes.blob();
+      const objectUrl = URL.createObjectURL(blob);
       const link = document.createElement("a");
-      link.href = signedUrl;
+      link.href = objectUrl;
       link.download = `${book.title}.pdf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      URL.revokeObjectURL(objectUrl);
 
       toast({ title: "Download started" });
     } catch {
@@ -361,7 +379,7 @@ export function BookDetail({
       {/* PDF Viewer Modal */}
       {showPDF && (
         <PDFViewer
-          url={signedUrl}
+          url={viewUrl}
           title={book.title}
           onClose={() => setShowPDF(false)}
         />

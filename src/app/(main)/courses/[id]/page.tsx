@@ -1,7 +1,6 @@
 import { prisma } from "@/src/lib/prisma";
 import { auth } from "@/src/lib/auth";
 import { notFound } from "next/navigation";
-import { generateDownloadUrl } from "@/src/lib/r2";
 import { isGlobalDownloadPaused } from "@/src/lib/settings";
 import { CourseDetail } from "@/src/components/courses/CourseDetail";
 import type { Metadata } from "next";
@@ -71,16 +70,13 @@ async function getCourse(id: string, userId: string) {
     })
     .catch(() => {});
 
-  // Generate signed URL
-  const fileKey = course.fileUrl.replace(
-    `${process.env.R2_PUBLIC_URL}/`,
-    ""
-  );
-  const signedUrl = await generateDownloadUrl(fileKey, 7200);
+  const viewUrl = `/api/files/courses/${id}`;
+  const downloadUrl = `/api/files/courses/${id}/download`;
 
   return {
     course,
-    signedUrl,
+    viewUrl,
+    downloadUrl,
     isBookmarked: !!isBookmarked,
     downloadsPaused: globalPaused || course.downloadsPaused,
   };
@@ -99,7 +95,8 @@ export default async function CoursePage({
   return (
     <CourseDetail
       course={data.course}
-      signedUrl={data.signedUrl}
+      viewUrl={data.viewUrl}
+      downloadUrl={data.downloadUrl}
       isBookmarked={data.isBookmarked}
       downloadsPaused={data.downloadsPaused}
     />
