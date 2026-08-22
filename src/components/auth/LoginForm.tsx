@@ -89,12 +89,12 @@ export function LoginForm() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* Google Sign In */}
       <Button
         type="button"
         variant="outline"
-        className="w-full"
+        className="w-full h-11 rounded-xl border-border/60 bg-secondary/40 text-sm font-medium hover:bg-secondary/70"
         onClick={handleGoogleSignIn}
         disabled={isGoogleLoading || isLoading}
       >
@@ -128,8 +128,8 @@ export function LoginForm() {
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t border-border" />
         </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-2 text-muted-foreground">
+        <div className="relative flex justify-center text-[11px] uppercase tracking-wider">
+          <span className="bg-background px-3 text-muted-foreground">
             or continue with email
           </span>
         </div>
@@ -137,7 +137,10 @@ export function LoginForm() {
 
       {/* Email/Password Form */}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-5 **:data-[slot=label]:text-[11px] **:data-[slot=label]:font-semibold **:data-[slot=label]:uppercase **:data-[slot=label]:tracking-wider **:data-[slot=label]:text-muted-foreground **:data-[slot=input]:h-11 **:data-[slot=input]:rounded-xl **:data-[slot=input]:border-border/60 **:data-[slot=input]:bg-secondary/40 **:data-[slot=input]:px-3.5 **:data-[slot=input]:text-[0.95rem]"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -199,7 +202,7 @@ export function LoginForm() {
 
           <Button
             type="submit"
-            className="w-full"
+            className="w-full h-11 rounded-xl text-[0.95rem] font-semibold shadow-sm shadow-primary/20"
             disabled={isLoading || isGoogleLoading}
           >
             {isLoading ? (

@@ -1,7 +1,6 @@
 import { prisma } from "@/src/lib/prisma";
 import { auth } from "@/src/lib/auth";
 import { notFound } from "next/navigation";
-import { generateDownloadUrl } from "@/src/lib/r2";
 import { isGlobalDownloadPaused } from "@/src/lib/settings";
 import { BookDetail } from "@/src/components/books/BookDetail";
 import type { Metadata } from "next";
@@ -78,16 +77,15 @@ async function getBook(id: string, userId: string) {
     // Silently fail if view already exists
   });
 
-  // Generate signed URL for PDF viewing
-  const fileKey = book.fileUrl.replace(
-    `${process.env.R2_PUBLIC_URL}/`,
-    ""
-  );
-  const signedUrl = await generateDownloadUrl(fileKey, 7200); // 2 hours
+  // These point at our own API, not a raw R2 link — see
+  // src/app/api/files/[type]/[id] for why.
+  const viewUrl = `/api/files/books/${id}`;
+  const downloadUrl = `/api/files/books/${id}/download`;
 
   return {
     book,
-    signedUrl,
+    viewUrl,
+    downloadUrl,
     isBookmarked: !!isBookmarked,
     downloadCount,
     downloadsPaused: globalPaused || book.downloadsPaused,
@@ -106,7 +104,8 @@ export default async function BookPage({ params }: BookPageProps) {
   return (
     <BookDetail
       book={data.book}
-      signedUrl={data.signedUrl}
+      viewUrl={data.viewUrl}
+      downloadUrl={data.downloadUrl}
       isBookmarked={data.isBookmarked}
       userId={session.user.id}
       downloadsPaused={data.downloadsPaused}

@@ -15,12 +15,12 @@ export default function ForgotPasswordPage() {
       quote="Allah will raise those who believe and those given knowledge, in degrees."
       cite="Qur'an 58:11"
     >
-      <div className="bg-card rounded-2xl shadow-sm border border-border p-8">
-        <div className="mb-6">
-          <h2 className="font-serif text-xl font-bold text-foreground">
+      <div className="space-y-8">
+        <div>
+          <h2 className="font-serif text-3xl font-bold text-foreground">
             Forgot your password?
           </h2>
-          <p className="text-muted-foreground text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-2">
             No worries — enter your email and we&apos;ll send you a reset link
           </p>
         </div>

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/src/lib/auth";
 import { prisma } from "@/src/lib/prisma";
-import { generateDownloadUrl } from "@/src/lib/r2";
 
 export async function GET(
   req: NextRequest,
@@ -59,18 +58,14 @@ export async function GET(
       where: { userId: session.user.id, projectId: params.id },
     });
 
-    // Generate signed URL
-    const fileKey = project.fileUrl.replace(
-      `${process.env.R2_PUBLIC_URL}/`,
-      ""
-    );
-    const signedUrl = await generateDownloadUrl(fileKey, 7200);
-
+    // Point at our own gated streaming routes rather than handing back
+    // a raw, reusable presigned R2 link — see src/app/api/files/[type]/[id]
     return NextResponse.json({
       success: true,
       data: {
         ...project,
-        signedUrl,
+        viewUrl: `/api/files/projects/${params.id}`,
+        downloadUrl: `/api/files/projects/${params.id}/download`,
         isBookmarked: !!bookmark,
       },
     });

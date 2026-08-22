@@ -119,18 +119,18 @@ export default async function LandingPage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/20" />
-        <GeometricPattern className="absolute inset-0 text-foreground/[0.05]" />
+        <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-background to-accent/20" />
+        <GeometricPattern className="absolute inset-0 text-foreground/5" />
         {/* soft glows */}
         <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
         <div className="absolute -right-16 bottom-0 h-72 w-72 rounded-full bg-accent/30 blur-3xl" />
 
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-[1.1fr_0.9fr] lg:py-32">
           <div className="max-w-2xl">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-background/70 px-3.5 py-1.5 text-xs font-medium text-primary shadow-sm backdrop-blur">
+            {/* <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-background/70 px-3.5 py-1.5 text-xs font-medium text-primary shadow-sm backdrop-blur">
               <Sparkles className="h-3.5 w-3.5" />
               Assalamu alaikum — welcome to your library
-            </div>
+            </div> */}
             <h1 className="font-serif text-4xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               Knowledge that
               <br />
@@ -156,7 +156,7 @@ export default async function LandingPage() {
                     href="/register"
                     className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-medium text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
                   >
-                    Create free account
+                    Create account
                     <ArrowRight className="h-5 w-5" />
                   </Link>
                   <Link
@@ -168,7 +168,7 @@ export default async function LandingPage() {
                 </>
               )}
             </div>
-            <p className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
+            {/* <p className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
               <span className="inline-flex items-center gap-1.5">
                 <CheckCircle className="h-4 w-4 text-primary" /> Free forever
               </span>
@@ -178,12 +178,12 @@ export default async function LandingPage() {
               <span className="inline-flex items-center gap-1.5">
                 <CheckCircle className="h-4 w-4 text-primary" /> Curated by MSSN UI
               </span>
-            </p>
+            </p> */}
           </div>
 
           {/* Hero image */}
           <div className="relative hidden lg:block">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-2xl ring-1 ring-border">
+            <div className="relative aspect-4/5 overflow-hidden rounded-3xl shadow-2xl ring-1 ring-border">
               <Image
                 src={HERO_IMAGE}
                 alt="A grand library interior with towering wooden bookshelves"
@@ -192,7 +192,7 @@ export default async function LandingPage() {
                 sizes="(max-width: 1024px) 0px, 45vw"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent" />
               <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/15 bg-black/40 px-5 py-4 backdrop-blur-md">
                 <p className="font-serif text-lg font-bold text-white">
                   A library within reach
@@ -334,7 +334,7 @@ export default async function LandingPage() {
 
       {/* Knowledge quote band */}
       <section className="relative overflow-hidden border-y border-border bg-primary/5">
-        <GeometricPattern className="absolute inset-0 text-foreground/[0.05]" />
+        <GeometricPattern className="absolute inset-0 text-foreground/5" />
         <div className="relative mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
           <BookOpen className="mx-auto h-8 w-8 text-primary" />
           <blockquote className="mt-5 font-serif text-2xl font-medium italic leading-relaxed text-foreground sm:text-3xl">
@@ -349,7 +349,7 @@ export default async function LandingPage() {
       {/* CTA */}
       <section className="bg-background">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-800 to-emerald-950 px-6 py-16 text-center shadow-xl sm:px-16">
+          <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-emerald-800 to-emerald-950 px-6 py-16 text-center shadow-xl sm:px-16">
             <GeometricPattern className="absolute inset-0 text-white/[0.07]" />
             <div className="relative">
               <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl">
@@ -374,7 +374,7 @@ export default async function LandingPage() {
                       href="/register"
                       className="inline-flex items-center gap-2 rounded-lg bg-amber-400 px-6 py-3 text-base font-semibold text-emerald-950 transition-colors hover:bg-amber-300"
                     >
-                      Create free account
+                      Create account
                       <ArrowRight className="h-5 w-5" />
                     </Link>
                     <Link

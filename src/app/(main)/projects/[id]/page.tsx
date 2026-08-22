@@ -1,7 +1,6 @@
 import { prisma } from "@/src/lib/prisma";
 import { auth } from "@/src/lib/auth";
 import { notFound } from "next/navigation";
-import { generateDownloadUrl } from "@/src/lib/r2";
 import { isGlobalDownloadPaused } from "@/src/lib/settings";
 import { ProjectDetail } from "@/src/components/projects/ProjectDetail";
 import type { Metadata } from "next";
@@ -72,16 +71,13 @@ async function getProject(id: string, userId: string) {
     })
     .catch(() => {});
 
-  // Generate signed URL
-  const fileKey = project.fileUrl.replace(
-    `${process.env.R2_PUBLIC_URL}/`,
-    ""
-  );
-  const signedUrl = await generateDownloadUrl(fileKey, 7200);
+  const viewUrl = `/api/files/projects/${id}`;
+  const downloadUrl = `/api/files/projects/${id}/download`;
 
   return {
     project,
-    signedUrl,
+    viewUrl,
+    downloadUrl,
     isBookmarked: !!isBookmarked,
     downloadsPaused: globalPaused || project.downloadsPaused,
   };
@@ -100,7 +96,8 @@ export default async function ProjectPage({
   return (
     <ProjectDetail
       project={data.project}
-      signedUrl={data.signedUrl}
+      viewUrl={data.viewUrl}
+      downloadUrl={data.downloadUrl}
       isBookmarked={data.isBookmarked}
       downloadsPaused={data.downloadsPaused}
     />

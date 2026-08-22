@@ -16,12 +16,12 @@ export default function ResetPasswordPage() {
       quote="Whoever treads a path in search of knowledge, Allah will make easy for him a path to Paradise."
       cite="Prophet Muhammad ﷺ — Sahih Muslim"
     >
-      <div className="bg-card rounded-2xl shadow-sm border border-border p-8">
-        <div className="mb-6">
-          <h2 className="font-serif text-xl font-bold text-foreground">
+      <div className="space-y-8">
+        <div>
+          <h2 className="font-serif text-3xl font-bold text-foreground">
             Choose a new password
           </h2>
-          <p className="text-muted-foreground text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-2">
             Your new password must be different from previous passwords
           </p>
         </div>
